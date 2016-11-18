@@ -115,7 +115,7 @@ public class WebchatUtil {
                 }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return dto;
     }
