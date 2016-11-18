@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no" />
+    <link rel="stylesheet" href="js/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/font/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>用户注册</title>
+</head>
+<body>
+<div id="overLay" class="dn"></div>
+
+<div id="shopList" class="dn">
+	
+</div>
+
+<div class="mt20">
+    <div class="container-fluid">
+        <form>
+            <div class="inputGroup clearfix">
+                <input type="text" readonly="readonly" placeholder="请选择门店" class="posr fl inputText" id="selShop">
+                <input type="hidden" class="posr fl inputText" id="shopCode">
+                <label class="posr fl inputName">所属门店</label>
+                <i class="posr fl fa fa-angle-right" aria-hidden="true"></i>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="输入手机号" class="posr fl inputText" id="mobile">
+                <label class="posr fl inputName">手机号</label>
+            </div>
+            <div class="inputGroup v-code clearfix">
+                <input type="text" placeholder="输入验证码" class="posr fl inputText" id="checkCode">
+                <label class="posr fl inputName">验证码</label>
+                <div class="posr fl red-btn codeBtn">获取验证码</div>
+            </div>
+            <div class="red-btn w100" id="register">确定</div>
+        </form>
+
+        <div class="linkDiv">
+            <a id="backIndex" class="blue-col homeLink">返回首页</a>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="tc">
+                    <h5 id="modal_lable"></h5>
+                    <p class="mt10 tishi" id="modal_msg"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="tc gr-col" id="ok_button">确定</div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal-backdrop fade in" style="display: none;"></div>
+
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script src="js/public.js"></script>
+<script src="js/phoneCheckCode.js"></script>
+<script type="text/javascript">
+	var rootPath = getContextPath();
+	var appId = getUrlDataByKey("appId");
+	var openId = getUrlDataByKey("openId");
+	var uid = getUrlDataByKey("uid");
+</script>
+<script>
+	//会员用户注册
+	function userRegister(){
+		$.ajax({
+    		type : "post",
+    		contentType : "application/x-www-form-urlencoded;charset=utf-8",
+    		url : rootPath + "/memberInfo/registerMember.do",
+    		async : false,
+    		data : {
+    			"mobile" : $("#mobile").val(),
+    			"shopCode" : $("#shopCode").val(),
+    			"openId" : openId,
+    			"appId" : appId,
+    			"uid" : uid,
+    			"registType" : getUrlDataByKey("registType")
+    		},
+    		dataType : "json",
+    		success : function(response) {
+    			if(response.success){
+    				$("#modal_lable").text("恭喜");
+    				$("#modal_msg").text(response.msg);
+    				$("#ok_button").attr("onclick", "modalShowOrHide(0, 1)");
+    				modalShowOrHide(1);
+    			} else {
+    				$("#modal_lable").text("抱歉，注册失败！");
+    				$("#modal_msg").text(response.msg);
+    				$("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
+    				modalShowOrHide(1);
+    			}
+    		}
+    	});
+	}
+	
+	//获取门店
+	function getShop(){
+		$.ajax({
+    		type : "post",
+    		contentType : "application/x-www-form-urlencoded;charset=utf-8",
+    		url : rootPath + "/memberInfo/getShopByAppId.do",
+    		async : false,
+    		data : {
+    			"appId" : appId
+    		},
+    		dataType : "json",
+    		success : function(response) {
+    			if(response.success){
+    				var data = response.data;
+    				var option = "<ul>";
+    				for(var i=0;i<data.length;i++){
+    					var ele = data[i];
+    					option += "<li>";
+    					option += "<input type='radio' name='shop' id='shop_0'" + i +" value='" + ele.organizationCode + "'>";
+    					option += "<label for='shop_0'" + i +">" + ele.organizationName + "</label>";
+    					option += "</li>";
+    				}
+    				option += "</ul>";
+    				$("#shopList").html(option);
+    			}
+    		}
+    	});
+	}
+	
+    $(function(){
+    	getShop();
+    	$(".inputGroup").click(function(){
+            $(this).addClass("selected").siblings().removeClass("selected");
+            $(this).find(".fa-angle-right").addClass("fa-ro");
+        });
+        $("#selShop").click(function(){
+            $("#overLay,#shopList").show();
+        });
+        $("#shopList ul li").click(function(){
+            var text=$(this).find("label").text();
+            var shopCode=$(this).find("input").val();
+            $("#selShop").val(text);
+            $("#shopCode").val(shopCode);
+            $("#overLay,#shopList").hide();
+            $(".inputGroup").find(".fa-angle-right").removeClass("fa-ro");
+        });
+        $("#register").click(function(){
+        	return checkPhoneCheckCode(userRegister);
+        });
+        $(".v-code .codeBtn").click(getPhoneCheckCode);
+        $("#backIndex").attr("href", "javascript:loadIndex()");
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <link rel="stylesheet" href="js/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/font/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>我的会员信息</title>
+</head>
+<body>
+<div class="integral_w">
+    <div class="tc integral_t">
+        <p id="cardNo">卡号：</p>
+
+        <p id="memberBalance">可用积分：</p>
+    </div>
+    <div class="container-fluid">
+        <ul class="integralList" id="memberDetailUl">
+            <li>
+                <div class="row">
+                    <div class="col-xs-5">2016-09-18</div>
+                    <div class="col-xs-7 tr tishi">北京市百货大楼</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">消费返增加</div>
+                    <div class="col-xs-5 tr">1955.32</div>
+                </div>
+            </li>
+            <li>
+                <div class="row">
+                    <div class="col-xs-5">2016-09-18</div>
+                    <div class="col-xs-7 tr tishi">北京市百货大楼</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">消费返增加</div>
+                    <div class="col-xs-5 tr">2955.32</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="js/public.js" type="text/javascript"></script>
+<script src="js/public.js"></script>
+<script type="text/javascript">
+    var rootPath = getContextPath();
+    var appId = getUrlDataByKey("appId");
+    var openId = getUrlDataByKey("openId");
+    var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
+    var cardNo = getUrlDataByKey("cardNo");
+    var mkt = getUrlDataByKey("storeCode");//门店号
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#cardNo").html("卡号：" + cardNo);
+        //获取全渠道积分总额
+        $.ajax({
+            type: "post",
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            url: rootPath + "/memberDetail/getAllChannelMemberBalance.do",
+            async: false,
+            data: {
+                "openId": openId,
+                "appId": appId,
+                "centType": registType,
+                "channelId": "M2"
+            },
+            dataType: "json",
+            ajaxStart: function () {
+                $("#loading-container").prop("class", "loading-container");
+            },
+            ajaxStop: function () {
+                $("#loading-container").addClass("loading-inactive");
+            },
+            success: function (response) {
+                if (response.success) {
+                    var result = response.obj;
+                    result = JSON.parse(result);
+                    $("#memberBalance").html("可用积分：" + result.totalCents);
+                    $("#cardNo").html("卡号：" + result.cardNo);
+                }
+            }
+        });
+
+        //获取全渠道/非全渠道共用积分明细
+        var pageNo = "";
+        var pageSize = "";
+        if (0 == registType) {
+            pageNo = "1";
+            pageSize = "10";
+        }
+        $.ajax({
+            type: "post",
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            url: rootPath + "/memberDetail/getAllChannelMemberDetail.do",
+            async: false,
+            data: {
+                "openId": openId,
+                "appId": appId,
+                "pageNo": pageNo,
+                "pageSize": pageSize
+            },
+            dataType: "json",
+            ajaxStart: function () {
+                $("#loading-container").prop("class", "loading-container");
+            },
+            ajaxStop: function () {
+                $("#loading-container").addClass("loading-inactive");
+            },
+            success: function (response) {
+                if (response.success) {
+                    var result = response.obj;
+//                    result = JSON.parse(result);
+                    var list = result.list;
+                    for (var i = 0; i < list.length; i++) {
+                        var obj = list[i];
+                        var eff_date = "";
+                        var storeName = "";
+                        var summaryname = "";
+                        var amount = "";
+                        if (0 == registType) {
+                            eff_date = obj.eff_date;
+                            storeName = obj.storeName;
+                            summaryname = obj.summaryname;
+                            amount = obj.amount;
+                        } else if (1 == registType) {
+                            eff_date = obj.rqsj;
+                            storeName = obj.mdname;
+                            amount = obj.ljjf;
+                        }
+                        var li = '<li><div class="row"><div class="col-xs-5">' + eff_date + '</div>';
+                        li += '<div class="col-xs-7 tr tishi">' + storeName + '</div></div>';
+                        li += '<div class="row"><div class="col-xs-7">' + summaryname + '</div>';
+                        li += '<div class="col-xs-5 tr">' + amount + '</div></div></li>';
+                        $("#memberDetailUl").append(li);
+                    }
+                }
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

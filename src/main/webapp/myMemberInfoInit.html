@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no" />
+    <link rel="stylesheet" href="js/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/font/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>我的会员信息</title>
+    <script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/public.js"></script>
+    <script type="text/javascript">
+	    var rootPath = getContextPath();
+	    var appId = getUrlDataByKey("appId");
+		var openId = getUrlDataByKey("openId");
+		var uid = getUrlDataByKey("uid");
+		var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
+		var mkt = getUrlDataByKey("storeCode");//门店号
+    </script>
+    <script type="text/javascript">
+    	//初始化
+    	function init(){
+    		$(".headpto").html("<img src='" + getUrlDataByKey("headimgurl") + "'>");
+    		$(".headName").text(getUrlDataByKey("nickname"));
+    	}
+    	//用户注册会员
+    	function userRegister(){
+    		var param = "?";
+    		param += "openId=" + openId;
+    		param += "&appId=" + appId;
+    		param += "&uid=" + uid;
+    		param += "&registType=" + getUrlDataByKey("registType");
+    		var regUrl = rootPath + "/userRegister.html" + param;
+    		$("#userRegister").attr("href", encodeURI(regUrl));
+    	}
+    	//绑定实体卡
+    	function bindEntityCard(){
+    		var bindEntityCardUrl = rootPath + "/bindMemberInfo.html?bindType=2";
+    		bindEntityCardUrl += "&uid=" + uid;
+    		bindEntityCardUrl += "&appId=" + appId;
+    		bindEntityCardUrl += "&openId=" + openId;
+    		bindEntityCardUrl += "&mkt=" + mkt;
+    		bindEntityCardUrl += "&registType=" + registType;
+    		$("#bindEntityCard").attr("href", encodeURI(bindEntityCardUrl));
+    	}
+	    $(function(){
+	    	init();
+	    	userRegister();
+	    	bindEntityCard();
+	    });
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="headDiv">
+        <div class="headpto">
+            
+        </div>
+        <div class="mt20 headName"></div>
+    </div>
+    <div class="btnDiv clearfix">
+        <div class="col-xs-6">
+            <a id="userRegister"><span class="fr red-btn">注册新会员</span></a>
+        </div>
+        <div class="col-xs-6">
+            <a id="bindEntityCard"><span class="fl red-btn">绑定实体卡</span></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

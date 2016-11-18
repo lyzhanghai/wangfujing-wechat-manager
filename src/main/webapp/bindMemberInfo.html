@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en" style="height:100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no" />
+    <link rel="stylesheet" href="js/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/font/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>绑定会员卡</title>
+    <style>
+    	html,body{margin:0;padding:0;}
+    </style>
+</head>
+<body style="height:100%;">
+<div id="overLay" class="dn" type="hidden"></div>
+<div id="shopList" class="dn" type="hidden">
+    <ul class="num_tel">
+        <li>
+            <input type="radio" name="shop" id="shop_01" value="2">
+            <label for="shop_01">手机号</label>
+        </li>
+        <li>
+            <input type="radio" name="shop" id="shop_02" value="1">
+            <label for="shop_02">会员卡号</label>
+        </li>
+    </ul>
+</div>
+<div style="padding:20px 0;">
+    <div class="container-fluid">
+        <form id="mytel">
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="请输入手机号" class="posr fl inputText" id="mobile" maxLength="11">
+                <label class="posr fl inputName">手机号</label>
+                <i class="posr fl fa fa-angle-right fa-ro" aria-hidden="true"></i>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="password" placeholder="输入6位数字" class="posr fl inputText" id="pwd" maxLength="6">
+                <label class="posr fl inputName">支付密码</label>
+            </div>
+            <div class="inputGroup v-code clearfix">
+                <input type="text" placeholder="输入验证码" class="posr fl inputText" id="phoneCode" maxLength="6">
+                <label class="posr fl inputName">验证码</label>
+                <div class="posr fl red-btn codeBtn" type="button" id="getVerifyCode">获取验证码</div>
+            </div>
+
+            <div class="red-btn w100"  id="bindPhone">确认</div>
+        </form>
+        <form class="dn" id="mycard">
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="请输入会员卡号" class="posr fl inputText" id="selShop_1">
+                <label class="posr fl inputName">卡号</label>
+                <i class="posr fl fa fa-angle-right fa-ro" aria-hidden="true"></i>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="输入证件号后六位" class="posr fl inputText" id="idNum" maxLength="6">
+                <label class="posr fl inputName">证件号</label>
+            </div>
+            <div class="red-btn w100"  id="bindCard">确认</div>
+        </form>
+
+        <div class="linkDiv">
+            <a href="#" class="blue-col homeLink">返回首页</a>
+        </div>
+    	<div style="width:90%;color:#FFFFFF;opacity:0.9;background-color:#000000;position:fixed;top:30%;text-align:center;display:none;border-radius:20px;padding:10px 20px;left:0px;right:0px;margin-left:auto;margin-right:auto" id="hintDiv">
+    		<span id="hint" style=""></span> 
+    	</div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="tc">
+                    <h5 id="modal_lable"></h5>
+                    <p class="mt10 tishi" id="modal_msg"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="tc gr-col" id="ok_button">确定</div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal-backdrop fade in" style="display: none;"></div>
+
+<!-- Loading -->
+<!-- <div id="loading" style="display:none;position:absolute;top:0;width:100%;height:100%;z-index:9999;text-align:center;background-color:gray;opacity:0.3;">
+	<div style="width:50px; height:50px;display:table-cell;vertical-align:middle;">
+		<img src="images/loading.gif" style="height:50px;height:50px;">
+	</div>
+</div> -->
+<!--  /Loading Container -->
+
+<div>
+	<input id="checkCode" type="hidden"/>
+</div>
+
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script src="js/phoneCheckCode.js"></script>
+<script src="js/public.js"></script>
+<script>
+    $(function(){
+        $(".inputGroup").click(function(){
+            $(this).addClass("selected").siblings().removeClass("selected");
+        });
+        $(".fa-angle-right").click(function(){
+            $("#overLay,#shopList").show();
+        });
+        $("#shopList ul li").each(function(index){
+            var i=$(this).index();
+            $(this).click(function(){
+                $("#overLay,#shopList").hide();
+                if(i==1){
+                    $("#mytel").hide();
+                    $("#mycard").show();
+                }else{
+                    $("#mycard").hide();
+                    $("#mytel").show();
+                }
+            });
+        });
+    });
+
+</script>
+<script>
+	//基本参数
+	var rootPath = getContextPath();
+	var appId = getUrlDataByKey("appId");
+	var openId = getUrlDataByKey("openId");
+	var uid= getUrlDataByKey("uid");
+	var mkt= getUrlDataByKey("mkt");
+	var registType= getUrlDataByKey("registType");
+	var bindType= getUrlDataByKey("bindType");
+	
+	//初始化
+	$(init);
+	
+	//初始化->
+	function init(){
+		
+		
+		//根据bindType选择绑定页面
+		if(bindType==2){
+			$("input[name=shop]:eq(1)").attr("checked",'checked');
+            $("#mytel").hide();
+            $("#mycard").show();
+        }else{
+        	$("input[name=shop]:eq(0)").attr("checked",'checked');
+            $("#mycard").hide();
+            $("#mytel").show();
+        }
+		
+		//返回首页链接
+		$(".linkDiv a").prop("href","javascript:loadIndex()");
+		
+		//----------绑定事件--------------
+		/* //确认窗口隐藏跳转
+		$("#confirm").click(function (){
+			$("#modal_lable").text("抱歉，获取验证码失败！");
+			$("#modal_msg").text(response.msg);
+			$("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
+			modalShowOrHide(0,1);
+		}); */
+		//获取验证码
+		$("#getVerifyCode").click(getPhoneCheckCode);
+		
+		//移除错误提示信息
+		$("#mytel input,#mycard input").focus(function(){
+			$(this).next().css("color","black");
+			
+		});
+		
+		//绑定手机
+		$("#bindPhone").click(function(){
+			var url=rootPath+"/cardBind/bindMemberCard.do";
+			//获取参数
+			var phoneNum=$("#mobile").val();
+			var pwd=$("#pwd").val();
+			//检查参数
+			if(!validateBindPhoneParam()){
+				return false;
+			}
+			param={"uid":uid,
+					"openId":openId,
+					"appId":appId,
+					"idType":"2",
+					"idKeyword":phoneNum,
+					"idPassword":pwd,
+					"mkt":mkt
+				};
+			//显示加载框
+//			$("#loading").css("display","table");
+			$.post(url,param,function(response){
+				
+				if(response.success){
+					$("#modal_lable").text("恭喜");
+					$("#modal_msg").text(response.msg);
+					$("#ok_button").attr("onclick", "modalShowOrHide(0, 1)");
+					//显示确认提示窗口
+					modalShowOrHide(1);
+				}else{
+					//显示错误提示信息
+					//showHintInfo(response.msg);
+					$("#modal_lable").text("抱歉，绑定失败！");
+    				$("#modal_msg").text(response.msg);
+    				$("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
+    				modalShowOrHide(1);
+				}
+			},"json").complete(function() { 
+				//请求完成后隐藏加载框
+//				$("#loading").css("display","none");
+			});
+		});
+		
+		//绑定卡号
+		$("#bindCard").click(function(){
+			var url=rootPath+"/cardBind/bindMemberCard.do";
+			var cardNum=$("#selShop_1").val();
+			var idNum=$("#idNum").val();
+			
+			//检查参数
+			if(!validateBindCardParam()){
+				return false;
+			}
+			
+			//请求参数
+			param={"uid":uid,
+					"openId":openId,
+					"appId":appId,
+					"idType":"1",
+					"idKeyword":cardNum,
+					"idPassword":idNum,
+					"mkt":mkt
+				};
+			
+			//显示加载框
+//			$("#loading").css("display","table");
+			$.post(url,param,function(response){
+				if(response.success){
+					$("#modal_lable").text("恭喜");
+					$("#modal_msg").text(response.msg);
+					$("#ok_button").attr("onclick", "modalShowOrHide(0, 1)");
+					//显示确认提示窗口
+					modalShowOrHide(1);
+				}else{
+					//显示提示信息
+					//showHintInfo(response.msg);
+					$("#modal_lable").text("抱歉，绑定失败！");
+    				$("#modal_msg").text(response.msg);
+    				$("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
+    				modalShowOrHide(1);
+				}
+			},"json").complete(function() { 
+				//请求完成后隐藏加载框
+//				$("#loading").css("display","none");
+			});
+			
+		});
+	}
+	//初始化<-
+	
+	//检查手机号绑定参数
+	function validateBindPhoneParam(){
+		//手机号正则，数字，长度11位
+		var phoneReg=/^[1][3,4,5,8][0-9]{9}$/;
+		//密码正则：数字，长度六位
+		var pwdReg=/^[0-9]{6}$/;
+		//验证码正则：数字，长度六位
+		var codeReg=/^[0-9]{6}$/;
+		var phoneNum=$("#mobile").val();
+		var pwd=$("#pwd").val();
+		var verifyCode=$("#phoneCode").val();
+		$("#mobile").val(phoneNum);
+		$("#checkCode").val(verifyCode);
+		//检查手机号是否为空
+		if(phoneNum.length==0){
+			$("#mytel label").eq(0).css("color","red");
+			showHintInfo("手机号码不能为空！");
+			return false;
+		}
+		//检查手机号格式
+		if(!phoneReg.test(phoneNum)){
+			$("#mytel label").eq(0).css("color","red");
+			showHintInfo("手机号码格式不正确！");
+			return false;
+		}
+		//检查密码是否为空
+		if(pwd.length==0){
+			$("#mytel label").eq(1).css("color","red");
+			showHintInfo("支付密码不能为空！");
+			return false;
+		}
+		//检查密码格式
+		if(!pwdReg.test(pwd)){
+			$("#mytel label").eq(1).css("color","red");
+			showHintInfo("请输入6位支付密码！");
+			return false;
+		}
+		//检查验证码是否为空
+		if(verifyCode.length==0){
+			$("#mytel label").eq(2).css("color","red");
+			showHintInfo("验证码不能为空！");
+			return false;
+		}
+		//检查验证码格式
+		if(!codeReg.test(verifyCode)){
+			$("#mytel label").eq(2).css("color","red");
+			showHintInfo("验证码为6位数字！");
+			return false;
+		}
+		//检查验证码是否正确
+		if(!checkPhoneCheckCode(function(){})){
+			$("#mytel label").eq(2).css("color","red");
+			//showHintInfo("验证码错误！");
+			return false;
+		}
+		return true;
+	}
+	
+	//检查卡绑定参数
+	function validateBindCardParam(){
+		//证件号正则,身份证后六位
+		var idNumReg=/^[0-9|x|X]{6}$/;
+		var cardNum=$("#selShop_1").val();
+		var idNum=$("#idNum").val();
+		//检查卡号是否为空
+		if(cardNum.length==0){
+			$("#mycard label").eq(0).css("color","red");
+			showHintInfo("会员卡号不能为空！");
+			return false;
+		}
+		//检查身份证号是否为空
+		if(idNum.length==0){
+			$("#mycard label").eq(1).css("color","red");
+			showHintInfo("证件号不能为空！");
+			return false;
+		}
+		//检查身份证号格式是否正确
+		if(!idNumReg.test(idNum)){
+			$("#mycard label").eq(1).css("color","red");
+			showHintInfo("证件号格式不正确！");
+			return false;
+		}
+		return true;
+	}
+	
+	//显示提示信息
+	function showHintInfo(hintInfo){
+		//设置提示文字
+		$("#hint").html(hintInfo);
+		//显示提示窗口
+		$("#hintDiv").show();
+		//自动隐藏提示信息
+		setTimeout(function(){$("#hintDiv").hide();},1500);
+	}
+	
+	/* //提示框的控制
+	function modalShowOrHide(flag, isJump){//flag--1:显示  0:隐藏; isJump--1:跳转  0:不跳转
+		if(flag == 1){
+			$("#myModaldiv").show();
+			$("body").addClass("modal-open");
+			$("#myModaldiv").addClass("in");
+			$(".modal-backdrop").show();
+		} else {
+			$("#myModalDiv").hide();
+			$("body").removeClass("modal-open");
+			$("#myModalDiv").removeClass("in");
+			$(".modal-backdrop").hide();
+			if(isJump == 1){
+				loadIndex();
+			}
+		}
+	} */
+</script>
+</body>
+</html>
