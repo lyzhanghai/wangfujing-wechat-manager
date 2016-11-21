@@ -9,6 +9,8 @@ public class MemberInfo {
 
     private String storeCode;
 
+    private String password;
+
     private Integer subscribe;
 
     private String openid;
@@ -67,6 +69,14 @@ public class MemberInfo {
 
     public void setStoreCode(String storeCode) {
         this.storeCode = storeCode;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getSubscribe() {
@@ -211,5 +221,33 @@ public class MemberInfo {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberInfo{" +
+                "sid=" + sid +
+                ", memberCode='" + memberCode + '\'' +
+                ", storeCode='" + storeCode + '\'' +
+                ", password='" + password + '\'' +
+                ", subscribe=" + subscribe +
+                ", openid='" + openid + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", sex=" + sex +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", province='" + province + '\'' +
+                ", language='" + language + '\'' +
+                ", headimgurl='" + headimgurl + '\'' +
+                ", subscribeTime='" + subscribeTime + '\'' +
+                ", unionid='" + unionid + '\'' +
+                ", remark='" + remark + '\'' +
+                ", groupid=" + groupid +
+                ", idCard='" + idCard + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", updateTime=" + updateTime +
+                ", createTime=" + createTime +
+                '}';
     }
 }
