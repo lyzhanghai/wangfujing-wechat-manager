@@ -33,6 +33,7 @@ public class StoreInfoController {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
         paramMap.clear();
+        paramMap.put("success", true);
         paramMap.put("list", storeInfoList);
         JSONObject jsonObject = JSONObject.fromObject(paramMap);
         return jsonObject.toString();
