@@ -267,4 +267,74 @@
       channel_type = #{channelType,jdbcType=INTEGER}
     where sid = #{sid,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectListByParam" resultMap="BaseResultMap"
+          parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List"/>
+    from storeinfo
+    <where>
+      <if test="sid != null">
+        and sid = #{sid,jdbcType=BIGINT}
+      </if>
+      <if test="storeCode != null">
+        and store_code = #{storeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="businessName != null">
+        and business_name = #{businessName,jdbcType=VARCHAR}
+      </if>
+      <if test="branchName != null">
+        and branch_name = #{branchName,jdbcType=VARCHAR}
+      </if>
+      <if test="province != null">
+        and province = #{province,jdbcType=VARCHAR}
+      </if>
+      <if test="city != null">
+        and city = #{city,jdbcType=VARCHAR}
+      </if>
+      <if test="district != null">
+        and district = #{district,jdbcType=VARCHAR}
+      </if>
+      <if test="address != null">
+        and address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="telephone != null">
+        and telephone = #{telephone,jdbcType=VARCHAR}
+      </if>
+      <if test="categories != null">
+        and categories = #{categories,jdbcType=VARCHAR}
+      </if>
+      <if test="offsetType != null">
+        and offset_type = #{offsetType,jdbcType=INTEGER}
+      </if>
+      <if test="longitude != null">
+        and longitude = #{longitude,jdbcType=VARCHAR}
+      </if>
+      <if test="latitude != null">
+        and latitude = #{latitude,jdbcType=VARCHAR}
+      </if>
+      <if test="photoList != null">
+        and photo_list = #{photoList,jdbcType=VARCHAR}
+      </if>
+      <if test="special != null">
+        and special = #{special,jdbcType=VARCHAR}
+      </if>
+      <if test="openTime != null">
+        and open_time = #{openTime,jdbcType=VARCHAR}
+      </if>
+      <if test="avgPrice != null">
+        and avg_price = #{avgPrice,jdbcType=VARCHAR}
+      </if>
+      <if test="introduction != null">
+        and introduction = #{introduction,jdbcType=VARCHAR}
+      </if>
+      <if test="recommend != null">
+        and recommend = #{recommend,jdbcType=VARCHAR}
+      </if>
+      <if test="channelType != null">
+        and channel_type = #{channelType,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
 </mapper>

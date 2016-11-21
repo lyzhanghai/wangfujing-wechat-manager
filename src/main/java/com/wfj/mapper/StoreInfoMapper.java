@@ -2,6 +2,9 @@ package com.wfj.mapper;
 
 import com.wfj.entity.StoreInfo;
 
+import java.util.List;
+import java.util.Map;
+
 public interface StoreInfoMapper {
     int deleteByPrimaryKey(String sid);
 
@@ -14,4 +17,7 @@ public interface StoreInfoMapper {
     int updateByPrimaryKeySelective(StoreInfo record);
 
     int updateByPrimaryKey(StoreInfo record);
+
+    List<StoreInfo> selectListByParam(Map<String, Object> paramMap);
+
 }

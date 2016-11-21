@@ -108,7 +108,7 @@
 		$.ajax({
     		type : "post",
     		contentType : "application/x-www-form-urlencoded;charset=utf-8",
-    		url : rootPath + "/memberInfo/getShopByAppId.do",
+    		url : rootPath + "/storeInfo/findStoreInfoList.do",
     		async : false,
     		data : {
     			"appId" : appId
@@ -116,13 +116,13 @@
     		dataType : "json",
     		success : function(response) {
     			if(response.success){
-    				var data = response.data;
+    				var list = response.list;
     				var option = "<ul>";
-    				for(var i=0;i<data.length;i++){
-    					var ele = data[i];
+    				for(var i=0;i<list.length;i++){
+    					var ele = list[i];
     					option += "<li>";
-    					option += "<input type='radio' name='shop' id='shop_0'" + i +" value='" + ele.organizationCode + "'>";
-    					option += "<label for='shop_0'" + i +">" + ele.organizationName + "</label>";
+    					option += "<input type='radio' name='shop' id='shop_0'" + i +" value='" + ele.storeCode + "'>";
+    					option += "<label for='shop_0'" + i +">" + ele.businessName + "</label>";
     					option += "</li>";
     				}
     				option += "</ul>";

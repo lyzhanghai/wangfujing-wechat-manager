@@ -82,6 +82,7 @@
                 /install.shtml = anon
                 /lanyuan.shtml = anon
                 /assets/** = anon
+                /wechat/list.shtml=anon
             </value>
         </property>
     </bean>
