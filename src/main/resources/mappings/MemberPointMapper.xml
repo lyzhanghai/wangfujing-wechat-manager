@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wfj.mapper.MemberPointMapper" >
+  <resultMap id="BaseResultMap" type="com.wfj.entity.MemberPoint" >
+    <id column="sid" property="sid" jdbcType="BIGINT" />
+    <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <result column="member_code" property="memberCode" jdbcType="VARCHAR" />
+    <result column="available_points" property="availablePoints" jdbcType="DOUBLE" />
+    <result column="total_points" property="totalPoints" jdbcType="DOUBLE" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, store_code, member_code, available_points, total_points, del_flag, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_point
+    where sid = #{sid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from member_point
+    where sid = #{sid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wfj.entity.MemberPoint" >
+    insert into member_point (sid, store_code, member_code, 
+      available_points, total_points, del_flag, 
+      create_time, update_time)
+    values (#{sid,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{memberCode,jdbcType=VARCHAR}, 
+      #{availablePoints,jdbcType=DOUBLE}, #{totalPoints,jdbcType=DOUBLE}, #{delFlag,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wfj.entity.MemberPoint" >
+    insert into member_point
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="storeCode != null" >
+        store_code,
+      </if>
+      <if test="memberCode != null" >
+        member_code,
+      </if>
+      <if test="availablePoints != null" >
+        available_points,
+      </if>
+      <if test="totalPoints != null" >
+        total_points,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=BIGINT},
+      </if>
+      <if test="storeCode != null" >
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCode != null" >
+        #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="availablePoints != null" >
+        #{availablePoints,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPoints != null" >
+        #{totalPoints,jdbcType=DOUBLE},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.MemberPoint" >
+    update member_point
+    <set >
+      <if test="storeCode != null" >
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCode != null" >
+        member_code = #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="availablePoints != null" >
+        available_points = #{availablePoints,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPoints != null" >
+        total_points = #{totalPoints,jdbcType=DOUBLE},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wfj.entity.MemberPoint" >
+    update member_point
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      member_code = #{memberCode,jdbcType=VARCHAR},
+      available_points = #{availablePoints,jdbcType=DOUBLE},
+      total_points = #{totalPoints,jdbcType=DOUBLE},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+</mapper>

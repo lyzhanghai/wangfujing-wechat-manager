@@ -1,0 +1,203 @@
+package com.wfj.entity;
+
+public class StoreInfo {
+    private String sid;
+
+    private String storeCode;
+
+    private String businessName;
+
+    private String branchName;
+
+    private String province;
+
+    private String city;
+
+    private String district;
+
+    private String address;
+
+    private String telephone;
+
+    private String categories;
+
+    private Integer offsetType;
+
+    private String longitude;
+
+    private String latitude;
+
+    private String photoList;
+
+    private String special;
+
+    private String openTime;
+
+    private String avgPrice;
+
+    private String introduction;
+
+    private String recommend;
+
+    private Integer channelType;
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getStoreCode() {
+        return storeCode;
+    }
+
+    public void setStoreCode(String storeCode) {
+        this.storeCode = storeCode;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public Integer getOffsetType() {
+        return offsetType;
+    }
+
+    public void setOffsetType(Integer offsetType) {
+        this.offsetType = offsetType;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getPhotoList() {
+        return photoList;
+    }
+
+    public void setPhotoList(String photoList) {
+        this.photoList = photoList;
+    }
+
+    public String getSpecial() {
+        return special;
+    }
+
+    public void setSpecial(String special) {
+        this.special = special;
+    }
+
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
+    public String getAvgPrice() {
+        return avgPrice;
+    }
+
+    public void setAvgPrice(String avgPrice) {
+        this.avgPrice = avgPrice;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
+    }
+
+    public Integer getChannelType() {
+        return channelType;
+    }
+
+    public void setChannelType(Integer channelType) {
+        this.channelType = channelType;
+    }
+}
