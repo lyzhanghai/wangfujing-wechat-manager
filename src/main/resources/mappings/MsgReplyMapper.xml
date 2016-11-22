@@ -163,7 +163,7 @@
 
 
 	<select id="selectListByParam" resultMap="BaseResultMap"
-		parameterType="java.util.Map">
+		parameterType="com.wfj.entity.MsgReply">
 		select
 		<include refid="Base_Column_List" />
 		from msg_reply
@@ -207,7 +207,7 @@
 		</where>
 	</select>
 	<select id="selectPageListByParam" resultMap="BaseResultMap"
-		parameterType="java.util.Map">
+		parameterType="com.wfj.entity.MsgReply">
 		select
 		<include refid="Base_Column_List" />
 		from msg_reply
@@ -255,7 +255,7 @@
 		#{start}, #{limit}
 	</select>
 	<select id="getCountByParam" resultType="java.lang.Integer"
-		parameterType="java.util.Map">
+		parameterType="com.wfj.entity.MsgReply">
 		select
 		count(sid)
 		from msg_reply

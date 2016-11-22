@@ -22,9 +22,9 @@ public class MsgDispatcher {
 	private static Logger logger = Logger.getLogger(MsgDispatcher.class);
 
 	@Autowired
-	private static MsgReplyMapper msgReplyMapper;
+	private MsgReplyMapper msgReplyMapper;
 
-	public static String processMessage(Map<String, String> map) {
+	public String processMessage(Map<String, String> map) {
 		logger.info(map.toString());
 		String openid = map.get("FromUserName"); // 用户 openid
 		String mpid = map.get("ToUserName"); // 公众号原始 ID
@@ -65,15 +65,6 @@ public class MsgDispatcher {
 			} else {
 				txtmsg.setContent("你好，欢迎来到王府井百货公众平台！");
 				return MessageUtil.textMessageToXml(txtmsg);
-			}
-			if ("1".equals(content)) {
-				txtmsg.setContent("你好，你发送的内容是 1！");
-			} else if ("2".equals(content)) {
-				txtmsg.setContent("你好，你发送的内容是 2！");
-			} else if ("3".equals(content)) {
-				txtmsg.setContent("你好，你发送的内容是 3！");
-			} else {
-				txtmsg.setContent("你好，欢迎来到王府井百货公众平台！");
 			}
 			return MessageUtil.textMessageToXml(txtmsg);
 		}
