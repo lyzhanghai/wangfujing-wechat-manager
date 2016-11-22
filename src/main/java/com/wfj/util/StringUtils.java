@@ -1,4 +1,4 @@
-package wechat.util;
+package com.wfj.util;
 
 import java.util.StringTokenizer;
 

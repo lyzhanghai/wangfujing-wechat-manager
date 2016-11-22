@@ -5,7 +5,7 @@
  * @Create In 2016年3月3日 下午12:04:28
  *
  */
-package wechat.util;
+package com.wfj.util;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Required;

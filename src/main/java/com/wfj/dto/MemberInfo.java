@@ -1,4 +1,4 @@
-package wechat.controller.support;
+package com.wfj.dto;
 
 import java.util.Arrays;
 

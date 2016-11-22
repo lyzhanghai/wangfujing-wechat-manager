@@ -1,4 +1,4 @@
-package wechat.util;
+package com.wfj.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -828,7 +828,7 @@ public class RedisUtil {
 		try {
 			// shardedJedis = shardedJedisPool.getResource();
 			String lockTime = (String) connectionCluster.get(lockName);
-			if (!StringUtils.isNotBlank(lockTime)) {
+			if (!com.wfj.util.StringUtils.isNotBlank(lockTime)) {
 				return false;
 			}
 
