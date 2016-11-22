@@ -50,6 +50,20 @@ public class MessageUtil {
 	public static final String RESP_MESSAGE_TYPE_NEWS = "news";
 
 	/**
+	 * 返回消息类型：图片
+	 */
+	public static final String RESP_MESSAGE_TYPE_IMAGE = "image";
+	/**
+	 * 返回消息类型：视频
+	 */
+	public static final String RESP_MESSAGE_TYPE_VIDEO = "video";
+
+	/**
+	 * 返回消息类型：音频
+	 */
+	public static final String RESP_MESSAGE_TYPE_VOICE = "voice";
+
+	/**
 	 * 请求消息类型：文本
 	 */
 	public static final String REQ_MESSAGE_TYPE_TEXT = "text";

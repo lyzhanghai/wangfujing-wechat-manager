@@ -61,6 +61,7 @@ public class WechatSecurity {
 				"00e66c2772af76181745b6f5d92b5801");
 		String processMessage = null;
 		try {
+			logger.info(request);
 			Map<String, String> map = MessageUtil.parseXml(request);
 			logger.info(map.toString());
 			String msgtype = map.get("MsgType");

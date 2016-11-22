@@ -6,8 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wfj.entity.MsgReply;
+import com.wfj.mapper.MsgReplyMapper;
 import com.wfj.message.resp.Article;
+import com.wfj.message.resp.BaseMessage;
+import com.wfj.message.resp.Image;
+import com.wfj.message.resp.ImageMessage;
 import com.wfj.message.resp.NewsMessage;
 import com.wfj.message.resp.TextMessage;
 import com.wfj.util.MessageUtil;
@@ -15,21 +21,51 @@ import com.wfj.util.MessageUtil;
 public class MsgDispatcher {
 	private static Logger logger = Logger.getLogger(MsgDispatcher.class);
 
+	@Autowired
+	private static MsgReplyMapper msgReplyMapper;
+
 	public static String processMessage(Map<String, String> map) {
 		logger.info(map.toString());
 		String openid = map.get("FromUserName"); // 用户 openid
 		String mpid = map.get("ToUserName"); // 公众号原始 ID
 		logger.info("openid" + openid + "mpid" + mpid);
-
 		if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) { // 文本消息
 			// 普通文本消息
+			BaseMessage basemsg = new BaseMessage();
+			basemsg.setToUserName(openid);
+			basemsg.setFromUserName(mpid);
+			basemsg.setCreateTime(new Date().getTime());
 			TextMessage txtmsg = new TextMessage();
-			txtmsg.setToUserName(openid);
-			txtmsg.setFromUserName(mpid);
-			txtmsg.setCreateTime(new Date().getTime());
 			txtmsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-
+			logger.info(txtmsg);
 			String content = map.get("Content");
+			MsgReply msg = new MsgReply();
+			msg.setMsgKey(content);
+			List<MsgReply> msgList = msgReplyMapper.selectListByParam(msg);
+			if (msgList != null && msgList.size() > 0) {
+				MsgReply msgReply = msgList.get(0);
+				if (msgReply.getMsgType().equals(0)) {// (0文本,1图片,2语音,3视频,4音频,5图文)
+					txtmsg.setContent(msgReply.getContent());
+				} else if (msgReply.getMsgType().equals(1)) {
+					ImageMessage imgMsg = new ImageMessage();
+					Image image = new Image();
+					image.setMediaId(msgReply.getMediaId());
+					imgMsg.setImage(image);
+					imgMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
+					return MessageUtil.imageMessageToXml(imgMsg);
+				} else if (msgReply.getMsgType().equals(2)) {
+
+				} else if (msgReply.getMsgType().equals(3)) {
+
+				} else if (msgReply.getMsgType().equals(4)) {
+
+				} else if (msgReply.getMsgType().equals(5)) {
+
+				}
+			} else {
+				txtmsg.setContent("你好，欢迎来到王府井百货公众平台！");
+				return MessageUtil.textMessageToXml(txtmsg);
+			}
 			if ("1".equals(content)) {
 				txtmsg.setContent("你好，你发送的内容是 1！");
 			} else if ("2".equals(content)) {
