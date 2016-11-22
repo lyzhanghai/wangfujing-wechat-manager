@@ -87,7 +87,7 @@ public class CommonController {
         long starTime = System.currentTimeMillis();
         String url = "";
         String para = "";
-        url = PropertiesUtils.findPropertiesKey("myMemberInfo");
+        url = PropertiesUtils.findPropertiesKey("myMemberInfoInit");
 
         return url + para;
     }
