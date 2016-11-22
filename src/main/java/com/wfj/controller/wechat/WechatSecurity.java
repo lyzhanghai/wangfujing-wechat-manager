@@ -35,8 +35,7 @@ public class WechatSecurity {
 	@ResponseBody
 	@RequestMapping(value = "/security", method = { RequestMethod.GET })
 	public String doGet(WeiXinDto dto) {
-		logger.info(dto.getAppid());
-		logger.info(dto.getAppSecret());
+		logger.info(dto);
 		List<String> list = new ArrayList<String>();
 		list.add(dto.getTimestamp());
 		list.add(dto.getNonce());

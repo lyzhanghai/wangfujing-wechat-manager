@@ -1,6 +1,5 @@
 package com.wfj.controller.wechat;
 
-import com.wfj.dto.AccessTokenDto;
 import com.wfj.util.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,9 +29,10 @@ public class CommonController {
             // 2 通过appID,appSecret获取access_token
             String accessToken = util.getAccessToken("wx7aec942c6742752d", "c27b7472a3bb1e9874c240a681b87880");
             System.out.println("accessToken ================ " + accessToken);
+            System.out.println("code:"+code);
             // 3 通过code或取网页授权access_token(暂时不用)及openID
-            AccessTokenDto atkDto = util.getOpenId("wx7aec942c6742752d", "c27b7472a3bb1e9874c240a681b87880",code);
-            System.out.println("atkDto ================ " + atkDto);
+            //AccessTokenDto atkDto = util.getOpenId("wx7aec942c6742752d", "c27b7472a3bb1e9874c240a681b87880",code);
+            //System.out.println("atkDto ================ " + atkDto);
             //// 4 通过access_token,openID获取用户信息
             //MemberInfo memberInfo = util.Openid_userinfo(atkDto.getOpenid(), storeInfo.getAppId(),
             //        storeInfo.getSecret());
