@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wfj.entity.MemberInfo;
 import com.wfj.service.intf.MemberInfoService;
-import com.wfj.util.StringUtils;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
