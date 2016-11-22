@@ -47,6 +47,7 @@ public class WechatSecurity {
 		logger.info(dto.getSignature());
 		if (DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2))
 				.equals(dto.getSignature())) {
+			logger.info(dto.getEchostr());
 			return dto.getEchostr();
 		}
 		return null;
