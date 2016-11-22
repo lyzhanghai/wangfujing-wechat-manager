@@ -305,6 +305,23 @@
 			<artifactId>jedis</artifactId>
 			<version>3.0.0.1</version>
 		</dependency>
+		<!-- 新添加 -->
+		<dependency>
+			<groupId>org.weixin4j</groupId>
+			<artifactId>weixin4j</artifactId>
+			<version>0.0.7</version>
+		</dependency>
+		<!-- xml -->
+		<dependency>
+			<groupId>org.apache.directory.studio</groupId>
+			<artifactId>org.dom4j.dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.8</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>notebook</finalName>
