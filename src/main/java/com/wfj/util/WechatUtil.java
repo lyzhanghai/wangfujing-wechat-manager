@@ -6,6 +6,8 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -184,16 +186,19 @@ public class WechatUtil {
     /**
      * URL 编码
      *
-     * @Methods Name getURLEncoder
-     * @Create In 2016年9月26日 By kongqf
      * @param str
      * @return String
+     * @Methods Name getURLEncoder
+     * @Create In 2016年9月26日 By kongqf
      */
-    /*
-     * public String getURLEncoder(String str) { try { str =
-	 * URLEncoder.encode(str, "UTF-8"); } catch (UnsupportedEncodingException e)
-	 * { logger.info("URLEncoder:" + str + e); } return str; }
-	 */
+    public String getURLEncoder(String str) {
+        try {
+            str = URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.info("URLEncoder:" + str + e);
+        }
+        return str;
+    }
 
     /**
      * URL解码
