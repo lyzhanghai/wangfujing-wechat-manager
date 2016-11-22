@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.Soundbank;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 @Controller
@@ -58,8 +60,8 @@ public class CommonController {
             // String sendGet = getMemberInfo(storeInfo.getAppId(),
             // atkDto.getOpenid());
             long endTime = System.currentTimeMillis();
-            System.out.println("------------------------------------" +
-                    (endTime - starTime));
+            System.out.println("------------------------------------" + (endTime - starTime));
+
             response.sendRedirect(sendGet + para);
             System.out.println("decoder ================ " + sendGet + para);
             PrintWriter out = response.getWriter();
@@ -85,7 +87,7 @@ public class CommonController {
         long starTime = System.currentTimeMillis();
         String url = "";
         String para = "";
-        url = PropertiesUtils.findPropertiesKey("myMemberInfo");
+        url = PropertiesUtils.findPropertiesKey("myMemberInfoInit");
 
         return url + para;
     }
