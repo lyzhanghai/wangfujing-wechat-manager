@@ -22,7 +22,7 @@
 		<javaClientGenerator targetPackage="com.wfj.mapper"
 			targetProject="wfj-shiro" type="XMLMAPPER" />
 		<!-- 数据库中对应表格的设置 -->
-		<table domainObjectName="StoreInfo" tableName="storeinfo"
+		<table domainObjectName="MsgReply" tableName="msg_reply"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" 
 			selectByExampleQueryId="false">
