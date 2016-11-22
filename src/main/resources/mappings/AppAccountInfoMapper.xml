@@ -92,4 +92,29 @@
 		del_flag = #{delFlag,jdbcType=INTEGER}
 		where sid = #{sid,jdbcType=BIGINT}
 	</update>
+
+	<select id="selectListByParam" resultMap="BaseResultMap"
+			parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List"/>
+		from appaccountinfo
+		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=BIGINT}
+			</if>
+			<if test="appid != null">
+				and appid = #{appid,jdbcType=VARCHAR}
+			</if>
+			<if test="appsecret != null">
+				and appsecret = #{appsecret,jdbcType=VARCHAR}
+			</if>
+			<if test="storecode != null">
+				and storecode = #{storecode,jdbcType=VARCHAR}
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
 </mapper>

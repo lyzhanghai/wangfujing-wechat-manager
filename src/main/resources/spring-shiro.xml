@@ -84,6 +84,7 @@
                 /assets/** = anon
                 /wechat/** = anon
                 /common/** = anon
+                /member/** = anon
             </value>
         </property>
     </bean>
