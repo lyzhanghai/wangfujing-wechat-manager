@@ -34,7 +34,7 @@ public class WechatSecurity {
 	// http://117.121.99.11/wechat-web/wechat/security.htm
 	@ResponseBody
 	@RequestMapping(value = "/security", method = { RequestMethod.GET })
-	public String doGet(WeiXinDto dto) {
+	public Long doGet(WeiXinDto dto) {
 		logger.info(dto);
 		List<String> list = new ArrayList<String>();
 		list.add(dto.getTimestamp());
@@ -48,7 +48,7 @@ public class WechatSecurity {
 		if (DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2))
 				.equals(dto.getSignature())) {
 			logger.info(dto.getEchostr());
-			return dto.getEchostr();
+			return Long.parseLong(dto.getEchostr());
 		}
 		return null;
 	}
