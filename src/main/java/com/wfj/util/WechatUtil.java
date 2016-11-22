@@ -1,6 +1,7 @@
 package com.wfj.util;
 
 import com.wfj.dto.AccessTokenDto;
+import com.wfj.dto.MemberInfo;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,38 +75,53 @@ public class WechatUtil {
     /**
      * 获取微信用户信息
      *
-     * @Methods Name Openid_userinfo
-     * @Create In 2016年9月26日 By kongqf
      * @param openid
      * @return
-     * @throws Exception
-     *             MemberInfo
+     * @throws Exception MemberInfo
+     * @Methods Name Openid_userinfo
+     * @Create In 2016年9月26日 By kongqf
      */
-    /*
-     * public MemberInfo Openid_userinfo(String openid, String appid, String
-	 * secret) throws Exception { HashMap<String, String> params = new
-	 * HashMap<String, String>(); params.put("access_token",
-	 * getAccessToken(appid, secret)); params.put("openid", openid);
-	 * params.put("lang", "zh_CN");
-	 * 
-	 * logger.info(params); String subscribers =
-	 * com.wfj.util.HttpUtil.sendGet(com.wfj.util.Constants.OPENIDUSERINFOURL,
-	 * params); logger.info(subscribers); MemberInfo memberInfo = new
-	 * MemberInfo(); // memberInfo = JsonUtil.getDTO(subscribers,
-	 * MemberInfo.class); if (com.wfj.util.StringUtils.isNotEmpty(subscribers))
-	 * { JSONObject jsonObject = JSONObject.fromObject(subscribers); try { if
-	 * (jsonObject.has("unionid")) {
-	 * memberInfo.setUnionid(jsonObject.getString("unionid")); }
-	 * memberInfo.setNickname(jsonObject.getString("nickname"));
-	 * memberInfo.setHeadimgurl(jsonObject.getString("headimgurl"));
-	 * memberInfo.setOpenid(jsonObject.getString("openid"));
-	 * memberInfo.setSubscribe(jsonObject.getInt("subscribe")); } catch
-	 * (Exception e) { if (0 == memberInfo.getSubscribe()) { logger.error("用户" +
-	 * memberInfo.getOpenid() + "已取消关注"); } else { int errorCode =
-	 * jsonObject.getInt("errcode"); String errorMsg =
-	 * jsonObject.getString("errmsg"); logger.error("获取用户信息失败 errorCode:" +
-	 * errorCode + " errmg:" + errorMsg); } } } return memberInfo; }
-	 */
+    public MemberInfo Openid_userinfo(String openid, String appid, String
+            secret) throws Exception {
+        HashMap<String, String> params = new
+                HashMap<String, String>();
+        params.put("access_token", getAccessToken(appid, secret));
+        params.put("openid", openid);
+        params.put("lang", "zh_CN");
+
+        logger.info(params);
+        String subscribers =
+                com.wfj.util.HttpUtil.sendGet(PropertiesUtils.findPropertiesKey("openidUserinfoUrl"), params);
+        logger.info(subscribers);
+        MemberInfo memberInfo = new MemberInfo(); // memberInfo = JsonUtil.getDTO(subscribers,MemberInfo.class);
+        if (com.wfj.util.StringUtils.isNotEmpty(subscribers)) {
+            JSONObject jsonObject = JSONObject.fromObject(subscribers);
+            try {
+                if
+                        (jsonObject.has("unionid")) {
+                    memberInfo.setUnionid(jsonObject.getString("unionid"));
+                }
+                memberInfo.setNickname(jsonObject.getString("nickname"));
+                memberInfo.setHeadimgurl(jsonObject.getString("headimgurl"));
+                memberInfo.setOpenid(jsonObject.getString("openid"));
+                memberInfo.setSubscribe(jsonObject.getInt("subscribe"));
+            } catch
+                    (Exception e) {
+                if (0 == memberInfo.getSubscribe()) {
+                    logger.error("用户" +
+                            memberInfo.getOpenid() + "已取消关注");
+                } else {
+                    int errorCode =
+                            jsonObject.getInt("errcode");
+                    String errorMsg =
+                            jsonObject.getString("errmsg");
+                    logger.error("获取用户信息失败 errorCode:" +
+                            errorCode + " errmg:" + errorMsg);
+                }
+            }
+        }
+        return memberInfo;
+    }
 
     /**
      * 获取openid
