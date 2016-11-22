@@ -41,6 +41,10 @@ public class WechatSecurity {
 		list.add(dto.getNonce());
 		list.add("qwertyuiop123");
 		Collections.sort(list);
+		logger.info(DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2))
+				.equals(dto.getSignature()));
+		logger.info(DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2)));
+		logger.info(dto.getSignature());
 		if (DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2))
 				.equals(dto.getSignature())) {
 			return dto.getEchostr();
