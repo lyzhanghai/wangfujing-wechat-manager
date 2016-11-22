@@ -33,8 +33,8 @@ public class WechatSecurity {
 
 	// http://117.121.99.11/wechat-web/wechat/security.htm
 	@ResponseBody
-	@RequestMapping(value = "/security", method = { RequestMethod.POST, RequestMethod.GET })
-	public String data(WeiXinDto dto) {
+	@RequestMapping(value = "/security", method = { RequestMethod.GET })
+	public String doGet(WeiXinDto dto) {
 		logger.info(dto.getAppid());
 		logger.info(dto.getAppSecret());
 		List<String> list = new ArrayList<String>();
@@ -51,7 +51,7 @@ public class WechatSecurity {
 
 	@RequestMapping(value = "security", method = RequestMethod.POST)
 	// post 方法用于接收微信服务端消息
-	public void DoPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("这是 post 方法！");
 		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
 				"00e66c2772af76181745b6f5d92b5801");
