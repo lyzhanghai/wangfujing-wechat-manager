@@ -1,17 +1,32 @@
 package com.wfj.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import com.wfj.entity.MsgReply;
 
 public interface MsgReplyMapper {
-    int deleteByPrimaryKey(Integer sid);
+	List<MsgReply> selectListByParam(Map<String, Object> paramMap);
 
-    int insert(MsgReply record);
+	List<MsgReply> selectPageListByParam(Map<String, Object> paramMap);
 
-    int insertSelective(MsgReply record);
+	Integer getCountByParam(Map<String, Object> paramMap);
 
-    MsgReply selectByPrimaryKey(Integer sid);
+	List<MsgReply> selectListByParam(MsgReply entity);
 
-    int updateByPrimaryKeySelective(MsgReply record);
+	List<MsgReply> selectPageListByParam(MsgReply entity);
 
-    int updateByPrimaryKey(MsgReply record);
+	Integer getCountByParam(MsgReply entity);
+
+	int deleteByPrimaryKey(Integer sid);
+
+	int insert(MsgReply record);
+
+	int insertSelective(MsgReply record);
+
+	MsgReply get(Integer sid);
+
+	int updateByPrimaryKeySelective(MsgReply record);
+
+	int updateByPrimaryKey(MsgReply record);
 }
