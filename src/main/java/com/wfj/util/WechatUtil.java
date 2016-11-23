@@ -47,10 +47,10 @@ public class WechatUtil {
             accessToken = jsonObject.getString("access_token");
         }
 
-        boolean flag = redisUtil.setKey(appid, accessToken, 7000);
-        if (!flag) {
-            logger.error("tokenInit redis save:" + flag);
-        }
+        //boolean flag = redisUtil.setKey(appid, accessToken, 7000);
+        //if (!flag) {
+        //    logger.error("tokenInit redis save:" + flag);
+        //}
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                 + "token 为==============================" + accessToken);
         return accessToken;

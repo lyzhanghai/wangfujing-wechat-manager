@@ -13,7 +13,7 @@ import net.sf.json.JSONObject;
 public class EventDispatcher {
 	private static Logger logger = Logger.getLogger(EventDispatcher.class);
 
-	public static String processEvent(Map<String, String> map) {
+	public String processEvent(Map<String, String> map) {
 		String para = null;
 		if (map.get("Event").equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) { // 关注事件
 			logger.info("==============这是关注事件！");
