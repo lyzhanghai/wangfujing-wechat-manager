@@ -36,7 +36,7 @@ public class MemberInfoController {
     /**
      * 注册会员
      *
-     * @param memberInfo
+     * @param
      * @return
      */
     @ResponseBody
