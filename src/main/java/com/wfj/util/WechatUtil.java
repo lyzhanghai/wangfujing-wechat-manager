@@ -2,11 +2,15 @@ package com.wfj.util;
 
 import com.wfj.dto.AccessTokenDto;
 import com.wfj.dto.MemberInfo;
+import com.wfj.message.req.StoreInfoDto;
+import com.wfj.service.impl.AppAccountInfoServiceImpl;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +22,9 @@ public class WechatUtil {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private AppAccountInfoServiceImpl appAccountInfoService;
 
     /**
      * 获取access_token
@@ -36,8 +43,7 @@ public class WechatUtil {
         String jsontoken = null;
         String accessToken = null;
         try {
-            jsontoken =
-                    com.wfj.util.HttpUtil.sendGet(PropertiesUtils.findPropertiesKey("accessTokenUrl"), params);
+            jsontoken = com.wfj.util.HttpUtil.sendGet(PropertiesUtils.findPropertiesKey("accessTokenUrl"), params);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,44 +91,74 @@ public class WechatUtil {
      */
     public MemberInfo Openid_userinfo(String openid, String appid, String
             secret) throws Exception {
-        HashMap<String, String> params = new
-                HashMap<String, String>();
+        HashMap<String, String> params = new HashMap<String, String>();
         params.put("access_token", getAccessToken(appid, secret));
         params.put("openid", openid);
         params.put("lang", "zh_CN");
 
         logger.info(params);
-        String subscribers =
-                com.wfj.util.HttpUtil.sendGet(PropertiesUtils.findPropertiesKey("openidUserinfoUrl"), params);
+        String subscribers = com.wfj.util.HttpUtil.sendGet(PropertiesUtils.findPropertiesKey("openidUserinfoUrl"), params);
         logger.info(subscribers);
         MemberInfo memberInfo = new MemberInfo(); // memberInfo = JsonUtil.getDTO(subscribers,MemberInfo.class);
         if (com.wfj.util.StringUtils.isNotEmpty(subscribers)) {
             JSONObject jsonObject = JSONObject.fromObject(subscribers);
             try {
-                if
-                        (jsonObject.has("unionid")) {
+                if (jsonObject.has("unionid")) {
                     memberInfo.setUnionid(jsonObject.getString("unionid"));
                 }
                 memberInfo.setNickname(jsonObject.getString("nickname"));
                 memberInfo.setHeadimgurl(jsonObject.getString("headimgurl"));
                 memberInfo.setOpenid(jsonObject.getString("openid"));
                 memberInfo.setSubscribe(jsonObject.getInt("subscribe"));
-            } catch
-                    (Exception e) {
+            } catch (Exception e) {
                 if (0 == memberInfo.getSubscribe()) {
-                    logger.error("用户" +
-                            memberInfo.getOpenid() + "已取消关注");
+                    logger.error("用户" + memberInfo.getOpenid() + "已取消关注");
                 } else {
-                    int errorCode =
-                            jsonObject.getInt("errcode");
-                    String errorMsg =
-                            jsonObject.getString("errmsg");
-                    logger.error("获取用户信息失败 errorCode:" +
-                            errorCode + " errmg:" + errorMsg);
+                    int errorCode = jsonObject.getInt("errcode");
+                    String errorMsg = jsonObject.getString("errmsg");
+                    logger.error("获取用户信息失败 errorCode:" + errorCode + " errmg:" + errorMsg);
                 }
             }
         }
         return memberInfo;
+    }
+
+
+    /**
+     * 根据门店标识获取公主号信息
+     *
+     * @param storeFlag
+     * @return StoreInfoDto
+     * @Methods Name getStoreInfo
+     * @Create In 2016年9月26日 By kongqf
+     */
+    public StoreInfoDto getStoreInfo(String storeFlag) {
+        String storeInfoStr = null;
+        StoreInfoDto storeInfoDto = new StoreInfoDto();
+        storeInfoStr = redisUtil.getKey("storeInfoDto" + storeFlag, "0000");
+        if ("0000".equals(storeInfoStr)) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("field1", storeFlag);
+            String storeInfo = HttpUtils.doPost(Constants.STOREINFOURL, JsonUtil.getJSONString(map));
+            JSONObject jsono = JSONObject.fromObject(storeInfo);
+            JSONArray jsona = JSONArray.fromObject(jsono.get("data"));
+
+            if (jsona != null && jsona.size() > 0) {
+                JSONObject object = jsona.getJSONObject(0);
+                storeInfoDto.setStoreCode(object.getString("organizationCode"));
+                storeInfoDto.setStoceName(object.getString("organizationName"));
+                storeInfoDto.setAppId(object.getString("field2"));
+                storeInfoDto.setSecret(object.getString("field3"));
+                storeInfoDto.setIsChannel(object.getString("field4"));
+                storeInfoDto.setStoreFlag(object.getString("field1"));
+
+                redisUtil.setIsOK("storeInfoDto" + storeFlag, JsonUtil.getJSONString(storeInfoDto));
+            }
+
+        } else {
+            storeInfoDto = JsonUtil.getDTO(storeInfoStr, StoreInfoDto.class);
+        }
+        return storeInfoDto;
     }
 
     /**
@@ -153,37 +189,6 @@ public class WechatUtil {
     }
 
     /**
-     * BASE64编码
-     *
-     * @Methods Name getEncoder
-     * @Create In 2016年9月26日 By kongqf
-     * @param str
-     * @return String
-     */
-    /*
-     * public String getEncoder(String str) { String s = ""; BASE64Encoder
-	 * encoder = new BASE64Encoder(); try { s =
-	 * encoder.encode(str.getBytes("UTF-8")); } catch
-	 * (UnsupportedEncodingException e) { logger.info("encoder:" + str + e); }
-	 * return s; }
-	 */
-
-    /**
-     * BASE64解码
-     *
-     * @Methods Name getDecoder
-     * @Create In 2016年9月26日 By kongqf
-     * @param str
-     * @return String
-     */
-    /*
-     * public String getDecoder(String str) { String s = ""; BASE64Decoder
-	 * decoder = new BASE64Decoder(); byte[] bytes; try { bytes =
-	 * decoder.decodeBuffer(str); s = new String(bytes, "UTF-8"); } catch
-	 * (IOException e) { logger.info("decoder:" + str + e); } return s; }
-	 */
-
-    /**
      * URL 编码
      *
      * @param str
@@ -203,14 +208,17 @@ public class WechatUtil {
     /**
      * URL解码
      *
-     * @Methods Name getURLDecoder
-     * @Create In 2016年9月26日 By kongqf
      * @param str
      * @return String
+     * @Methods Name getURLDecoder
+     * @Create In 2016年9月26日 By kongqf
      */
-    /*
-     * public String getURLDecoder(String str) { try { str =
-	 * URLDecoder.decode(str, "UTF-8"); } catch (UnsupportedEncodingException e)
-	 * { logger.info("URLDecoder:" + str + e); } return str; }
-	 */
+    public String getURLDecoder(String str) {
+        try {
+            str = URLDecoder.decode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.info("URLDecoder:" + str + e);
+        }
+        return str;
+    }
 }
