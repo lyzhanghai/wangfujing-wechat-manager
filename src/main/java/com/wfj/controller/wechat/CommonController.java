@@ -43,7 +43,7 @@ public class CommonController {
             MemberInfo memberInfo = util.Openid_userinfo(atkDto.getOpenid(), appid, secret);
             System.out.println("memberInfo ================ " + memberInfo);
             String name = util.getURLEncoder(memberInfo.getNickname());
-            String para = "&appId=" + appid + "&openId=" + atkDto.getOpenid()
+            String para = "&appId=" + appid + "&openId=" + atkDto.getOpenid() + "&secret=" + secret
                     + "&headimgurl=" + memberInfo.getHeadimgurl() + "&nickname=" +
                     name + "&registType=&uid=" + memberInfo.getUnionid() + "&storeCode=";
             response.setHeader("Content-type", "text/html;charset=UTF-8");
