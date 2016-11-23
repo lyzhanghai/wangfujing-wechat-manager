@@ -4,8 +4,6 @@ import com.wfj.dto.AccessTokenDto;
 import com.wfj.dto.MemberInfo;
 import com.wfj.util.PropertiesUtils;
 import com.wfj.util.WechatUtil;
-import net.sf.json.JSONObject;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.Soundbank;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 @Controller
@@ -75,11 +71,8 @@ public class CommonController {
     /**
      * 获取会员用户信息
      *
-     * @param request
-     * @param response
-     * @param access_token
+     * @param appid
      * @param openid
-     * @param lang
      * @return
      * @throws Exception
      */
