@@ -69,13 +69,14 @@ public class WechatSecurity {
 			logger.info(msgtype);
 			if (MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgtype)) {
 				logger.info("进入事件处理");
-				processMessage = EventDispatcher.processEvent(map); // 进入事件处理
+				processMessage = new EventDispatcher().processEvent(map); // 进入事件处理
 			} else {
 				logger.info("进入消息处理");
-				processMessage = MsgDispatcher.processMessage(map); // 进入消息处理
+				processMessage = new MsgDispatcher().processMessage(map); // 进入消息处理
 			}
 		} catch (Exception e) {
-			logger.error(e, e);
+			logger.error(e);
+			e.printStackTrace();
 		}
 		logger.info("processMessage" + processMessage);
 		response.setHeader("Content-type", "text/html;charset=UTF-8");
