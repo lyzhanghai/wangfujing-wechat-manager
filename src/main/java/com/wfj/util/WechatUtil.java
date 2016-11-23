@@ -2,9 +2,9 @@ package com.wfj.util;
 
 import com.wfj.dto.AccessTokenDto;
 import com.wfj.dto.MemberInfo;
+import com.wfj.entity.AppAccountInfo;
 import com.wfj.message.req.StoreInfoDto;
 import com.wfj.service.impl.AppAccountInfoServiceImpl;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WechatUtil {
@@ -127,32 +128,28 @@ public class WechatUtil {
     /**
      * 根据门店标识获取公主号信息
      *
-     * @param storeFlag
+     * @param appid
      * @return StoreInfoDto
      * @Methods Name getStoreInfo
      * @Create In 2016年9月26日 By kongqf
      */
-    public StoreInfoDto getStoreInfo(String storeFlag) {
+    public StoreInfoDto getStoreInfo(String appid) {
         String storeInfoStr = null;
         StoreInfoDto storeInfoDto = new StoreInfoDto();
-        storeInfoStr = redisUtil.getKey("storeInfoDto" + storeFlag, "0000");
+        storeInfoStr = redisUtil.getKey("storeInfoDto" + appid, "0000");
         if ("0000".equals(storeInfoStr)) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("field1", storeFlag);
-            String storeInfo = HttpUtils.doPost(Constants.STOREINFOURL, JsonUtil.getJSONString(map));
-            JSONObject jsono = JSONObject.fromObject(storeInfo);
-            JSONArray jsona = JSONArray.fromObject(jsono.get("data"));
+            map.put("appid", appid);
+            List<AppAccountInfo> appAccountInfos = appAccountInfoService.queryAppAccount(map);
 
-            if (jsona != null && jsona.size() > 0) {
-                JSONObject object = jsona.getJSONObject(0);
-                storeInfoDto.setStoreCode(object.getString("organizationCode"));
-                storeInfoDto.setStoceName(object.getString("organizationName"));
-                storeInfoDto.setAppId(object.getString("field2"));
-                storeInfoDto.setSecret(object.getString("field3"));
-                storeInfoDto.setIsChannel(object.getString("field4"));
-                storeInfoDto.setStoreFlag(object.getString("field1"));
+            if (appAccountInfos != null && appAccountInfos.size() > 0) {
+                AppAccountInfo model = appAccountInfos.get(0);
+                storeInfoDto.setStoreCode(model.getStorecode());
+                //storeInfoDto.setStoceName(object.getString("organizationName"));
+                storeInfoDto.setAppId(model.getAppid());
+                storeInfoDto.setSecret(model.getAppsecret());
 
-                redisUtil.setIsOK("storeInfoDto" + storeFlag, JsonUtil.getJSONString(storeInfoDto));
+                redisUtil.setIsOK("storeInfoDto" + appid, JsonUtil.getJSONString(storeInfoDto));
             }
 
         } else {
