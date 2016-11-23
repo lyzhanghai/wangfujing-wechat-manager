@@ -1,15 +1,17 @@
-package com.wfj.dto;
+package com.wfj.service.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.wfj.util.HttpUtils;
 import com.wfj.util.MessageUtil;
 
 import net.sf.json.JSONObject;
 
+@Service
 public class EventDispatcher {
 	private static Logger logger = Logger.getLogger(EventDispatcher.class);
 

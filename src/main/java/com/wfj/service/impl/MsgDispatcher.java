@@ -1,4 +1,4 @@
-package com.wfj.dto;
+package com.wfj.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.wfj.entity.MsgReply;
 import com.wfj.mapper.MsgReplyMapper;
@@ -18,6 +19,7 @@ import com.wfj.message.resp.NewsMessage;
 import com.wfj.message.resp.TextMessage;
 import com.wfj.util.MessageUtil;
 
+@Service
 public class MsgDispatcher {
 	private static Logger logger = Logger.getLogger(MsgDispatcher.class);
 

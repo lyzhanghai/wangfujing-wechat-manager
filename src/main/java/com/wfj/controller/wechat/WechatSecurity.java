@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wfj.dto.EventDispatcher;
-import com.wfj.dto.MsgDispatcher;
 import com.wfj.dto.WeiXinDto;
+import com.wfj.service.impl.EventDispatcher;
+import com.wfj.service.impl.MsgDispatcher;
 import com.wfj.util.MessageUtil;
 import com.wfj.util.WechatUtil;
 
@@ -30,6 +30,9 @@ public class WechatSecurity {
 
 	@Autowired
 	private WechatUtil tokenUtil;
+
+	@Autowired
+	private MsgDispatcher msgDispatcher;
 
 	// http://117.121.99.11/wechat-web/wechat/security.htm
 	@ResponseBody
@@ -72,7 +75,7 @@ public class WechatSecurity {
 				processMessage = new EventDispatcher().processEvent(map); // 进入事件处理
 			} else {
 				logger.info("进入消息处理");
-				processMessage = new MsgDispatcher().processMessage(map); // 进入消息处理
+				processMessage = msgDispatcher.processMessage(map); // 进入消息处理
 			}
 		} catch (Exception e) {
 			logger.error(e);

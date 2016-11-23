@@ -12,8 +12,7 @@
         http://www.springframework.org/schema/mvc 
         http://www.springframework.org/schema/mvc/spring-mvc.xsd"
        default-lazy-init="true">
-    <context:component-scan base-package="com.wfj.controller"/>
-    <context:component-scan base-package="com.wfj.logAop"/>
+    
     <!-- 启动对@AspectJ注解的支持 -->
     <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller-->
     <!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
@@ -76,4 +75,6 @@
         <property name="maxInMemorySize" value="40960"/>
     </bean>
     <import resource="spring-mvc-shiro.xml"/>
+    <context:component-scan base-package="com.wfj.*"/>
+    <!-- <context:component-scan base-package="com.wfj.logAop"/> -->
 </beans>
