@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.wfj.entity.MemberInfo;
 import com.wfj.service.intf.MemberInfoService;
 import com.wfj.util.StringUtils;
+import com.wfj.util.WechatUtil;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class MemberInfoController {
     private static Logger logger = LoggerFactory.getLogger(MemberInfoController.class);
 
     @Autowired
+    private WechatUtil wechatUtil;
+
+    @Autowired
     private MemberInfoService memberInfoService;
 
     /**
@@ -40,8 +44,7 @@ public class MemberInfoController {
     public String registerMember(String memberCode, String storeCode, String password, Integer subscribe, String openid,
                                  String nickname, Integer sex, String city, String country, String province, String language,
                                  String headimgurl, String subscribeTime, String unionid, String remark, Integer groupid,
-                                 String idCard, String email, String mobile) {
-        Map<String, Object> map = new HashMap<String, Object>();
+                                 String idCard, String email, String mobile, String appId, String secret) {
         MemberInfo memberInfo = new MemberInfo();
         if (StringUtils.isNotEmpty(memberCode)) {
             memberInfo.setMemberCode(memberCode.trim());
@@ -59,22 +62,27 @@ public class MemberInfoController {
         if (StringUtils.isNotEmpty(unionid)) {
             memberInfo.setUnionid(unionid.trim());
         }
-        memberInfo.setSubscribe(subscribe);
-        memberInfo.setNickname(nickname);
-        memberInfo.setSex(sex);
-        memberInfo.setCity(city);
-        memberInfo.setCountry(country);
-        memberInfo.setProvince(province);
-        memberInfo.setLanguage(language);
-        memberInfo.setHeadimgurl(headimgurl);
-        memberInfo.setSubscribeTime(subscribeTime);
-        memberInfo.setRemark(remark);
-        memberInfo.setGroupid(groupid);
-        memberInfo.setIdCard(idCard);
+        try {
+            com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(openid, appId, secret);
+            memberInfo.setSubscribe(openid_userinfo.getSubscribe());
+            memberInfo.setNickname(openid_userinfo.getNickname());
+            memberInfo.setSex(openid_userinfo.getSex());
+            memberInfo.setCity(openid_userinfo.getCity());
+            memberInfo.setCountry(openid_userinfo.getCountry());
+            memberInfo.setProvince(openid_userinfo.getProvince());
+            memberInfo.setLanguage(openid_userinfo.getLanguage());
+            memberInfo.setHeadimgurl(openid_userinfo.getHeadimgurl());
+            memberInfo.setSubscribeTime(openid_userinfo.getSubscribe_time());
+            memberInfo.setRemark(openid_userinfo.getRemark());
+            memberInfo.setGroupid(openid_userinfo.getGroupid());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         memberInfo.setEmail(email);
+        memberInfo.setIdCard(idCard);
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try {
-            logger.info("注册参数：" + JSONObject.fromObject(map).toString());
+            logger.info("注册参数：" + JSONObject.fromObject(memberInfo).toString());
             Map<String, Object> returnMap = memberInfoService.registerMember(memberInfo);
             logger.info("调用注册返回：" + returnMap.toString());
             if ("true".equals(returnMap.get("success") + "")) {
