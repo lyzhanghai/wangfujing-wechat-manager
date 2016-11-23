@@ -29,6 +29,7 @@
     		param += "openId=" + openId;
     		param += "&appId=" + appId;
     		param += "&uid=" + uid;
+    		param += "&secret=" + getUrlDataByKey("secret");
     		param += "&registType=" + getUrlDataByKey("registType");
     		var regUrl = rootPath + "/userRegister.html" + param;
     		$("#userRegister").attr("href", encodeURI(regUrl));
