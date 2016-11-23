@@ -94,6 +94,7 @@
     		},
     		dataType : "json",
     		success : function(response) {
+    		    response = JSON.parse(response);
     			if(response.success){
     				$("#modal_lable").text("恭喜");
     				$("#modal_msg").text(response.msg);
