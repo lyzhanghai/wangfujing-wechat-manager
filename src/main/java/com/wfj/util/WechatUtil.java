@@ -5,6 +5,7 @@ import com.wfj.dto.MemberInfo;
 import com.wfj.entity.AppAccountInfo;
 import com.wfj.message.req.StoreInfoDto;
 import com.wfj.service.impl.AppAccountInfoServiceImpl;
+import com.wfj.service.intf.IAppAccountInfoService;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,6 @@ public class WechatUtil {
 
     @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
-    private AppAccountInfoServiceImpl appAccountInfoService;
 
     /**
      * 获取access_token
@@ -140,6 +138,8 @@ public class WechatUtil {
         if ("0000".equals(storeInfoStr)) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("appid", appid);
+             IAppAccountInfoService appAccountInfoService=new AppAccountInfoServiceImpl();
+
             List<AppAccountInfo> appAccountInfos = appAccountInfoService.queryAppAccount(map);
 
             if (appAccountInfos != null && appAccountInfos.size() > 0) {

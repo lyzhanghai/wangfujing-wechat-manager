@@ -4,6 +4,7 @@ import com.wfj.entity.AppAccountInfo;
 import com.wfj.mapper.AppAccountInfoMapper;
 import com.wfj.service.intf.IAppAccountInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
 /**
  * Created by kongqf on 16-11-23.
  */
+@Service
 public class AppAccountInfoServiceImpl implements IAppAccountInfoService {
 
     @Autowired
