@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,14 +33,23 @@ public class MemberInfoServiceImpl implements MemberInfoService {
     @Transactional
     public Map<String, Object> registerMember(MemberInfo memberInfo) {
         logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),para:" + memberInfo.toString());
-        int insertSelective = memberInfoMapper.insertSelective(memberInfo);
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("storeCode", memberInfo.getStoreCode());
+        paramMap.put("memberCode", memberInfo.getMemberCode());
+        List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        if (insertSelective == 1) {
-            returnMap.put("success", "true");
-            returnMap.put("desc", "注册成功！");
+        if (memberInfoList != null && memberInfoList.size() > 0) {
+            int insertSelective = memberInfoMapper.insertSelective(memberInfo);
+            if (insertSelective == 1) {
+                returnMap.put("success", "true");
+                returnMap.put("desc", "注册成功！");
+            } else {
+                returnMap.put("success", "false");
+                returnMap.put("desc", "注册失败！");
+            }
         } else {
             returnMap.put("success", "false");
-            returnMap.put("desc", "注册失败！");
+            returnMap.put("desc", "已经注册了！");
         }
 
         logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),return:" + returnMap.toString());
