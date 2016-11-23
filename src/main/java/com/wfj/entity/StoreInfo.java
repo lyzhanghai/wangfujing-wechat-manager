@@ -1,7 +1,7 @@
 package com.wfj.entity;
 
 public class StoreInfo {
-    private String sid;
+    private Long sid;
 
     private String storeCode;
 
@@ -41,11 +41,11 @@ public class StoreInfo {
 
     private Integer channelType;
 
-    public String getSid() {
+    public Long getSid() {
         return sid;
     }
 
-    public void setSid(String sid) {
+    public void setSid(Long sid) {
         this.sid = sid;
     }
 
