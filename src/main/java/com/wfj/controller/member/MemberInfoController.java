@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wfj.entity.MemberInfo;
 import com.wfj.service.intf.MemberInfoService;
+import com.wfj.util.StringUtils;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,41 @@ public class MemberInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/registerMember", method = {RequestMethod.GET, RequestMethod.POST})
-    public String registerMember(MemberInfo memberInfo) {
+    public String registerMember(String memberCode, String storeCode, String password, Integer subscribe, String openid,
+                                 String nickname, Integer sex, String city, String country, String province, String language,
+                                 String headimgurl, String subscribeTime, String unionid, String remark, Integer groupid,
+                                 String idCard, String email, String mobile) {
         Map<String, Object> map = new HashMap<String, Object>();
+        MemberInfo memberInfo = new MemberInfo();
+        if (StringUtils.isNotEmpty(memberCode)) {
+            memberInfo.setMemberCode(memberCode.trim());
+        }
+        if (StringUtils.isNotEmpty(storeCode)) {
+            memberInfo.setStoreCode(storeCode.trim());
+        }
+        if (StringUtils.isNotEmpty(mobile)) {
+            memberInfo.setMobile(mobile.trim());
+            memberInfo.setPassword(mobile.trim().substring(5, 6));//密码默认手机后六位
+        }
+        if (StringUtils.isNotEmpty(openid)) {
+            memberInfo.setOpenid(openid.trim());
+        }
+        if (StringUtils.isNotEmpty(unionid)) {
+            memberInfo.setUnionid(unionid.trim());
+        }
+        memberInfo.setSubscribe(subscribe);
+        memberInfo.setNickname(nickname);
+        memberInfo.setSex(sex);
+        memberInfo.setCity(city);
+        memberInfo.setCountry(country);
+        memberInfo.setProvince(province);
+        memberInfo.setLanguage(language);
+        memberInfo.setHeadimgurl(headimgurl);
+        memberInfo.setSubscribeTime(subscribeTime);
+        memberInfo.setRemark(remark);
+        memberInfo.setGroupid(groupid);
+        memberInfo.setIdCard(idCard);
+        memberInfo.setEmail(email);
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try {
             logger.info("注册参数：" + JSONObject.fromObject(map).toString());
