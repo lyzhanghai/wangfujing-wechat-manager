@@ -1,10 +1,14 @@
 package com.wfj.controller.wechat;
 
-import com.wfj.dto.EventDispatcher;
-import com.wfj.dto.MsgDispatcher;
-import com.wfj.dto.WeiXinDto;
-import com.wfj.util.MessageUtil;
-import com.wfj.util.WechatUtil;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import com.wfj.dto.WeiXinDto;
+import com.wfj.service.impl.EventDispatcher;
+import com.wfj.service.impl.MsgDispatcher;
+import com.wfj.util.MessageUtil;
+import com.wfj.util.WechatUtil;
 
 @Controller
 @RequestMapping(value = "/wechat")
@@ -28,6 +30,9 @@ public class WechatSecurity {
 
 	@Autowired
 	private WechatUtil tokenUtil;
+
+	@Autowired
+	private MsgDispatcher msgDispatcher;
 
 	// http://117.121.99.11/wechat-web/wechat/security.htm
 	@ResponseBody
@@ -56,7 +61,7 @@ public class WechatSecurity {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("这是 post 方法！");
 		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d9``2b5801");
+				"00e66c2772af76181745b6f5d92b5801");
 		String processMessage = null;
 		try {
 			logger.info(request);
@@ -70,7 +75,7 @@ public class WechatSecurity {
 				processMessage = new EventDispatcher().processEvent(map); // 进入事件处理
 			} else {
 				logger.info("进入消息处理");
-				processMessage = new MsgDispatcher().processMessage(map); // 进入消息处理
+				processMessage = msgDispatcher.processMessage(map); // 进入消息处理
 			}
 		} catch (Exception e) {
 			logger.error(e);
