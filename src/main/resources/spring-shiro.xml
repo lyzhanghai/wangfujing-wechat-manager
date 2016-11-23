@@ -85,6 +85,7 @@
                 /wechat/** = anon
                 /common/** = anon
                 /member/** = anon
+                /appAccountInfo/** = anon
             </value>
         </property>
     </bean>
