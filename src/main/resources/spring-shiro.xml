@@ -87,6 +87,7 @@
                 /member/** = anon
                 /storeInfo/** = anon
                 /memberInfo/** = anon
+                /appAccountInfo/** = anon
             </value>
         </property>
     </bean>
