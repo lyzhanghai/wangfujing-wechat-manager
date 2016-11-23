@@ -200,4 +200,30 @@ public class StoreInfo {
     public void setChannelType(Integer channelType) {
         this.channelType = channelType;
     }
+
+    @Override
+    public String toString() {
+        return "StoreInfo{" +
+                "sid=" + sid +
+                ", storeCode='" + storeCode + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", branchName='" + branchName + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", address='" + address + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", categories='" + categories + '\'' +
+                ", offsetType=" + offsetType +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", photoList='" + photoList + '\'' +
+                ", special='" + special + '\'' +
+                ", openTime='" + openTime + '\'' +
+                ", avgPrice='" + avgPrice + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", recommend='" + recommend + '\'' +
+                ", channelType=" + channelType +
+                '}';
+    }
 }
