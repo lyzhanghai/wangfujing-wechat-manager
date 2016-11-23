@@ -115,6 +115,7 @@
     		},
     		dataType : "json",
     		success : function(response) {
+    		    response = JSON.parse(response);
     			if(response.success){
     				var list = response.list;
     				var option = "<ul>";
