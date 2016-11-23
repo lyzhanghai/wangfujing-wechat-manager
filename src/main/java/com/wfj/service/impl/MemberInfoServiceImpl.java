@@ -27,8 +27,14 @@ public class MemberInfoServiceImpl implements MemberInfoService {
     public String generateMemberCode(Map<String, Object> paramMap) {
         logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.generateMemberCode(),para" + paramMap.toString());
         Map<String, Object> objectMap = memberInfoMapper.selectMaxMemberCodeByParam(paramMap);
-        Long maxMemberCode = Long.parseLong(objectMap.get("maxMemberCode") + "");
-        Long code = maxMemberCode + 1;
+        Long code = null;
+        if (objectMap != null && !objectMap.isEmpty()) {
+            Long maxMemberCode = Long.parseLong(objectMap.get("maxMemberCode") + "");
+            code = maxMemberCode + 1;
+        } else {
+            code = 1L;
+        }
+
         logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.generateMemberCode(),return:" + code);
         return code + "";
     }

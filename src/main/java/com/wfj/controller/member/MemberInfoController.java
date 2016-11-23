@@ -51,7 +51,7 @@ public class MemberInfoController {
         }
         if (StringUtils.isNotEmpty(mobile)) {
             memberInfo.setMobile(mobile.trim());
-            memberInfo.setPassword(mobile.trim().substring(5, 6));//密码默认手机后六位
+            memberInfo.setPassword(mobile.trim().substring(5, mobile.length()));//密码默认手机后六位
         }
         if (StringUtils.isNotEmpty(openid)) {
             memberInfo.setOpenid(openid.trim());
