@@ -19,4 +19,6 @@ public interface MemberInfoMapper {
     int updateByPrimaryKey(MemberInfo record);
 
     List<MemberInfo> selectListByParam(Map<String, Object> paramMap);
+
+    Map<String, Object> selectMaxMemberCodeByParam(Map<String, Object> paramMap);
 }

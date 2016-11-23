@@ -41,14 +41,11 @@ public class MemberInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/registerMember", method = {RequestMethod.GET, RequestMethod.POST})
-    public String registerMember(String memberCode, String storeCode, String password, Integer subscribe, String openid,
+    public String registerMember(String storeCode, String password, Integer subscribe, String openid,
                                  String nickname, Integer sex, String city, String country, String province, String language,
                                  String headimgurl, String subscribeTime, String unionid, String remark, Integer groupid,
                                  String idCard, String email, String mobile, String appId, String secret) {
         MemberInfo memberInfo = new MemberInfo();
-        if (StringUtils.isNotEmpty(memberCode)) {
-            memberInfo.setMemberCode(memberCode.trim());
-        }
         if (StringUtils.isNotEmpty(storeCode)) {
             memberInfo.setStoreCode(storeCode.trim());
         }

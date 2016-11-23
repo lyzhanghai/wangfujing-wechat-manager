@@ -24,6 +24,13 @@ public class MemberInfoServiceImpl implements MemberInfoService {
     @Autowired
     private MemberInfoMapper memberInfoMapper;
 
+    public String generateMemberCode(Map<String, Object> paramMap) {
+        Map<String, Object> objectMap = memberInfoMapper.selectMaxMemberCodeByParam(paramMap);
+        Long maxMemberCode = Long.parseLong(objectMap.get("maxMemberCode") + "");
+        Long code = maxMemberCode + 1;
+        return code + "";
+    }
+
     /**
      * 注册会员
      *
@@ -35,10 +42,13 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),para:" + memberInfo.toString());
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("storeCode", memberInfo.getStoreCode());
-        paramMap.put("memberCode", memberInfo.getMemberCode());
+        paramMap.put("mobile", memberInfo.getMobile());
         List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        if (memberInfoList != null && memberInfoList.size() > 0) {
+        if (memberInfoList.size() == 0) {
+            paramMap.clear();
+            String generateMemberCode = generateMemberCode(paramMap);
+            memberInfo.setMemberCode(generateMemberCode);
             int insertSelective = memberInfoMapper.insertSelective(memberInfo);
             if (insertSelective == 1) {
                 returnMap.put("success", "true");

@@ -368,4 +368,16 @@
         </where>
     </select>
 
+    <select id="selectMaxMemberCodeByParam" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            MAX(member_code) AS maxMemberCode
+        FROM
+            memberinfo
+        <where>
+            <if test="storeCode != null">
+                and store_code = #{storeCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
 </mapper>
