@@ -130,8 +130,9 @@
 	var rootPath = getContextPath();
 	var appId = getUrlDataByKey("appId");
 	var openId = getUrlDataByKey("openId");
-	var uid= getUrlDataByKey("uid");
-	var mkt= getUrlDataByKey("mkt");
+	var unionId= getUrlDataByKey("unionId");
+    var secret = getUrlDataByKey("secret");//appsecret秘钥
+	var storeCode= getUrlDataByKey("storeCode");
 	var registType= getUrlDataByKey("registType");
 	var bindType= getUrlDataByKey("bindType");
 	
@@ -183,13 +184,13 @@
 			if(!validateBindPhoneParam()){
 				return false;
 			}
-			param={"uid":uid,
+			param={"unionId":unionId,
 					"openId":openId,
 					"appId":appId,
 					"idType":"2",
 					"idKeyword":phoneNum,
 					"idPassword":pwd,
-					"mkt":mkt
+					"storeCode":storeCode
 				};
 			//显示加载框
 //			$("#loading").css("display","table");
@@ -227,13 +228,13 @@
 			}
 			
 			//请求参数
-			param={"uid":uid,
+			param={"unionId":unionId,
 					"openId":openId,
 					"appId":appId,
 					"idType":"1",
 					"idKeyword":cardNum,
 					"idPassword":idNum,
-					"mkt":mkt
+					"storeCode":storeCode
 				};
 			
 			//显示加载框
