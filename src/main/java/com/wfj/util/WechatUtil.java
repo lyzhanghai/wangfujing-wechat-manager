@@ -130,7 +130,6 @@ public class WechatUtil {
         return memberInfo;
     }
 
-
     /**
      * 根据门店标识获取公主号信息
      *
@@ -192,6 +191,49 @@ public class WechatUtil {
 
         return accessTokenDto;
     }
+
+    /**
+     * 获取菜单
+     *
+     * @param appid
+     * @param secret
+     * @return
+     */
+    public String getMenus(String appid, String secret) {
+        String token = getAccessToken(appid, secret);
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("access_token", token);
+        String menus = "";
+        try {
+            menus = HttpUtil.sendGet(PropertiesUtils.findPropertiesKey("menuget"), params);
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        return menus;
+
+    }
+
+    /**
+     * 创建菜单
+     *
+     * @param appid
+     * @param secret
+     * @param menus
+     * @return
+     */
+    public String createMenus(String appid, String secret, String menus) {
+        String token = getAccessToken(appid, secret);
+        HashMap<String, String> params = new HashMap<String, String>();
+        String result = "";
+        try {
+            result = HttpUtil.sendPostBuffer(PropertiesUtils.findPropertiesKey("menucreate") + token, menus);
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        return result;
+
+    }
+
 
     /**
      * URL 编码
