@@ -109,6 +109,14 @@ public class WechatUtil {
                 memberInfo.setHeadimgurl(jsonObject.getString("headimgurl"));
                 memberInfo.setOpenid(jsonObject.getString("openid"));
                 memberInfo.setSubscribe(jsonObject.getInt("subscribe"));
+                memberInfo.setSex(jsonObject.getInt("sex"));
+                memberInfo.setCity(jsonObject.getString("city"));
+                memberInfo.setCountry(jsonObject.getString("country"));
+                memberInfo.setProvince(jsonObject.getString("province"));
+                memberInfo.setLanguage(jsonObject.getString("language"));
+                memberInfo.setSubscribe_time(jsonObject.get("subscribe_time") + "");
+                memberInfo.setRemark(jsonObject.getString("remark"));
+                memberInfo.setGroupid(jsonObject.getInt("groupid"));
             } catch (Exception e) {
                 if (0 == memberInfo.getSubscribe()) {
                     logger.error("用户" + memberInfo.getOpenid() + "已取消关注");
@@ -138,7 +146,7 @@ public class WechatUtil {
         if ("0000".equals(storeInfoStr)) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("appid", appid);
-             IAppAccountInfoService appAccountInfoService=new AppAccountInfoServiceImpl();
+            IAppAccountInfoService appAccountInfoService = new AppAccountInfoServiceImpl();
 
             List<AppAccountInfo> appAccountInfos = appAccountInfoService.queryAppAccount(map);
 
