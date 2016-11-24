@@ -45,10 +45,8 @@ public class MemberInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/registerMember", method = {RequestMethod.GET, RequestMethod.POST})
-    public String registerMember(String storeCode, String password, Integer subscribe, String openid,
-                                 String nickname, Integer sex, String city, String country, String province, String language,
-                                 String headimgurl, String subscribeTime, String unionid, String remark, Integer groupid,
-                                 String idCard, String email, String mobile, String appId, String secret) {
+    public String registerMember(String storeCode, String openId, String unionId, String idCard,
+                                 String email, String mobile, String appId, String secret) {
         MemberInfo memberInfo = new MemberInfo();
         if (StringUtils.isNotEmpty(storeCode)) {
             memberInfo.setStoreCode(storeCode.trim());
@@ -57,14 +55,14 @@ public class MemberInfoController {
             memberInfo.setMobile(mobile.trim());
             memberInfo.setPassword(mobile.trim().substring(5, mobile.length()));//密码默认手机后六位
         }
-        if (StringUtils.isNotEmpty(openid)) {
-            memberInfo.setOpenid(openid.trim());
+        if (StringUtils.isNotEmpty(openId)) {
+            memberInfo.setOpenid(openId.trim());
         }
-        if (StringUtils.isNotEmpty(unionid)) {
-            memberInfo.setUnionid(unionid.trim());
+        if (StringUtils.isNotEmpty(unionId)) {
+            memberInfo.setUnionid(unionId.trim());
         }
         try {
-            com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(openid, appId, secret);
+            com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(openId, appId, secret);
             memberInfo.setSubscribe(openid_userinfo.getSubscribe());
             memberInfo.setNickname(openid_userinfo.getNickname());
             memberInfo.setSex(openid_userinfo.getSex());
@@ -76,6 +74,14 @@ public class MemberInfoController {
             memberInfo.setSubscribeTime(openid_userinfo.getSubscribe_time());
             memberInfo.setRemark(openid_userinfo.getRemark());
             memberInfo.setGroupid(openid_userinfo.getGroupid());
+            String openid_userinfoUnionid = openid_userinfo.getUnionid();
+            if (StringUtils.isNotEmpty(openid_userinfoUnionid)) {
+                memberInfo.setUnionid(openid_userinfoUnionid);
+            }
+            String openid_userinfoOpenid = openid_userinfo.getOpenid();
+            if (StringUtils.isNotEmpty(openid_userinfoOpenid)) {
+                memberInfo.setOpenid(openid_userinfoOpenid);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,8 +116,8 @@ public class MemberInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/bindMemberCard", method = {RequestMethod.GET, RequestMethod.POST})
-    public String bindMemberCard(String storeCode, String cardCode, String memberCode, String mobile, String unionid,
-                                 String password, Integer cardType, Integer cardLevel) {
+    public String bindMemberCard(String storeCode, String cardCode, String mobile, String openId, String appId,
+                                 String secret, String unionId, String password, String cardType, String cardLevel) {
         logger.info("start com.wfj.controller.member.MemberInfoController.bindMemberCard()");
         Map<String, Object> paraMap = new HashMap<String, Object>();
         if (StringUtils.isNotEmpty(storeCode)) {
@@ -120,22 +126,28 @@ public class MemberInfoController {
         if (StringUtils.isNotEmpty(cardCode)) {
             paraMap.put("cardCode", cardCode);
         }
-        if (StringUtils.isNotEmpty(memberCode)) {
-            paraMap.put("memberCode", memberCode);
-        }
         if (StringUtils.isNotEmpty(mobile)) {
             paraMap.put("mobile", mobile);
         }
-        if (StringUtils.isNotEmpty(unionid)) {
-            paraMap.put("unionid", unionid);
+        if (StringUtils.isNotEmpty(openId)) {
+            paraMap.put("openid", openId);
+        }
+        if (StringUtils.isNotEmpty(appId)) {
+            paraMap.put("appid", appId);
+        }
+        if (StringUtils.isNotEmpty(secret)) {
+            paraMap.put("secret", secret);
+        }
+        if (StringUtils.isNotEmpty(unionId)) {
+            paraMap.put("unionid", unionId);
         }
         if (StringUtils.isNotEmpty(password)) {
             paraMap.put("password", password);
         }
-        if (cardType != null) {
+        if (StringUtils.isNotEmpty(cardType)) {
             paraMap.put("cardType", cardType);
         }
-        if (cardLevel != null) {
+        if (StringUtils.isNotEmpty(cardLevel)) {
             paraMap.put("cardLevel", cardLevel);
         }
 

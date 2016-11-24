@@ -56,7 +56,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),para:" + memberInfo.toString());
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("storeCode", memberInfo.getStoreCode());
-        paramMap.put("mobile", memberInfo.getMobile());
+        paramMap.put("openid", memberInfo.getOpenid());
         List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         Map<String, Object> returnMap = new HashMap<String, Object>();
         if (memberInfoList.size() == 0) {

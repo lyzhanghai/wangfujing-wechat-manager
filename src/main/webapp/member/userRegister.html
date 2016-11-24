@@ -68,7 +68,7 @@
 	var rootPath = getContextPath();
 	var appId = getUrlDataByKey("appId");
 	var openId = getUrlDataByKey("openId");
-	var uid = getUrlDataByKey("uid");
+	var unionId = getUrlDataByKey("unionId");
 </script>
 <script>
 	//会员用户注册
@@ -81,9 +81,9 @@
     		data : {
                 "storeCode" : $("#shopCode").val(),
                 "mobile" : $("#mobile").val(),
-    			"openid" : openId,
+    			"openId" : openId,
     			"appId" : appId,
-    			"unionid" : uid,
+    			"unionId" : unionId,
     			"secret" : getUrlDataByKey("secret"),
     			"registType" : getUrlDataByKey("registType")
     		},

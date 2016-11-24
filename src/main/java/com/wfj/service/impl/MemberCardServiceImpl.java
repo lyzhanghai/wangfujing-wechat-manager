@@ -8,6 +8,7 @@ import com.wfj.mapper.MemberInfoMapper;
 import com.wfj.service.intf.IAppAccountInfoService;
 import com.wfj.service.intf.MemberCardService;
 import com.wfj.service.intf.MemberInfoService;
+import com.wfj.util.StringUtils;
 import com.wfj.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,11 +75,11 @@ public class MemberCardServiceImpl implements MemberCardService {
     public Map<String, Object> bindMemberCard(Map<String, Object> paraMap) throws Exception {
         logger.info("start com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),para:" + paraMap.toString());
         String storeCode = paraMap.get("storeCode") + "";
-        String unionid = paraMap.get("unionid") + "";
+        String openid = paraMap.get("openid") + "";
         String cardType = paraMap.get("cardType") + "";
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("storeCode", storeCode);
-        paramMap.put("unionid", unionid);
+        paramMap.put("openid", openid);
         List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         MemberInfo tempMemberInfo = null;
         if (memberInfoList.size() == 0) {//未注册绑定
@@ -87,7 +88,7 @@ public class MemberCardServiceImpl implements MemberCardService {
             List<AppAccountInfo> appAccountInfoList = appAccountInfoService.queryAppAccount(paramMap);
             if (appAccountInfoList.size() == 1) {
                 AppAccountInfo appAccountInfo = appAccountInfoList.get(0);
-                com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(unionid, appAccountInfo.getAppid(), appAccountInfo.getAppsecret());
+                com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(openid, appAccountInfo.getAppid(), appAccountInfo.getAppsecret());
                 MemberInfo memberInfo = new MemberInfo();
                 paramMap.clear();
                 String generateMemberCode = memberInfoService.generateMemberCode(paramMap);
@@ -103,7 +104,8 @@ public class MemberCardServiceImpl implements MemberCardService {
                 memberInfo.setSubscribeTime(openid_userinfo.getSubscribe_time());
                 memberInfo.setRemark(openid_userinfo.getRemark());
                 memberInfo.setGroupid(openid_userinfo.getGroupid());
-                memberInfo.setUnionid(unionid);
+                memberInfo.setUnionid(openid_userinfo.getUnionid());
+                memberInfo.setOpenid(openid);
                 memberInfoService.registerMember(memberInfo);//注册会员
 
                 tempMemberInfo = memberInfo;
@@ -113,10 +115,11 @@ public class MemberCardServiceImpl implements MemberCardService {
         } else if (memberInfoList.size() == 1) {//已注册绑定
             tempMemberInfo = memberInfoList.get(0);
         } else {//多个会员信息
-            throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作时，同一storeCode、unionid有两个会员账号！");
+            throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作时，同一storeCode、openid有两个会员账号！");
         }
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
+        String cardLevel = paraMap.get("cardLevel") + "";
         String memberCode = tempMemberInfo.getMemberCode();
         if ("1".equals(cardType)) {//实体卡绑定
             String cardCode = paraMap.get("cardCode") + "";
@@ -132,6 +135,9 @@ public class MemberCardServiceImpl implements MemberCardService {
                 memberCard.setCardCode(cardCode);
                 memberCard.setCardType(1);
                 memberCard.setStatus(0);
+                if (StringUtils.isNotEmpty(cardLevel)) {
+                    memberCard.setCardLevel(Integer.parseInt(cardLevel));
+                }
                 memberCardMapper.insertSelective(memberCard);
                 returnMap.put("success", "true");
                 returnMap.put("desc", "绑定成功！");
@@ -156,6 +162,9 @@ public class MemberCardServiceImpl implements MemberCardService {
             memberCard.setCardCode(generateCardCode);
             memberCard.setCardType(2);
             memberCard.setStatus(0);
+            if (StringUtils.isNotEmpty(cardLevel)) {
+                memberCard.setCardLevel(Integer.parseInt(cardLevel));
+            }
             memberCardMapper.insertSelective(memberCard);
             returnMap.put("success", "true");
             returnMap.put("desc", "绑定成功！");

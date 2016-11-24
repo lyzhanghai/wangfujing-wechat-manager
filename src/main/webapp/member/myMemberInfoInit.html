@@ -13,9 +13,10 @@
 	    var rootPath = getContextPath();
 	    var appId = getUrlDataByKey("appId");
 		var openId = getUrlDataByKey("openId");
-		var uid = getUrlDataByKey("uid");
+		var unionId = getUrlDataByKey("unionId");
 		var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
-		var mkt = getUrlDataByKey("storeCode");//门店号
+		var storeCode = getUrlDataByKey("storeCode");//门店号
+        var secret = getUrlDataByKey("secret");//appsecret秘钥
     </script>
     <script type="text/javascript">
     	//初始化
@@ -28,8 +29,8 @@
     		var param = "?";
     		param += "openId=" + openId;
     		param += "&appId=" + appId;
-    		param += "&uid=" + uid;
-    		param += "&secret=" + getUrlDataByKey("secret");
+    		param += "&unionId=" + unionId;
+    		param += "&secret=" + secret;
     		param += "&registType=" + getUrlDataByKey("registType");
     		var regUrl = rootPath + "/userRegister.html" + param;
     		$("#userRegister").attr("href", encodeURI(regUrl));
@@ -37,10 +38,10 @@
     	//绑定实体卡
     	function bindEntityCard(){
     		var bindEntityCardUrl = rootPath + "/bindMemberInfo.html?bindType=2";
-    		bindEntityCardUrl += "&uid=" + uid;
+    		bindEntityCardUrl += "&unionId=" + unionId;
     		bindEntityCardUrl += "&appId=" + appId;
     		bindEntityCardUrl += "&openId=" + openId;
-    		bindEntityCardUrl += "&mkt=" + mkt;
+    		bindEntityCardUrl += "&storeCode=" + storeCode;
     		bindEntityCardUrl += "&registType=" + registType;
     		$("#bindEntityCard").attr("href", encodeURI(bindEntityCardUrl));
     	}
