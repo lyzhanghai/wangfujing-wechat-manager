@@ -10,8 +10,8 @@
         <result column="card_level" property="cardLevel" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
-        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
     sid, store_code, card_code, member_code, card_type, card_level, status, del_flag, 
@@ -34,8 +34,8 @@
       create_time)
     values (#{sid,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{cardCode,jdbcType=VARCHAR}, 
       #{memberCode,jdbcType=VARCHAR}, #{cardType,jdbcType=INTEGER}, #{cardLevel,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{updateTime,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR})
+      #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective" parameterType="com.wfj.entity.MemberCard">
         insert into member_card
@@ -97,10 +97,10 @@
                 #{delFlag,jdbcType=INTEGER},
             </if>
             <if test="updateTime != null">
-                #{updateTime,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createTime != null">
-                #{createTime,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -129,10 +129,10 @@
                 del_flag = #{delFlag,jdbcType=INTEGER},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=VARCHAR},
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime,jdbcType=VARCHAR},
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where sid = #{sid,jdbcType=BIGINT}
@@ -146,8 +146,8 @@
       card_level = #{cardLevel,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       del_flag = #{delFlag,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where sid = #{sid,jdbcType=BIGINT}
   </update>
 
@@ -182,10 +182,10 @@
                 and del_flag = #{delFlag,jdbcType=INTEGER}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime,jdbcType=VARCHAR}
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime,jdbcType=VARCHAR}
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>

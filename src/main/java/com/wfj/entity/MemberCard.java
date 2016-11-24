@@ -1,5 +1,7 @@
 package com.wfj.entity;
 
+import java.util.Date;
+
 public class MemberCard {
     private Long sid;
 
@@ -17,9 +19,9 @@ public class MemberCard {
 
     private Integer delFlag;
 
-    private String updateTime;
+    private Date updateTime;
 
-    private String createTime;
+    private Date createTime;
 
     public Long getSid() {
         return sid;
@@ -85,19 +87,35 @@ public class MemberCard {
         this.delFlag = delFlag;
     }
 
-    public String getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberCard{" +
+                "sid=" + sid +
+                ", storeCode='" + storeCode + '\'' +
+                ", cardCode='" + cardCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
+                ", cardType=" + cardType +
+                ", cardLevel=" + cardLevel +
+                ", status=" + status +
+                ", delFlag=" + delFlag +
+                ", updateTime=" + updateTime +
+                ", createTime=" + createTime +
+                '}';
     }
 }
