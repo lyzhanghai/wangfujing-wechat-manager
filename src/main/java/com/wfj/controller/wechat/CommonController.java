@@ -46,7 +46,7 @@ public class CommonController {
             String name = util.getURLEncoder(memberInfo.getNickname());
             String para = "&appId=" + appid + "&openId=" + atkDto.getOpenid() + "&secret=" + secret
                     + "&headimgurl=" + memberInfo.getHeadimgurl() + "&nickname=" +
-                    name + "&registType=&uid=" + memberInfo.getUnionid() + "&storeCode=" + storeInfo.getStoreCode();
+                    name + "&registType=&unionId=" + memberInfo.getUnionid() + "&storeCode=" + storeInfo.getStoreCode();
             response.setHeader("Content-type", "text/html;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             // Map<String, String> paramMap = new HashMap<String, String>();
