@@ -126,7 +126,7 @@ public class MemberCardServiceImpl implements MemberCardService {
         } else {
             throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，不符合的绑定卡类型！");
         }
-        logger.info("end com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),return:");
-        return null;
+        logger.info("end com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),return:" + returnMap);
+        return returnMap;
     }
 }
