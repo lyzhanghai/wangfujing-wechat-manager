@@ -32,12 +32,12 @@
     		param += "&unionId=" + unionId;
     		param += "&secret=" + secret;
     		param += "&registType=" + getUrlDataByKey("registType");
-    		var regUrl = rootPath + "/userRegister.html" + param;
+    		var regUrl = rootPath + "/member/userRegister.html" + param;
     		$("#userRegister").attr("href", encodeURI(regUrl));
     	}
     	//绑定实体卡
     	function bindEntityCard(){
-    		var bindEntityCardUrl = rootPath + "/bindMemberInfo.html?bindType=2";
+    		var bindEntityCardUrl = rootPath + "/member/bindMemberInfo.html?bindType=2";
     		bindEntityCardUrl += "&unionId=" + unionId;
     		bindEntityCardUrl += "&appId=" + appId;
     		bindEntityCardUrl += "&openId=" + openId;
