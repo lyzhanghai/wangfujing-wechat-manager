@@ -24,6 +24,12 @@ public class MemberInfoServiceImpl implements MemberInfoService {
     @Autowired
     private MemberInfoMapper memberInfoMapper;
 
+    /**
+     * 生成会员编码
+     *
+     * @param paramMap
+     * @return
+     */
     public String generateMemberCode(Map<String, Object> paramMap) {
         logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.generateMemberCode(),para" + paramMap.toString());
         Map<String, Object> objectMap = memberInfoMapper.selectMaxMemberCodeByParam(paramMap);

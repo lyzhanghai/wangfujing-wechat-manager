@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface MemberCardService {
     @Transactional
-    Map<String, Object> bindMemberCard(Map<String, Object> paramMap);
+    Map<String, Object> bindMemberCard(Map<String, Object> paraMap) throws Exception;
 }

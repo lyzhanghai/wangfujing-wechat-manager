@@ -10,6 +10,8 @@ import java.util.Map;
  */
 public interface MemberInfoService {
 
+    String generateMemberCode(Map<String, Object> paramMap);
+
     @Transactional
     Map<String, Object> registerMember(MemberInfo memberInfo);
 }

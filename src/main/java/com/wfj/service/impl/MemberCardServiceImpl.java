@@ -1,14 +1,22 @@
 package com.wfj.service.impl;
 
+import com.wfj.entity.AppAccountInfo;
+import com.wfj.entity.MemberCard;
+import com.wfj.entity.MemberInfo;
 import com.wfj.mapper.MemberCardMapper;
 import com.wfj.mapper.MemberInfoMapper;
+import com.wfj.service.intf.IAppAccountInfoService;
 import com.wfj.service.intf.MemberCardService;
+import com.wfj.service.intf.MemberInfoService;
+import com.wfj.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +33,15 @@ public class MemberCardServiceImpl implements MemberCardService {
     @Autowired
     private MemberInfoMapper memberInfoMapper;
 
+    @Autowired
+    private MemberInfoService memberInfoService;
+
+    @Autowired
+    private IAppAccountInfoService appAccountInfoService;
+
+    @Autowired
+    private WechatUtil wechatUtil;
+
     /**
      * 绑定卡
      *
@@ -32,11 +49,82 @@ public class MemberCardServiceImpl implements MemberCardService {
      * @return
      */
     @Transactional
-    public Map<String, Object> bindMemberCard(Map<String, Object> paramMap) {
-        logger.info("start com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),para:" + paramMap.toString());
-        String cardType = paramMap.get("cardType") + "";
-        if ("1".equals(cardType)) {//实体卡绑定
+    public Map<String, Object> bindMemberCard(Map<String, Object> paraMap) throws Exception {
+        logger.info("start com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),para:" + paraMap.toString());
+        String storeCode = paraMap.get("storeCode") + "";
+        String unionid = paraMap.get("unionid") + "";
+        String cardType = paraMap.get("cardType") + "";
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("storeCode", storeCode);
+        paramMap.put("unionid", unionid);
+        List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
+        MemberInfo tempMemberInfo = null;
+        if (memberInfoList.size() == 0) {//未注册绑定
+            paramMap.clear();
+            paramMap.put("storeCode", storeCode);
+            List<AppAccountInfo> appAccountInfoList = appAccountInfoService.queryAppAccount(paramMap);
+            if (appAccountInfoList.size() == 1) {
+                AppAccountInfo appAccountInfo = appAccountInfoList.get(0);
+                com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(unionid, appAccountInfo.getAppid(), appAccountInfo.getAppsecret());
+                MemberInfo memberInfo = new MemberInfo();
+                paramMap.clear();
+                String generateMemberCode = memberInfoService.generateMemberCode(paramMap);
+                memberInfo.setMemberCode(generateMemberCode);
+                memberInfo.setSubscribe(openid_userinfo.getSubscribe());
+                memberInfo.setNickname(openid_userinfo.getNickname());
+                memberInfo.setSex(openid_userinfo.getSex());
+                memberInfo.setCity(openid_userinfo.getCity());
+                memberInfo.setCountry(openid_userinfo.getCountry());
+                memberInfo.setProvince(openid_userinfo.getProvince());
+                memberInfo.setLanguage(openid_userinfo.getLanguage());
+                memberInfo.setHeadimgurl(openid_userinfo.getHeadimgurl());
+                memberInfo.setSubscribeTime(openid_userinfo.getSubscribe_time());
+                memberInfo.setRemark(openid_userinfo.getRemark());
+                memberInfo.setGroupid(openid_userinfo.getGroupid());
+                memberInfo.setUnionid(unionid);
+                memberInfoService.registerMember(memberInfo);//注册会员
 
+                tempMemberInfo = memberInfo;
+            } else {
+                throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作时，查询门店appid等信息错误！");
+            }
+        } else if (memberInfoList.size() == 1) {//已注册绑定
+            tempMemberInfo = memberInfoList.get(0);
+        } else {//多个会员信息
+            throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作时，同一storeCode、unionid有两个会员账号！");
+        }
+
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        if ("1".equals(cardType)) {//实体卡绑定
+            String cardCode = paraMap.get("cardCode") + "";
+            String memberCode = tempMemberInfo.getMemberCode();
+            paramMap.clear();
+            paramMap.put("storeCode", storeCode);
+            paramMap.put("memberCode", memberCode);
+            paramMap.put("cardCode", cardCode);
+            List<MemberCard> memberCardList = memberCardMapper.selectListByParam(paramMap);
+            if (memberCardList.size() == 0) {
+                MemberCard memberCard = new MemberCard();
+                memberCard.setStoreCode(storeCode);
+                memberCard.setMemberCode(memberCode);
+                memberCard.setCardCode(cardCode);
+                memberCard.setCardType(1);
+                memberCard.setStatus(0);
+                memberCardMapper.insertSelective(memberCard);
+            } else if (memberCardList.size() == 1 && memberCardList.get(0).getStatus() == 1) {
+                MemberCard tempMemberCard = memberCardList.get(0);
+                tempMemberCard.setStatus(0);
+                memberCardMapper.updateByPrimaryKeySelective(tempMemberCard);
+            } else if (memberCardList.size() == 1 && memberCardList.get(0).getStatus() == 0) {
+                returnMap.put("success", "false");
+                returnMap.put("desc", "该卡已经绑定了！");
+            } else {
+                throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，同一门店、会员号、卡号重复数据！");
+            }
+        } else if ("2".equals(cardType)) {//虚拟卡
+
+        } else {
+            throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，不符合的绑定卡类型！");
         }
         logger.info("end com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),return:");
         return null;

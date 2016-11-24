@@ -2,6 +2,9 @@ package com.wfj.mapper;
 
 import com.wfj.entity.MemberCard;
 
+import java.util.List;
+import java.util.Map;
+
 public interface MemberCardMapper {
     int deleteByPrimaryKey(Long sid);
 
@@ -14,4 +17,6 @@ public interface MemberCardMapper {
     int updateByPrimaryKeySelective(MemberCard record);
 
     int updateByPrimaryKey(MemberCard record);
+
+    List<MemberCard> selectListByParam(Map<String, Object> paramMap);
 }

@@ -113,36 +113,36 @@ public class MemberInfoController {
     public String bindMemberCard(String storeCode, String cardCode, String memberCode, String mobile, String unionid,
                                  String password, Integer cardType, Integer cardLevel) {
         logger.info("start com.wfj.controller.member.MemberInfoController.bindMemberCard()");
-        Map<String, Object> paramMap = new HashMap<String, Object>();
+        Map<String, Object> paraMap = new HashMap<String, Object>();
         if (StringUtils.isNotEmpty(storeCode)) {
-            paramMap.put("storeCode", storeCode);
+            paraMap.put("storeCode", storeCode);
         }
         if (StringUtils.isNotEmpty(cardCode)) {
-            paramMap.put("cardCode", cardCode);
+            paraMap.put("cardCode", cardCode);
         }
         if (StringUtils.isNotEmpty(memberCode)) {
-            paramMap.put("memberCode", memberCode);
+            paraMap.put("memberCode", memberCode);
         }
         if (StringUtils.isNotEmpty(mobile)) {
-            paramMap.put("mobile", mobile);
+            paraMap.put("mobile", mobile);
         }
         if (StringUtils.isNotEmpty(unionid)) {
-            paramMap.put("unionid", unionid);
+            paraMap.put("unionid", unionid);
         }
         if (StringUtils.isNotEmpty(password)) {
-            paramMap.put("password", password);
+            paraMap.put("password", password);
         }
         if (cardType != null) {
-            paramMap.put("cardType", cardType);
+            paraMap.put("cardType", cardType);
         }
         if (cardLevel != null) {
-            paramMap.put("cardLevel", cardLevel);
+            paraMap.put("cardLevel", cardLevel);
         }
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try {
-            logger.info("绑定会员卡,请求数据：" + paramMap.toString());
-            Map<String, Object> returnMap = memberCardService.bindMemberCard(paramMap);
+            logger.info("绑定会员卡,请求数据：" + paraMap.toString());
+            Map<String, Object> returnMap = memberCardService.bindMemberCard(paraMap);
             logger.info("绑定会员卡,响应数据：" + returnMap.toString());
             if ("true".equals(returnMap.get("success") + "")) {
 //                resultMap.put("cid", dto.getObject());

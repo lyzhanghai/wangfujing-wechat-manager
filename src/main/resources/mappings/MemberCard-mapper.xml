@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wfj.mapper.MemberCardMapper" >
-  <resultMap id="BaseResultMap" type="com.wfj.entity.MemberCard" >
-    <id column="sid" property="sid" jdbcType="BIGINT" />
-    <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
-    <result column="card_code" property="cardCode" jdbcType="VARCHAR" />
-    <result column="member_code" property="memberCode" jdbcType="VARCHAR" />
-    <result column="card_type" property="cardType" jdbcType="INTEGER" />
-    <result column="card_level" property="cardLevel" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
-    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.wfj.mapper.MemberCardMapper">
+    <resultMap id="BaseResultMap" type="com.wfj.entity.MemberCard">
+        <id column="sid" property="sid" jdbcType="BIGINT"/>
+        <result column="store_code" property="storeCode" jdbcType="VARCHAR"/>
+        <result column="card_code" property="cardCode" jdbcType="VARCHAR"/>
+        <result column="member_code" property="memberCode" jdbcType="VARCHAR"/>
+        <result column="card_type" property="cardType" jdbcType="INTEGER"/>
+        <result column="card_level" property="cardLevel" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     sid, store_code, card_code, member_code, card_type, card_level, status, del_flag, 
     update_time, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from member_card
-    where sid = #{sid,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from member_card
+        where sid = #{sid,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from member_card
     where sid = #{sid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.wfj.entity.MemberCard" >
+    <insert id="insert" parameterType="com.wfj.entity.MemberCard">
     insert into member_card (sid, store_code, card_code, 
       member_code, card_type, card_level, 
       status, del_flag, update_time, 
@@ -37,107 +37,107 @@
       #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{updateTime,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wfj.entity.MemberCard" >
-    insert into member_card
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        sid,
-      </if>
-      <if test="storeCode != null" >
-        store_code,
-      </if>
-      <if test="cardCode != null" >
-        card_code,
-      </if>
-      <if test="memberCode != null" >
-        member_code,
-      </if>
-      <if test="cardType != null" >
-        card_type,
-      </if>
-      <if test="cardLevel != null" >
-        card_level,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="delFlag != null" >
-        del_flag,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        #{sid,jdbcType=BIGINT},
-      </if>
-      <if test="storeCode != null" >
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cardCode != null" >
-        #{cardCode,jdbcType=VARCHAR},
-      </if>
-      <if test="memberCode != null" >
-        #{memberCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null" >
-        #{cardType,jdbcType=INTEGER},
-      </if>
-      <if test="cardLevel != null" >
-        #{cardLevel,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.MemberCard" >
-    update member_card
-    <set >
-      <if test="storeCode != null" >
-        store_code = #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cardCode != null" >
-        card_code = #{cardCode,jdbcType=VARCHAR},
-      </if>
-      <if test="memberCode != null" >
-        member_code = #{memberCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null" >
-        card_type = #{cardType,jdbcType=INTEGER},
-      </if>
-      <if test="cardLevel != null" >
-        card_level = #{cardLevel,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where sid = #{sid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wfj.entity.MemberCard" >
+    <insert id="insertSelective" parameterType="com.wfj.entity.MemberCard">
+        insert into member_card
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="storeCode != null">
+                store_code,
+            </if>
+            <if test="cardCode != null">
+                card_code,
+            </if>
+            <if test="memberCode != null">
+                member_code,
+            </if>
+            <if test="cardType != null">
+                card_type,
+            </if>
+            <if test="cardLevel != null">
+                card_level,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                #{sid,jdbcType=BIGINT},
+            </if>
+            <if test="storeCode != null">
+                #{storeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cardCode != null">
+                #{cardCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCode != null">
+                #{memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cardType != null">
+                #{cardType,jdbcType=INTEGER},
+            </if>
+            <if test="cardLevel != null">
+                #{cardLevel,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.MemberCard">
+        update member_card
+        <set>
+            <if test="storeCode != null">
+                store_code = #{storeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cardCode != null">
+                card_code = #{cardCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCode != null">
+                member_code = #{memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cardType != null">
+                card_type = #{cardType,jdbcType=INTEGER},
+            </if>
+            <if test="cardLevel != null">
+                card_level = #{cardLevel,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wfj.entity.MemberCard">
     update member_card
     set store_code = #{storeCode,jdbcType=VARCHAR},
       card_code = #{cardCode,jdbcType=VARCHAR},
@@ -150,4 +150,44 @@
       create_time = #{createTime,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=BIGINT}
   </update>
+
+    <select id="selectListByParam" resultMap="BaseResultMap"
+            parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from member_card
+        <where>
+            <if test="sid != null">
+                and sid = #{sid,jdbcType=BIGINT}
+            </if>
+            <if test="storeCode != null">
+                and store_code = #{storeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="cardCode != null">
+                and card_code = #{cardCode,jdbcType=VARCHAR}
+            </if>
+            <if test="memberCode != null">
+                and member_code = #{memberCode,jdbcType=VARCHAR}
+            </if>
+            <if test="cardType != null">
+                and card_type = #{cardType,jdbcType=INTEGER}
+            </if>
+            <if test="cardLevel != null">
+                and card_level = #{cardLevel,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="delFlag != null">
+                and del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
 </mapper>
