@@ -43,9 +43,31 @@ public class MemberCardServiceImpl implements MemberCardService {
     private WechatUtil wechatUtil;
 
     /**
-     * 绑定卡
+     * 生成虚拟卡编码
      *
      * @param paramMap
+     * @return
+     */
+    public String generateCardCode(Map<String, Object> paramMap) {
+        logger.info("start com.wfj.service.impl.MemberCardServiceImpl.generateCardCode(),para" + paramMap.toString());
+        Map<String, Object> objectMap = memberCardMapper.selectMaxCardCodeByParam(paramMap);
+        Long code = null;
+        if (objectMap != null && !objectMap.isEmpty()) {
+            Long maxCardCode = Long.parseLong(objectMap.get("maxCardCode") + "");
+            code = maxCardCode + 1;
+        } else {
+            code = 1L;
+        }
+
+        logger.info("end com.wfj.service.impl.MemberCardServiceImpl.generateCardCode(),return:" + code);
+        return code + "";
+    }
+
+
+    /**
+     * 绑定卡
+     *
+     * @param paraMap
      * @return
      */
     @Transactional
@@ -95,9 +117,9 @@ public class MemberCardServiceImpl implements MemberCardService {
         }
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
+        String memberCode = tempMemberInfo.getMemberCode();
         if ("1".equals(cardType)) {//实体卡绑定
             String cardCode = paraMap.get("cardCode") + "";
-            String memberCode = tempMemberInfo.getMemberCode();
             paramMap.clear();
             paramMap.put("storeCode", storeCode);
             paramMap.put("memberCode", memberCode);
@@ -111,10 +133,14 @@ public class MemberCardServiceImpl implements MemberCardService {
                 memberCard.setCardType(1);
                 memberCard.setStatus(0);
                 memberCardMapper.insertSelective(memberCard);
+                returnMap.put("success", "true");
+                returnMap.put("desc", "绑定成功！");
             } else if (memberCardList.size() == 1 && memberCardList.get(0).getStatus() == 1) {
                 MemberCard tempMemberCard = memberCardList.get(0);
                 tempMemberCard.setStatus(0);
                 memberCardMapper.updateByPrimaryKeySelective(tempMemberCard);
+                returnMap.put("success", "true");
+                returnMap.put("desc", "绑定成功！");
             } else if (memberCardList.size() == 1 && memberCardList.get(0).getStatus() == 0) {
                 returnMap.put("success", "false");
                 returnMap.put("desc", "该卡已经绑定了！");
@@ -122,7 +148,17 @@ public class MemberCardServiceImpl implements MemberCardService {
                 throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，同一门店、会员号、卡号重复数据！");
             }
         } else if ("2".equals(cardType)) {//虚拟卡
-
+            MemberCard memberCard = new MemberCard();
+            memberCard.setStoreCode(storeCode);
+            memberCard.setMemberCode(memberCode);
+            paramMap.clear();
+            String generateCardCode = generateCardCode(paramMap);
+            memberCard.setCardCode(generateCardCode);
+            memberCard.setCardType(2);
+            memberCard.setStatus(0);
+            memberCardMapper.insertSelective(memberCard);
+            returnMap.put("success", "true");
+            returnMap.put("desc", "绑定成功！");
         } else {
             throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，不符合的绑定卡类型！");
         }

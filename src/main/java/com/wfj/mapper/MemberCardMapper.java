@@ -19,4 +19,6 @@ public interface MemberCardMapper {
     int updateByPrimaryKey(MemberCard record);
 
     List<MemberCard> selectListByParam(Map<String, Object> paramMap);
+
+    Map<String, Object> selectMaxCardCodeByParam(Map<String, Object> paramMap);
 }
