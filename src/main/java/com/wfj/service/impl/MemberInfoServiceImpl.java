@@ -1,7 +1,10 @@
 package com.wfj.service.impl;
 
+import com.wfj.entity.MemberCard;
 import com.wfj.entity.MemberInfo;
+import com.wfj.mapper.MemberCardMapper;
 import com.wfj.mapper.MemberInfoMapper;
+import com.wfj.service.intf.MemberCardService;
 import com.wfj.service.intf.MemberInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +26,12 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
     @Autowired
     private MemberInfoMapper memberInfoMapper;
+
+    @Autowired
+    private MemberCardMapper memberCardMapper;
+
+    @Autowired
+    private MemberCardService memberCardService;
 
     /**
      * 生成会员编码
@@ -52,14 +61,18 @@ public class MemberInfoServiceImpl implements MemberInfoService {
      * @return
      */
     @Transactional
-    public Map<String, Object> registerMember(MemberInfo memberInfo) {
+    public Map<String, Object> registerMember(MemberInfo memberInfo) throws Exception {
         logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),para:" + memberInfo.toString());
+        String storeCode = memberInfo.getStoreCode();
+        String openid = memberInfo.getOpenid();
+
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("storeCode", memberInfo.getStoreCode());
-        paramMap.put("openid", memberInfo.getOpenid());
+        paramMap.put("storeCode", storeCode);
+        paramMap.put("openid", openid);
         List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         Map<String, Object> returnMap = new HashMap<String, Object>();
         if (memberInfoList.size() == 0) {
+            //插入会员信息
             paramMap.clear();
             String generateMemberCode = generateMemberCode(paramMap);
             memberInfo.setMemberCode(generateMemberCode);
@@ -68,12 +81,25 @@ public class MemberInfoServiceImpl implements MemberInfoService {
                 returnMap.put("success", "true");
                 returnMap.put("desc", "注册成功！");
             } else {
-                returnMap.put("success", "false");
-                returnMap.put("desc", "注册失败！");
+                throw new RuntimeException("会员注册时，数据库插入会员信息（memberinfo）失败！");
             }
-        } else {
+
+            //插入虚拟卡
+            MemberCard memberCard = new MemberCard();
+            memberCard.setStoreCode(storeCode);
+            memberCard.setMemberCode(generateMemberCode);
+            paramMap.clear();
+            String generateCardCode = memberCardService.generateCardCode(paramMap);
+            memberCard.setCardCode(generateCardCode);
+            memberCard.setCardType(2);
+            memberCard.setStatus(0);
+            memberCard.setDelFlag(0);
+            memberCardMapper.insertSelective(memberCard);
+        } else if (memberInfoList.size() == 1) {
             returnMap.put("success", "false");
             returnMap.put("desc", "已经注册了！");
+        } else {
+            throw new RuntimeException("会员注册时，会员信息（memberinfo）存在重复信息！");
         }
 
         logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),return:" + returnMap.toString());

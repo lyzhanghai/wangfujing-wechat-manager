@@ -13,5 +13,5 @@ public interface MemberInfoService {
     String generateMemberCode(Map<String, Object> paramMap);
 
     @Transactional
-    Map<String, Object> registerMember(MemberInfo memberInfo);
+    Map<String, Object> registerMember(MemberInfo memberInfo) throws Exception;
 }

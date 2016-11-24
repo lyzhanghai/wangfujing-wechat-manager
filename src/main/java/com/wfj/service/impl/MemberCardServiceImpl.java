@@ -135,6 +135,7 @@ public class MemberCardServiceImpl implements MemberCardService {
                 memberCard.setCardCode(cardCode);
                 memberCard.setCardType(1);
                 memberCard.setStatus(0);
+                memberCard.setDelFlag(0);
                 if (StringUtils.isNotEmpty(cardLevel)) {
                     memberCard.setCardLevel(Integer.parseInt(cardLevel));
                 }
@@ -144,6 +145,7 @@ public class MemberCardServiceImpl implements MemberCardService {
             } else if (memberCardList.size() == 1 && memberCardList.get(0).getStatus() == 1) {
                 MemberCard tempMemberCard = memberCardList.get(0);
                 tempMemberCard.setStatus(0);
+                tempMemberCard.setDelFlag(0);
                 memberCardMapper.updateByPrimaryKeySelective(tempMemberCard);
                 returnMap.put("success", "true");
                 returnMap.put("desc", "绑定成功！");
@@ -162,6 +164,7 @@ public class MemberCardServiceImpl implements MemberCardService {
             memberCard.setCardCode(generateCardCode);
             memberCard.setCardType(2);
             memberCard.setStatus(0);
+            memberCard.setDelFlag(0);
             if (StringUtils.isNotEmpty(cardLevel)) {
                 memberCard.setCardLevel(Integer.parseInt(cardLevel));
             }
