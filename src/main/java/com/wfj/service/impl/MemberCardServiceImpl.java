@@ -83,35 +83,35 @@ public class MemberCardServiceImpl implements MemberCardService {
         List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         MemberInfo tempMemberInfo = null;
         if (memberInfoList.size() == 0) {//未注册绑定
+//            paramMap.clear();
+//            paramMap.put("storeCode", storeCode);
+//            List<AppAccountInfo> appAccountInfoList = appAccountInfoService.queryAppAccount(paramMap);
+//            if (appAccountInfoList.size() == 1) {
+//                AppAccountInfo appAccountInfo = appAccountInfoList.get(0);
+            com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(openid, paraMap.get("appid") + "", paraMap.get("secret") + "");
+            MemberInfo memberInfo = new MemberInfo();
             paramMap.clear();
-            paramMap.put("storeCode", storeCode);
-            List<AppAccountInfo> appAccountInfoList = appAccountInfoService.queryAppAccount(paramMap);
-            if (appAccountInfoList.size() == 1) {
-                AppAccountInfo appAccountInfo = appAccountInfoList.get(0);
-                com.wfj.dto.MemberInfo openid_userinfo = wechatUtil.Openid_userinfo(openid, appAccountInfo.getAppid(), appAccountInfo.getAppsecret());
-                MemberInfo memberInfo = new MemberInfo();
-                paramMap.clear();
-                String generateMemberCode = memberInfoService.generateMemberCode(paramMap);
-                memberInfo.setMemberCode(generateMemberCode);
-                memberInfo.setSubscribe(openid_userinfo.getSubscribe());
-                memberInfo.setNickname(openid_userinfo.getNickname());
-                memberInfo.setSex(openid_userinfo.getSex());
-                memberInfo.setCity(openid_userinfo.getCity());
-                memberInfo.setCountry(openid_userinfo.getCountry());
-                memberInfo.setProvince(openid_userinfo.getProvince());
-                memberInfo.setLanguage(openid_userinfo.getLanguage());
-                memberInfo.setHeadimgurl(openid_userinfo.getHeadimgurl());
-                memberInfo.setSubscribeTime(openid_userinfo.getSubscribe_time());
-                memberInfo.setRemark(openid_userinfo.getRemark());
-                memberInfo.setGroupid(openid_userinfo.getGroupid());
-                memberInfo.setUnionid(openid_userinfo.getUnionid());
-                memberInfo.setOpenid(openid);
-                memberInfoService.registerMember(memberInfo);//注册会员
+            String generateMemberCode = memberInfoService.generateMemberCode(paramMap);
+            memberInfo.setMemberCode(generateMemberCode);
+            memberInfo.setSubscribe(openid_userinfo.getSubscribe());
+            memberInfo.setNickname(openid_userinfo.getNickname());
+            memberInfo.setSex(openid_userinfo.getSex());
+            memberInfo.setCity(openid_userinfo.getCity());
+            memberInfo.setCountry(openid_userinfo.getCountry());
+            memberInfo.setProvince(openid_userinfo.getProvince());
+            memberInfo.setLanguage(openid_userinfo.getLanguage());
+            memberInfo.setHeadimgurl(openid_userinfo.getHeadimgurl());
+            memberInfo.setSubscribeTime(openid_userinfo.getSubscribe_time());
+            memberInfo.setRemark(openid_userinfo.getRemark());
+            memberInfo.setGroupid(openid_userinfo.getGroupid());
+            memberInfo.setUnionid(openid_userinfo.getUnionid());
+            memberInfo.setOpenid(openid);
+            memberInfoService.registerMember(memberInfo);//注册会员
 
-                tempMemberInfo = memberInfo;
-            } else {
-                throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作时，查询门店appid等信息错误！");
-            }
+            tempMemberInfo = memberInfo;
+//            } else {
+//                throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作时，查询门店appid等信息错误！");
+//            }
         } else if (memberInfoList.size() == 1) {//已注册绑定
             tempMemberInfo = memberInfoList.get(0);
         } else {//多个会员信息
