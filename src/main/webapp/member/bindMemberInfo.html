@@ -196,7 +196,7 @@
 			//显示加载框
 //			$("#loading").css("display","table");
 			$.post(url,param,function(response){
-				
+				response = JSON.parse(response);
 				if(response.success){
 					$("#modal_lable").text("恭喜");
 					$("#modal_msg").text(response.msg);
@@ -242,6 +242,7 @@
 			//显示加载框
 //			$("#loading").css("display","table");
 			$.post(url,param,function(response){
+			    response = JSON.parse(response);
 				if(response.success){
 					$("#modal_lable").text("恭喜");
 					$("#modal_msg").text(response.msg);
