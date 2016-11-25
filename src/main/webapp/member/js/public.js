@@ -63,7 +63,7 @@ function loadIndex() {
         success: function (response) {
             response = JSON.parse(response);
             if (response.success) {
-                location.href = encodeURI(response.data);
+                location.href = response.data;
             }
         }
     });
