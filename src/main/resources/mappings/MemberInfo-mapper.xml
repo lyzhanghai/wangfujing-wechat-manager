@@ -370,12 +370,56 @@
 
     <select id="selectMaxMemberCodeByParam" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT
-            MAX(member_code) AS maxMemberCode
+        MAX(member_code) AS maxMemberCode
         FROM
-            memberinfo
+        memberinfo
         <where>
             <if test="storeCode != null">
                 and store_code = #{storeCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMemberInfoListByParam" parameterType="java.util.Map" resultType="com.wfj.dto.MemberInfoReturnDto">
+        SELECT
+        mi.store_code AS storeCode,
+        mi.member_code AS memberCode,
+        mi.openid AS openid,
+        mi.password AS password,
+        mi.mobile AS mobile,
+        mc.card_code AS cardCode,
+        mc.card_type AS cardType,
+        mc.card_level AS cardLevel,
+        mc.status AS status,
+        mc.del_flag AS delFlag
+        FROM
+        memberinfo mi
+        INNER JOIN member_card mc ON mi.store_code = mc.store_code
+        AND mi.member_code = mc.member_code
+        <where>
+            <if test="status != null">
+                AND mc.status = #{status}
+            </if>
+            <if test="status == null">
+                AND mc.status = 0
+            </if>
+            <if test="delFlag != null">
+                AND mc.del_flag = #{delFlag}
+            </if>
+            <if test="status == null">
+                AND mc.del_flag = 0
+            </if>
+            <if test="storeCode != null">
+                AND mi.store_code = #{storeCode}
+            </if>
+            <if test="openid != null">
+                AND mi.openid = #{openid}
+            </if>
+            <if test="memberCode != null">
+                AND mi.member_code = #{memberCode}
+            </if>
+            <if test="mobile != null">
+                AND mi.mobile = #{mobile}
             </if>
         </where>
     </select>

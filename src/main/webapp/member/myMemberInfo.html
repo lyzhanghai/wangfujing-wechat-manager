@@ -74,7 +74,7 @@
 	var rootPath = getContextPath();
 	var appId = getUrlDataByKey("appId");
 	var openId = getUrlDataByKey("openId");
-	var uid = getUrlDataByKey("uid");
+	var unionId = getUrlDataByKey("unionId");
 	var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
 	var cardNo = getUrlDataByKey("cardNo");
 	var custType = getUrlDataByKey("custType");//等级
@@ -140,7 +140,7 @@
 	//绑定手机
 	function bindPhone(){
 		var bindPhoneUrl = rootPath + "/unRegidterBindPhone.html?";
-		bindPhoneUrl += "uid=" + uid;
+		bindPhoneUrl += "unionId=" + unionId;
 		bindPhoneUrl += "&appId=" + appId;
 		bindPhoneUrl += "&openId=" + openId;
 		bindPhoneUrl += "&mkt=" + mkt;
@@ -150,7 +150,7 @@
 	//绑定实体卡
 	function bindEntityCard(){
 		var bindEntityCardUrl = rootPath + "/bindMemberInfo.html?bindType=2";
-		bindEntityCardUrl += "&uid=" + uid;
+		bindEntityCardUrl += "&unionId=" + unionId;
 		bindEntityCardUrl += "&appId=" + appId;
 		bindEntityCardUrl += "&openId=" + openId;
 		bindEntityCardUrl += "&mkt=" + mkt;

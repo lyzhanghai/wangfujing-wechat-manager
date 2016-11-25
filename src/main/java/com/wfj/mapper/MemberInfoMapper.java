@@ -1,5 +1,6 @@
 package com.wfj.mapper;
 
+import com.wfj.dto.MemberInfoReturnDto;
 import com.wfj.entity.MemberInfo;
 
 import java.util.List;
@@ -21,4 +22,12 @@ public interface MemberInfoMapper {
     List<MemberInfo> selectListByParam(Map<String, Object> paramMap);
 
     Map<String, Object> selectMaxMemberCodeByParam(Map<String, Object> paramMap);
+
+    /**
+     * 查询会员及会员卡信息
+     *
+     * @param paramMap
+     * @return
+     */
+    List<MemberInfoReturnDto> selectMemberInfoListByParam(Map<String, Object> paramMap);
 }

@@ -1,5 +1,6 @@
 package com.wfj.service.impl;
 
+import com.wfj.dto.MemberInfoReturnDto;
 import com.wfj.entity.MemberCard;
 import com.wfj.entity.MemberInfo;
 import com.wfj.mapper.MemberCardMapper;
@@ -103,6 +104,39 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         }
 
         logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),return:" + returnMap.toString());
+        return returnMap;
+    }
+
+    /**
+     * 查询会员及会员卡信息
+     *
+     * @param
+     * @return
+     */
+    public Map<String, Object> getMemberInfo(Map<String, Object> paraMap) {
+        logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.getMemberInfo(),para:" + paraMap.toString());
+        String appid = paraMap.get("appid") + "";
+        String openid = paraMap.get("openid") + "";
+        String storeCode = paraMap.get("storeCode") + "";
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("storeCode", storeCode);
+        paramMap.put("openid", openid);
+        List<MemberInfoReturnDto> memberInfoReturnDtoList = memberInfoMapper.selectMemberInfoListByParam(paramMap);
+
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        if (memberInfoReturnDtoList.size() == 0) {
+            returnMap.put("code", "0");
+            returnMap.put("desc", "未注册会员信息！");
+        } else if (memberInfoReturnDtoList.size() == 1) {
+            returnMap.put("code", "1");
+            returnMap.put("desc", "查询到会员及会员卡信息！");
+            returnMap.put("obj", memberInfoReturnDtoList.get(0));
+        } else {
+            throw new RuntimeException("查询会员及会员卡信息（com.wfj.service.impl.MemberInfoServiceImpl.getMemberInfo）：一个门店下一个会员有两张及以上会员！");
+        }
+
+        logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.getMemberInfo(),return:" + returnMap.toString());
         return returnMap;
     }
 
