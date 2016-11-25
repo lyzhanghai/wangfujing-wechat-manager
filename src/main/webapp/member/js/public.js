@@ -61,6 +61,7 @@ function loadIndex() {
         },
         dataType: "json",
         success: function (response) {
+            response = JSON.parse(response);
             if (response.success) {
                 location.href = response.data;
             }
