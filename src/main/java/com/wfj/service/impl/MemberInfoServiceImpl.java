@@ -140,4 +140,51 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         return returnMap;
     }
 
+    /**
+     * 修改支付密码
+     *
+     * @param
+     * @return
+     */
+    @Transactional
+    public Map<String, Object> changePayPassword(Map<String, Object> paraMap) throws Exception {
+        logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.changePayPassword(),para:" + paraMap.toString());
+        String openid = paraMap.get("openid") + "";
+        String storeCode = paraMap.get("storeCode") + "";
+        String oldPayPwd = paraMap.get("oldPayPwd") + "";
+        String newPayPwd = paraMap.get("newPayPwd") + "";
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("openid", openid);
+        paramMap.put("storeCode", storeCode);
+        List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
+
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        if (memberInfoList.size() == 1) {
+            MemberInfo memberInfo = memberInfoList.get(0);
+            String password = memberInfo.getPassword();
+            if (oldPayPwd.equals(password)) {
+                memberInfo.setPassword(newPayPwd);//修改密码
+                int i = memberInfoMapper.updateByPrimaryKeySelective(memberInfo);
+                if (i == 1) {
+                    returnMap.put("success", "true");
+                    returnMap.put("desc", "修改密码成功！");
+                } else {
+                    throw new RuntimeException("修改支付密码（com.wfj.service.impl.MemberInfoServiceImpl.changePayPassword）时操作数据库失败！");
+                }
+            } else {
+                returnMap.put("success", "false");
+                returnMap.put("desc", "旧密码不正确！");
+            }
+        } else if (memberInfoList.size() == 0) {
+            returnMap.put("success", "false");
+            returnMap.put("desc", "未注册会员信息！");
+        } else {
+            throw new RuntimeException("修改支付密码（com.wfj.service.impl.MemberInfoServiceImpl.changePayPassword）时出现重复会员！");
+        }
+
+        logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.changePayPassword(),return:" + returnMap.toString());
+        return returnMap;
+    }
+
 }

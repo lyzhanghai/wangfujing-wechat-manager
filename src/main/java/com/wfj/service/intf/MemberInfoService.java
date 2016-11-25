@@ -16,4 +16,7 @@ public interface MemberInfoService {
     Map<String, Object> registerMember(MemberInfo memberInfo) throws Exception;
 
     Map<String,Object> getMemberInfo(Map<String, Object> paraMap);
+
+    @Transactional
+    Map<String,Object> changePayPassword(Map<String, Object> paraMap) throws Exception;
 }

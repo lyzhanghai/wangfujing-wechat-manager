@@ -280,8 +280,8 @@ public class MemberInfoController {
 
             String mobile = memberInfoReturnDto.getMobile();
 
-            para = "cardNo=" + memberInfoReturnDto.getCardCode() + "&custType=" + memberInfoReturnDto.getCardLevel()
-                    + "&qrcode=&mobile=" + mobile;
+            para = "memberCode=" + memberInfoReturnDto.getMemberCode() + "&cardNo=" + memberInfoReturnDto.getCardCode() +
+                    "&custType=" + memberInfoReturnDto.getCardLevel() + "&qrcode=&mobile=" + mobile;
 
             Integer cardType = memberInfoReturnDto.getCardType();
             if (cardType != 1) {// 是否存在有实体卡,无实体卡
@@ -299,5 +299,60 @@ public class MemberInfoController {
         logger.info("end com.wfj.controller.member.MemberInfoController.getMemberInfo(),return:" + url + para);
         return url + para;
     }
+
+    /**
+     * 修改支付密码
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = {"/newChangePayPwd"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String newChangePayPwd(String storeCode, String openId, String appId, String oldPayPwd, String newPayPwd, String newPayPwdCheck) {
+        logger.info("start com.wfj.controller.member.MemberInfoController.newChangePayPwd()");
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        if (StringUtils.isNotEmpty(storeCode)) {
+            paraMap.put("storeCode", storeCode.trim());
+        }
+        if (StringUtils.isNotEmpty(openId)) {
+            paraMap.put("openid", openId.trim());
+        }
+        if (StringUtils.isNotEmpty(appId)) {
+            paraMap.put("appid", appId.trim());
+        }
+        if (StringUtils.isNotEmpty(oldPayPwd)) {
+            paraMap.put("oldPayPwd", oldPayPwd.trim());
+        }
+        if (StringUtils.isNotEmpty(newPayPwd)) {
+            paraMap.put("newPayPwd", newPayPwd.trim());
+        }
+        logger.info("请求参数：" + paraMap.toString() + "--newPayPwdCheck:" + newPayPwdCheck);
+        logger.info("开始判断新密码与确认密码是否一致！");
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if (newPayPwd.trim().equals(newPayPwdCheck.trim())) {
+            try {
+                Map<String, Object> returnMap = memberInfoService.changePayPassword(paraMap);
+                String success = returnMap.get("success") + "";
+                String desc = returnMap.get("desc") + "";
+                if ("true".equals(success)) {
+                    resultMap.put("msg", desc);
+                    resultMap.put("success", true);
+                } else {
+                    resultMap.put("msg", desc);
+                    resultMap.put("success", false);
+                }
+            } catch (Exception e) {
+                resultMap.put("msg", "系统错误");
+                resultMap.put("success", false);
+            }
+        } else {
+            resultMap.put("msg", "新密码与确认密码不一致！");
+            resultMap.put("success", false);
+        }
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        logger.info("end com.wfj.controller.member.MemberInfoController.newChangePayPwd(),return:" + resultMap.toString());
+        return gson.toJson(resultMap);
+    }
+
 
 }
