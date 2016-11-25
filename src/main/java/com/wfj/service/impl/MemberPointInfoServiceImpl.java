@@ -1,16 +1,13 @@
 package com.wfj.service.impl;
 
-import com.wfj.dto.MemberPointInfoDto;
-import com.wfj.entity.MemberPointInfo;
+import com.wfj.dto.MemberPointInfoReturnDto;
 import com.wfj.mapper.MemberPointInfoMapper;
 import com.wfj.service.intf.MemberPointInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +29,7 @@ public class MemberPointInfoServiceImpl implements MemberPointInfoService {
      * @param paraMap
      * @return
      */
-    public List<MemberPointInfoDto> findMemberPointDetailByPara(Map<String, Object> paraMap) {
+    public List<MemberPointInfoReturnDto> findMemberPointDetailByPara(Map<String, Object> paraMap) {
         logger.info("start com.wfj.service.impl.MemberPointInfoServiceImpl.findMemberPointDetailByPara(),para:" + paraMap.toString());
         String storeCode = paraMap.get("storeCode") + "";
         String memberCode = paraMap.get("memberCode") + "";
@@ -42,18 +39,14 @@ public class MemberPointInfoServiceImpl implements MemberPointInfoService {
         paraMap.put("storeCode", storeCode);
         paraMap.put("memberCode", memberCode);
         paraMap.put("cardCode", cardCode);
-        List<MemberPointInfo> memberPointInfoList = memberPointInfoMapper.selectListByParam(paramMap);
-        List<MemberPointInfoDto> returnDtoList = new ArrayList<MemberPointInfoDto>();
-        for (MemberPointInfo memberPointInfo : memberPointInfoList) {
-            MemberPointInfoDto returnDto = new MemberPointInfoDto();
-            BeanUtils.copyProperties(memberPointInfo, returnDto);
-            Integer pointType = memberPointInfo.getPointType();
+        List<MemberPointInfoReturnDto> dtoList = memberPointInfoMapper.selectMemberPointDetailListByParam(paramMap);
+        for (MemberPointInfoReturnDto tempDto : dtoList) {
+            Integer pointType = tempDto.getPointType();
             if (pointType == 1) {
-                returnDto.setPointTypeView("消费返增加");
+                tempDto.setPointTypeView("消费返增加");
             }
-            returnDtoList.add(returnDto);
         }
-        logger.info("end com.wfj.service.impl.MemberPointInfoServiceImpl.findMemberPointDetailByPara(),return:" + returnDtoList.toString());
-        return returnDtoList;
+        logger.info("end com.wfj.service.impl.MemberPointInfoServiceImpl.findMemberPointDetailByPara(),return:" + dtoList.toString());
+        return dtoList;
     }
 }

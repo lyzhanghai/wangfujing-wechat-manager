@@ -3,7 +3,7 @@ package com.wfj.controller.member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wfj.dto.MemberInfoReturnDto;
-import com.wfj.dto.MemberPointInfoDto;
+import com.wfj.dto.MemberPointInfoReturnDto;
 import com.wfj.entity.MemberInfo;
 import com.wfj.message.req.StoreInfoDto;
 import com.wfj.service.intf.MemberCardService;
@@ -390,7 +390,7 @@ public class MemberInfoController {
         logger.info("查询参数：" + paraMap.toString());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try {
-            List<MemberPointInfoDto> returnDtoList = memberPointInfoService.findMemberPointDetailByPara(paraMap);
+            List<MemberPointInfoReturnDto> returnDtoList = memberPointInfoService.findMemberPointDetailByPara(paraMap);
             resultMap.put("obj", returnDtoList);
             resultMap.put("success", true);
         } catch (Exception e) {

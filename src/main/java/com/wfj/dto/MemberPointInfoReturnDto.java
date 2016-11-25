@@ -2,10 +2,12 @@ package com.wfj.dto;
 
 import java.util.Date;
 
-public class MemberPointInfoDto {
+public class MemberPointInfoReturnDto {
     private Long sid;
 
     private String storeCode;
+
+    private String businessName;//门店名称
 
     private String memberCode;
 
@@ -39,6 +41,14 @@ public class MemberPointInfoDto {
 
     public void setStoreCode(String storeCode) {
         this.storeCode = storeCode;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 
     public String getMemberCode() {

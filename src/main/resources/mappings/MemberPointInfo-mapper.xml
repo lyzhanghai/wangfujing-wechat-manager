@@ -224,4 +224,51 @@
         </where>
     </select>
 
+    <select id="selectMemberPointDetailListByParam" resultType="com.wfj.dto.MemberPointInfoReturnDto"
+            parameterType="java.util.Map">
+        SELECT
+        mpi.store_code AS storeCode,
+        si.business_name AS businessName,
+        mpi.member_code AS memberCode,
+        mpi.card_code AS cardCode,
+        mpi.point_type AS pointType,
+        mpi.points AS points,
+        mpi.point_time AS pointTime,
+        mpi.status AS status,
+        mpi.serial_number AS serialNumber,
+        mpi.del_flag AS delFlag
+        FROM
+        member_point_info mpi
+        INNER JOIN storeinfo si ON mpi.store_code = si.store_code
+        <where>
+            <if test="storeCode != null">
+                and mpi.store_code = #{storeCode}
+            </if>
+            <if test="memberCode != null">
+                and mpi.member_code = #{memberCode}
+            </if>
+            <if test="cardCode != null">
+                and mpi.card_code = #{cardCode}
+            </if>
+            <if test="pointType != null">
+                and mpi.point_type = #{pointType}
+            </if>
+            <if test="status != null">
+                and mpi.status = #{status}
+            </if>
+            <if test="status == null">
+                and mpi.status = 0
+            </if>
+            <if test="serialNumber != null">
+                and mpi.serial_number = #{serialNumber}
+            </if>
+            <if test="delFlag != null">
+                and mpi.del_flag = #{delFlag}
+            </if>
+            <if test="delFlag == null">
+                and mpi.del_flag = 0
+            </if>
+        </where>
+    </select>
+
 </mapper>

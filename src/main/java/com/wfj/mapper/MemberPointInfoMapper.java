@@ -1,5 +1,6 @@
 package com.wfj.mapper;
 
+import com.wfj.dto.MemberPointInfoReturnDto;
 import com.wfj.entity.MemberPointInfo;
 
 import java.util.List;
@@ -19,4 +20,12 @@ public interface MemberPointInfoMapper {
     int updateByPrimaryKey(MemberPointInfo record);
 
     List<MemberPointInfo> selectListByParam(Map<String, Object> paramMap);
+
+    /**
+     * 查询积分明细
+     *
+     * @param paramMap
+     * @return
+     */
+    List<MemberPointInfoReturnDto> selectMemberPointDetailListByParam(Map<String, Object> paramMap);
 }
