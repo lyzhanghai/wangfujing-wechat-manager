@@ -80,7 +80,7 @@
 	var custType = getUrlDataByKey("custType");//等级
 	var qrcode = getUrlDataByKey("qrcode");//二维码
 	var phone = getUrlDataByKey("mobile");
-	var mkt = getUrlDataByKey("storeCode");//门店号
+	var storeCode = getUrlDataByKey("storeCode");//门店号
 	
 	var entityCard = getUrlDataByKey("entityCard");
 	var unBund = getUrlDataByKey("unBund");
@@ -96,17 +96,17 @@
 	
 	//会员积分
 	function memberCen(){
-		var memberCenUrl = rootPath + "/myMemberDetailInfo.html?";
+		var memberCenUrl = rootPath + "/member/myMemberDetailInfo.html?";
 		memberCenUrl += "appId=" + appId;
 		memberCenUrl += "&openId=" + openId;
 		memberCenUrl += "&cardNo=" + cardNo;
 		memberCenUrl += "&registType=" + registType;
-		memberCenUrl += "&storeCode=" + mkt;
+		memberCenUrl += "&storeCode=" + storeCode;
 		$("#memberCen").attr("href", memberCenUrl);
 	}
 	//会员权益
 	function memberBen(){
-		var memberBenUrl = rootPath + "/storeMemBenefitsHtml/memberBenefits_"+ mkt +".html";
+		var memberBenUrl = rootPath + "/member/storeMemBenefitsHtml/memberBenefits_"+ storeCode +".html";
 		$("#memberBen").attr("href", memberBenUrl);
 	}
 	
@@ -139,11 +139,11 @@
 	}
 	//绑定手机
 	function bindPhone(){
-		var bindPhoneUrl = rootPath + "/unRegidterBindPhone.html?";
+		var bindPhoneUrl = rootPath + "/member/unRegidterBindPhone.html?";
 		bindPhoneUrl += "unionId=" + unionId;
 		bindPhoneUrl += "&appId=" + appId;
 		bindPhoneUrl += "&openId=" + openId;
-		bindPhoneUrl += "&mkt=" + mkt;
+		bindPhoneUrl += "&storeCode=" + storeCode;
 		bindPhoneUrl += "&registType=" + registType;
 		location.href = bindPhoneUrl;
 	}
@@ -153,7 +153,7 @@
 		bindEntityCardUrl += "&unionId=" + unionId;
 		bindEntityCardUrl += "&appId=" + appId;
 		bindEntityCardUrl += "&openId=" + openId;
-		bindEntityCardUrl += "&mkt=" + mkt;
+		bindEntityCardUrl += "&storeCode=" + storeCode;
 		bindEntityCardUrl += "&registType=" + registType;
 		location.href = bindEntityCardUrl;
 	}
