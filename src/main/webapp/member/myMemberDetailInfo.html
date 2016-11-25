@@ -17,7 +17,7 @@
     </div>
     <div class="container-fluid">
         <ul class="integralList" id="memberDetailUl">
-            <li>
+            <!--<li>
                 <div class="row">
                     <div class="col-xs-5">2016-09-18</div>
                     <div class="col-xs-7 tr tishi">北京市百货大楼</div>
@@ -36,7 +36,7 @@
                     <div class="col-xs-7">消费返增加</div>
                     <div class="col-xs-5 tr">2955.32</div>
                 </div>
-            </li>
+            </li>-->
         </ul>
     </div>
 </div>
@@ -50,7 +50,8 @@
     var openId = getUrlDataByKey("openId");
     var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
     var cardNo = getUrlDataByKey("cardNo");
-    var mkt = getUrlDataByKey("storeCode");//门店号
+    var storeCode = getUrlDataByKey("storeCode");//门店号
+    var memberCode = getUrlDataByKey("memberCode");//门店号
 </script>
 <script type="text/javascript">
     $(function () {
@@ -95,11 +96,14 @@
         $.ajax({
             type: "post",
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            url: rootPath + "/memberDetail/getAllChannelMemberDetail.do",
+            url: rootPath + "/memberInfo/getMemberPointInfo.json",
             async: false,
             data: {
                 "openId": openId,
                 "appId": appId,
+                "storeCode": storeCode,
+                "memberCode": memberCode,
+                "cardNo": cardNo,
                 "pageNo": pageNo,
                 "pageSize": pageSize
             },
@@ -111,30 +115,19 @@
                 $("#loading-container").addClass("loading-inactive");
             },
             success: function (response) {
+                response = JSON.parse(response);
                 if (response.success) {
-                    var result = response.obj;
-//                    result = JSON.parse(result);
-                    var list = result.list;
+                    var list = response.obj;
                     for (var i = 0; i < list.length; i++) {
                         var obj = list[i];
-                        var eff_date = "";
-                        var storeName = "";
-                        var summaryname = "";
-                        var amount = "";
-                        if (0 == registType) {
-                            eff_date = obj.eff_date;
-                            storeName = obj.storeName;
-                            summaryname = obj.summaryname;
-                            amount = obj.amount;
-                        } else if (1 == registType) {
-                            eff_date = obj.rqsj;
-                            storeName = obj.mdname;
-                            amount = obj.ljjf;
-                        }
-                        var li = '<li><div class="row"><div class="col-xs-5">' + eff_date + '</div>';
+                        var pointTime = obj.pointTime;
+                        var storeName = obj.storeCode;
+                        var pointTypeView = obj.pointTypeView;
+                        var points = obj.points;
+                        var li = '<li><div class="row"><div class="col-xs-5">' + pointTime + '</div>';
                         li += '<div class="col-xs-7 tr tishi">' + storeName + '</div></div>';
-                        li += '<div class="row"><div class="col-xs-7">' + summaryname + '</div>';
-                        li += '<div class="col-xs-5 tr">' + amount + '</div></div></li>';
+                        li += '<div class="row"><div class="col-xs-7">' + pointTypeView + '</div>';
+                        li += '<div class="col-xs-5 tr">' + points + '</div></div></li>';
                         $("#memberDetailUl").append(li);
                     }
                 }

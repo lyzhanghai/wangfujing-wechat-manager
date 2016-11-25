@@ -3,10 +3,12 @@ package com.wfj.controller.member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wfj.dto.MemberInfoReturnDto;
+import com.wfj.dto.MemberPointInfoDto;
 import com.wfj.entity.MemberInfo;
 import com.wfj.message.req.StoreInfoDto;
 import com.wfj.service.intf.MemberCardService;
 import com.wfj.service.intf.MemberInfoService;
+import com.wfj.service.intf.MemberPointInfoService;
 import com.wfj.util.PropertiesUtils;
 import com.wfj.util.StringUtils;
 import com.wfj.util.WechatUtil;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +43,9 @@ public class MemberInfoController {
 
     @Autowired
     private MemberCardService memberCardService;
+
+    @Autowired
+    private MemberPointInfoService memberPointInfoService;
 
     /**
      * 注册会员
@@ -354,5 +360,47 @@ public class MemberInfoController {
         return gson.toJson(resultMap);
     }
 
+    /**
+     * 查询积分明细
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/getMemberPointInfo", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String getMemberPointInfo(String storeCode, String memberCode, String cardNo,
+                                     String pageNo, String pageSize) {
+        logger.info("start com.wfj.controller.member.MemberInfoController.getMemberPointInfo()");
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        if (StringUtils.isNotEmpty(storeCode)) {
+            paraMap.put("storeCode", storeCode.trim());
+        }
+        if (StringUtils.isNotEmpty(memberCode)) {
+            paraMap.put("memberCode", memberCode.trim());
+        }
+        if (StringUtils.isNotEmpty(cardNo)) {
+            paraMap.put("cardCode", cardNo.trim());
+        }
+        if (StringUtils.isNotEmpty(pageNo)) {
+            paraMap.put("pageNo", pageNo.trim());
+        }
+        if (StringUtils.isNotEmpty(pageSize)) {
+            paraMap.put("pageSize", pageSize.trim());
+        }
+        logger.info("查询参数：" + paraMap.toString());
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+            List<MemberPointInfoDto> returnDtoList = memberPointInfoService.findMemberPointDetailByPara(paraMap);
+            resultMap.put("obj", returnDtoList);
+            resultMap.put("success", true);
+        } catch (Exception e) {
+            resultMap.put("msg", "系统错误");
+            resultMap.put("success", false);
+        }
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        logger.info("end com.wfj.controller.member.MemberInfoController.getMemberPointInfo(),return:" + resultMap.toString());
+        return gson.toJson(resultMap);
+    }
 
 }

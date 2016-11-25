@@ -203,11 +203,17 @@
             <if test="status != null">
                 and status = #{status,jdbcType=INTEGER}
             </if>
+            <if test="status == null">
+                and status = 0
+            </if>
             <if test="serialNumber != null">
                 and serial_number = #{serialNumber,jdbcType=VARCHAR}
             </if>
             <if test="delFlag != null">
                 and del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+            <if test="delFlag == null">
+                and del_flag = 0
             </if>
             <if test="createTime != null">
                 and create_time = #{createTime,jdbcType=TIMESTAMP}
