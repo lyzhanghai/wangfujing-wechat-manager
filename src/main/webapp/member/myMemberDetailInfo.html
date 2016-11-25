@@ -120,11 +120,11 @@
                     var list = response.obj;
                     for (var i = 0; i < list.length; i++) {
                         var obj = list[i];
-                        var pointTime = obj.pointTime;
+                        var pointTimeView = obj.pointTimeView;
                         var storeName = obj.businessName;
                         var pointTypeView = obj.pointTypeView;
                         var points = obj.points;
-                        var li = '<li><div class="row"><div class="col-xs-5">' + pointTime + '</div>';
+                        var li = '<li><div class="row"><div class="col-xs-5">' + pointTimeView + '</div>';
                         li += '<div class="col-xs-7 tr tishi">' + storeName + '</div></div>';
                         li += '<div class="row"><div class="col-xs-7">' + pointTypeView + '</div>';
                         li += '<div class="col-xs-5 tr">' + points + '</div></div></li>';

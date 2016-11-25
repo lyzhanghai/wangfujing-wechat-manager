@@ -21,6 +21,8 @@ public class MemberPointInfoReturnDto {
 
     private Date pointTime;//积分时间
 
+    private String pointTimeView;//积分时间
+
     private Integer status;
 
     private String serialNumber;
@@ -121,5 +123,13 @@ public class MemberPointInfoReturnDto {
 
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public String getPointTimeView() {
+        return pointTimeView;
+    }
+
+    public void setPointTimeView(String pointTimeView) {
+        this.pointTimeView = pointTimeView;
     }
 }

@@ -52,11 +52,7 @@ public class MemberPointInfoServiceImpl implements MemberPointInfoService {
             Date pointTime = tempDto.getPointTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String format = sdf.format(pointTime);
-            try {
-                tempDto.setPointTime(sdf.parse(format));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            tempDto.setPointTypeView(format);
         }
         logger.info("end com.wfj.service.impl.MemberPointInfoServiceImpl.findMemberPointDetailByPara(),return:" + dtoList.toString());
         return dtoList;
