@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,15 @@ public class MemberPointInfoServiceImpl implements MemberPointInfoService {
             Integer pointType = tempDto.getPointType();
             if (pointType == 1) {
                 tempDto.setPointTypeView("消费返增加");
+            }
+
+            Date pointTime = tempDto.getPointTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String format = sdf.format(pointTime);
+            try {
+                tempDto.setPointTime(sdf.parse(format));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         logger.info("end com.wfj.service.impl.MemberPointInfoServiceImpl.findMemberPointDetailByPara(),return:" + dtoList.toString());
