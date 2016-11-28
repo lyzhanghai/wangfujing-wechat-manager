@@ -1,133 +1,164 @@
 package com.wfj.entity;
 
 public class MsgReply {
-    private Integer sid;
+	private Integer sid;
 
-    private String msgKey;
+	private String appId;
 
-    private Integer msgType;
+	private String appSecret;
 
-    private String content;
+	private String msgKey;
 
-    private String mediaId;
+	private Integer msgType;
 
-    private String title;
+	private String content;
 
-    private String description;
+	private String mediaId;
 
-    private String musicUrl;
+	private String title;
 
-    private String hqmusicUrl;
+	private String description;
 
-    private String thumbMediald;
+	private String musicUrl;
 
-    private String articleCount;
+	private String hqmusicUrl;
 
-    private String picUrl;
+	private String thumbMediald;
 
-    private String url;
+	private String articleCount;
 
-    public Integer getSid() {
-        return sid;
-    }
+	private String picUrl;
 
-    public void setSid(Integer sid) {
-        this.sid = sid;
-    }
+	private String url;
 
-    public String getMsgKey() {
-        return msgKey;
-    }
+	public String getAppId() {
+		return appId;
+	}
 
-    public void setMsgKey(String msgKey) {
-        this.msgKey = msgKey;
-    }
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 
-    public Integer getMsgType() {
-        return msgType;
-    }
+	public String getAppSecret() {
+		return appSecret;
+	}
 
-    public void setMsgType(Integer msgType) {
-        this.msgType = msgType;
-    }
+	public void setAppSecret(String appSecret) {
+		this.appSecret = appSecret;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public Integer getSid() {
+		return sid;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
 
-    public String getMediaId() {
-        return mediaId;
-    }
+	public String getMsgKey() {
+		return msgKey;
+	}
 
-    public void setMediaId(String mediaId) {
-        this.mediaId = mediaId;
-    }
+	public void setMsgKey(String msgKey) {
+		this.msgKey = msgKey;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public Integer getMsgType() {
+		return msgType;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setMsgType(Integer msgType) {
+		this.msgType = msgType;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getMusicUrl() {
-        return musicUrl;
-    }
+	public String getMediaId() {
+		return mediaId;
+	}
 
-    public void setMusicUrl(String musicUrl) {
-        this.musicUrl = musicUrl;
-    }
+	public void setMediaId(String mediaId) {
+		this.mediaId = mediaId;
+	}
 
-    public String getHqmusicUrl() {
-        return hqmusicUrl;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setHqmusicUrl(String hqmusicUrl) {
-        this.hqmusicUrl = hqmusicUrl;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getThumbMediald() {
-        return thumbMediald;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setThumbMediald(String thumbMediald) {
-        this.thumbMediald = thumbMediald;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getArticleCount() {
-        return articleCount;
-    }
+	public String getMusicUrl() {
+		return musicUrl;
+	}
 
-    public void setArticleCount(String articleCount) {
-        this.articleCount = articleCount;
-    }
+	public void setMusicUrl(String musicUrl) {
+		this.musicUrl = musicUrl;
+	}
 
-    public String getPicUrl() {
-        return picUrl;
-    }
+	public String getHqmusicUrl() {
+		return hqmusicUrl;
+	}
 
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
+	public void setHqmusicUrl(String hqmusicUrl) {
+		this.hqmusicUrl = hqmusicUrl;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getThumbMediald() {
+		return thumbMediald;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setThumbMediald(String thumbMediald) {
+		this.thumbMediald = thumbMediald;
+	}
+
+	public String getArticleCount() {
+		return articleCount;
+	}
+
+	public void setArticleCount(String articleCount) {
+		this.articleCount = articleCount;
+	}
+
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public String toString() {
+		return "MsgReply [sid=" + sid + ", appId=" + appId + ", appSecret=" + appSecret
+				+ ", msgKey=" + msgKey + ", msgType=" + msgType + ", content=" + content
+				+ ", mediaId=" + mediaId + ", title=" + title + ", description=" + description
+				+ ", musicUrl=" + musicUrl + ", hqmusicUrl=" + hqmusicUrl + ", thumbMediald="
+				+ thumbMediald + ", articleCount=" + articleCount + ", picUrl=" + picUrl + ", url="
+				+ url + "]";
+	}
+
 }

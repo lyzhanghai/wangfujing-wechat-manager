@@ -21,7 +21,6 @@ import com.wfj.dto.WeiXinDto;
 import com.wfj.service.impl.EventDispatcher;
 import com.wfj.service.impl.MsgDispatcher;
 import com.wfj.util.MessageUtil;
-import com.wfj.util.WechatUtil;
 
 @Controller
 @RequestMapping(value = "/wechat")
@@ -29,10 +28,9 @@ public class WechatSecurity {
 	private static Logger logger = Logger.getLogger(WechatSecurity.class);
 
 	@Autowired
-	private WechatUtil tokenUtil;
-
-	@Autowired
 	private MsgDispatcher msgDispatcher;
+	@Autowired
+	private EventDispatcher eventDispatcher;
 
 	// http://117.121.99.11/wechat-web/wechat/security.htm
 	@ResponseBody
@@ -60,19 +58,16 @@ public class WechatSecurity {
 	// post 方法用于接收微信服务端消息
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("这是 post 方法！");
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
 		String processMessage = null;
 		try {
 			logger.info(request);
 			Map<String, String> map = MessageUtil.parseXml(request);
 			logger.info(map.toString());
 			String msgtype = map.get("MsgType");
-			map.put("access_token", access_token);
 			logger.info(msgtype);
 			if (MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgtype)) {
 				logger.info("进入事件处理");
-				processMessage = new EventDispatcher().processEvent(map); // 进入事件处理
+				processMessage = eventDispatcher.processEvent(map); // 进入事件处理
 			} else {
 				logger.info("进入消息处理");
 				processMessage = msgDispatcher.processMessage(map); // 进入消息处理

@@ -7,7 +7,7 @@ package com.wfj.message.resp;
  * @Author kongqf
  * @Create In 2016年9月22日
  */
-public class VideoMessage {
+public class VideoMessage extends BaseMessage {
 
 	private Video Video;
 

@@ -83,6 +83,7 @@
                 /lanyuan.shtml = anon
                 /assets/** = anon
                 /wechat/** = anon
+                /upload/** = anon
                 /common/** = anon
                 /member/** = anon
                 /storeInfo/** = anon
