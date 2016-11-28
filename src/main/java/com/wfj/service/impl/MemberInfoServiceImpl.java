@@ -187,4 +187,27 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         return returnMap;
     }
 
+    /**
+     * 查询个人资料(会员信息以及门店信息)
+     *
+     * @param paraMap
+     * @return
+     */
+    public MemberInfoReturnDto findMemberAndStoreInfoByPara(Map<String, Object> paraMap) {
+        logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.findMemberInfoByPara(),para:" + paraMap.toString());
+        String openid = paraMap.get("openid") + "";
+        String storeCode = paraMap.get("storeCode") + "";
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("openid", openid);
+        paramMap.put("storeCode", storeCode);
+        List<MemberInfoReturnDto> returnDtoList = memberInfoMapper.findMemberAndStoreInfoByPara(paramMap);
+        MemberInfoReturnDto returnDto = new MemberInfoReturnDto();
+        if (returnDtoList.size() > 0) {
+            returnDto = returnDtoList.get(0);
+        }
+        logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.findMemberInfoByPara(),return:" + returnDto.toString());
+        return returnDto;
+    }
+
 }

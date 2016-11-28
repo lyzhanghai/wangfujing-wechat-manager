@@ -441,4 +441,37 @@ public class MemberInfoController {
         return gson.toJson(resultMap);
     }
 
+    /**
+     * 查询个人资料
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/findMemberAndStoreInfoByPara", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String findMemberAndStoreInfoByPara(String openId, String storeCode) {
+        logger.info("start com.wfj.controller.member.MemberInfoController.findMemberAndStoreInfoByPara()");
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        if (StringUtils.isNotEmpty(openId)) {
+            paraMap.put("openid", openId.trim());
+        }
+        if (StringUtils.isNotEmpty(storeCode)) {
+            paraMap.put("storeCode", storeCode.trim());
+        }
+        logger.info("查询参数：" + paraMap.toString());
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+            MemberInfoReturnDto returnDto = memberInfoService.findMemberAndStoreInfoByPara(paraMap);
+            resultMap.put("obj", returnDto);
+            resultMap.put("success", true);
+        } catch (Exception e) {
+            resultMap.put("msg", "系统错误");
+            resultMap.put("success", false);
+        }
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        logger.info("end com.wfj.controller.member.MemberInfoController.findMemberAndStoreInfoByPara(),return:" + resultMap.toString());
+        return gson.toJson(resultMap);
+    }
+
 }

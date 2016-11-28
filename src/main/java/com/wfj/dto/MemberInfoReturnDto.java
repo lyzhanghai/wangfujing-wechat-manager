@@ -10,6 +10,10 @@ public class MemberInfoReturnDto {
 
     private String storeCode;//门店编码
 
+    private String businessName;//门店名称
+
+    private String branchName;
+
     private String password;//密码
 
     private Integer subscribe;
@@ -246,11 +250,29 @@ public class MemberInfoReturnDto {
         this.delFlag = delFlag;
     }
 
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
     @Override
     public String toString() {
         return "MemberInfoReturnDto{" +
                 "memberCode='" + memberCode + '\'' +
                 ", storeCode='" + storeCode + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", branchName='" + branchName + '\'' +
                 ", password='" + password + '\'' +
                 ", subscribe=" + subscribe +
                 ", openid='" + openid + '\'' +

@@ -424,4 +424,43 @@
         </where>
     </select>
 
+    <select id="findMemberAndStoreInfoByPara" parameterType="java.util.Map" resultType="com.wfj.dto.MemberInfoReturnDto">
+        SELECT
+        mi.store_code AS storeCode,
+        mi.member_code AS memberCode,
+        mi.openid AS openid,
+        mi.unionid AS unionid,
+        mi.groupid AS groupid,
+        mi.nickname AS nickname,
+        mi.headimgurl AS headimgurl,
+        mi.sex AS sex,
+        mi.city AS city,
+        mi.country AS country,
+        mi.province AS province,
+        mi.remark AS remark,
+        mi.password AS password,
+        mi.mobile AS mobile,
+        mi.id_card AS idCard,
+        mi.email AS email,
+        si.business_name AS businessName,
+        si.branch_name AS branchName
+        FROM
+        memberinfo mi
+        INNER JOIN storeinfo si ON mi.store_code = si.store_code
+        <where>
+            <if test="storeCode != null">
+                AND mi.store_code = #{storeCode}
+            </if>
+            <if test="openid != null">
+                AND mi.openid = #{openid}
+            </if>
+            <if test="memberCode != null">
+                AND mi.member_code = #{memberCode}
+            </if>
+            <if test="mobile != null">
+                AND mi.mobile = #{mobile}
+            </if>
+        </where>
+    </select>
+
 </mapper>

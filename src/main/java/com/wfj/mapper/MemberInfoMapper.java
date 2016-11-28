@@ -30,4 +30,12 @@ public interface MemberInfoMapper {
      * @return
      */
     List<MemberInfoReturnDto> selectMemberInfoListByParam(Map<String, Object> paramMap);
+
+    /**
+     * 查询个人资料(会员信息以及门店信息)
+     *
+     * @param paramMap
+     * @return
+     */
+    List<MemberInfoReturnDto> findMemberAndStoreInfoByPara(Map<String, Object> paramMap);
 }
