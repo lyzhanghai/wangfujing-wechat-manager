@@ -2,6 +2,9 @@ package com.wfj.mapper;
 
 import com.wfj.entity.MemberPoint;
 
+import java.util.List;
+import java.util.Map;
+
 public interface MemberPointMapper {
     int deleteByPrimaryKey(Long sid);
 
@@ -14,4 +17,6 @@ public interface MemberPointMapper {
     int updateByPrimaryKeySelective(MemberPoint record);
 
     int updateByPrimaryKey(MemberPoint record);
+
+    List<MemberPoint> selectListByParam(Map<String, Object> paramMap);
 }

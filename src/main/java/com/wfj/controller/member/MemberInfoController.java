@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wfj.dto.MemberInfoReturnDto;
 import com.wfj.dto.MemberPointInfoReturnDto;
+import com.wfj.dto.MemberPointReturnDto;
 import com.wfj.entity.MemberInfo;
 import com.wfj.message.req.StoreInfoDto;
 import com.wfj.service.intf.MemberCardService;
 import com.wfj.service.intf.MemberInfoService;
 import com.wfj.service.intf.MemberPointInfoService;
+import com.wfj.service.intf.MemberPointService;
 import com.wfj.util.PropertiesUtils;
 import com.wfj.util.StringUtils;
 import com.wfj.util.WechatUtil;
@@ -46,6 +48,9 @@ public class MemberInfoController {
 
     @Autowired
     private MemberPointInfoService memberPointInfoService;
+
+    @Autowired
+    private MemberPointService memberPointService;
 
     /**
      * 注册会员
@@ -400,6 +405,39 @@ public class MemberInfoController {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         logger.info("end com.wfj.controller.member.MemberInfoController.getMemberPointInfo(),return:" + resultMap.toString());
+        return gson.toJson(resultMap);
+    }
+
+    /**
+     * 查询积分总额
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/getMemberPoint", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String getMemberPoint(String storeCode, String memberCode) {
+        logger.info("start com.wfj.controller.member.MemberInfoController.getMemberPoint()");
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        if (StringUtils.isNotEmpty(storeCode)) {
+            paraMap.put("storeCode", storeCode.trim());
+        }
+        if (StringUtils.isNotEmpty(memberCode)) {
+            paraMap.put("memberCode", memberCode.trim());
+        }
+        logger.info("查询参数：" + paraMap.toString());
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+            MemberPointReturnDto returnDto = memberPointService.findMemberPointByPara(paraMap);
+            resultMap.put("obj", returnDto);
+            resultMap.put("success", true);
+        } catch (Exception e) {
+            resultMap.put("msg", "系统错误");
+            resultMap.put("success", false);
+        }
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        logger.info("end com.wfj.controller.member.MemberInfoController.getMemberPoint(),return:" + resultMap.toString());
         return gson.toJson(resultMap);
     }
 

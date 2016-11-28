@@ -61,13 +61,13 @@
         $.ajax({
             type: "post",
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            url: rootPath + "/memberDetail/getAllChannelMemberBalance.do",
+            url: rootPath + "/memberInfo/getMemberPoint.json",
             async: false,
             data: {
                 "openId": openId,
                 "appId": appId,
-                "centType": registType,
-                "channelId": "M2"
+                "storeCode": storeCode,
+                "memberCode": memberCode
             },
             dataType: "json",
             ajaxStart: function () {
@@ -77,11 +77,10 @@
                 $("#loading-container").addClass("loading-inactive");
             },
             success: function (response) {
+                response = JSON.parse(response);
                 if (response.success) {
                     var result = response.obj;
-                    result = JSON.parse(result);
-                    $("#memberBalance").html("可用积分：" + result.totalCents);
-                    $("#cardNo").html("卡号：" + result.cardNo);
+                    $("#memberBalance").html("可用积分：" + result.totalPoints);
                 }
             }
         });
