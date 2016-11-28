@@ -80,7 +80,7 @@
                 response = JSON.parse(response);
                 if (response.success) {
                     var result = response.obj;
-                    $("#memberBalance").html("可用积分：" + result.totalPoints);
+                    $("#memberBalance").html("可用积分：" + result.availablePoints);
                 }
             }
         });
