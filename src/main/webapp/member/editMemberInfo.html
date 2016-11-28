@@ -26,6 +26,10 @@
                 <input type="text" placeholder="" class="posr fl inputText" id="storeCode" readonly="readonly">
                 <label class="posr fl inputName">门店号</label>
             </div>
+            <div class="inputGroup clearfix" style="display: none">
+                <input type="text" placeholder="" class="posr fl inputText" id="memberCode" readonly="readonly">
+                <label class="posr fl inputName">会员号</label>
+            </div>
             <div class="inputGroup clearfix">
                 <input type="text" placeholder="" class="posr fl inputText" id="sex" readonly="readonly">
                 <label class="posr fl inputName">性别</label>
@@ -42,7 +46,7 @@
                 <input type="text" placeholder="" class="posr fl inputText" id="email">
                 <label class="posr fl inputName">邮箱</label>
             </div>
-            <div class="red-btn w100" data-toggle="modal" data-target="#myModal" id="changePayPwdCommit">提交</div>
+            <div class="red-btn w100" data-toggle="modal" data-target="#myModal" id="modifyMemberInfoCommit">提交</div>
         </form>
 
         <div class="linkDiv mt50">
@@ -80,28 +84,21 @@
     var openId = getUrlDataByKey("openId");
     var storeCode = getUrlDataByKey("storeCode");//门店号
 
-    //修改支付密码
-    function newChangePayPwd() {
-
-        var oldPayPwd = $("#oldPayPwd").val();
-        var newPayPwd = $("#newPayPwd").val();
-        var newPayPwdCheck = $("#newPayPwdCheck").val();
-        if (newPayPwd != newPayPwdCheck) {
-
-        }
-
+    //修改个人资料
+    function modifyMemberInfo() {
         $.ajax({
             type: "post",
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            url: rootPath + "/memberInfo/newChangePayPwd.json",
+            url: rootPath + "/memberInfo/modifyMemberInfo.json",
             async: false,
             data: {
                 "openId": openId,
                 "appId": appId,
                 "storeCode": storeCode,
-                "oldPayPwd": oldPayPwd,
-                "newPayPwd": newPayPwd,
-                "newPayPwdCheck": newPayPwdCheck
+                "memberCode": $("#memberCode").val(),
+                "mobile": $("#mobile").val(),
+                "idCard": $("#idCard").val(),
+                "email": $("#email").val()
             },
             dataType: "json",
             ajaxStart: function () {
@@ -155,6 +152,7 @@
 
                     $("#storeName").val(result.businessName);
                     $("#storeCode").val(result.storeCode);
+                    $("#memberCode").val(result.memberCode);
                     var sex = result.sex;
                     if (typeof sex != "undefined") {
                         if (sex == 1) {
@@ -168,23 +166,22 @@
                         $("#sex").val("未知");
                     }
                     var mobile = result.mobile;
-                    if (typeof mobile != "undefined"){
+                    if (typeof mobile != "undefined") {
                         $("#mobile").val(mobile);
                     }
                     var idCard = result.idCard;
-                    if (typeof idCard != "undefined"){
+                    if (typeof idCard != "undefined") {
                         $("#idCard").val(idCard);
                     }
                     var email = result.email;
-                    if (typeof email != "undefined"){
+                    if (typeof email != "undefined") {
                         $("#email").val(email);
                     }
                 }
             }
         });
 
-
-//        $("#changePayPwdCommit").click(newChangePayPwd);
+        $("#modifyMemberInfoCommit").click(modifyMemberInfo);
         $("#backIndex").prop("href", "javascript:loadIndex()");
     })
 </script>

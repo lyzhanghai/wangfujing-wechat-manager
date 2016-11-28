@@ -474,4 +474,56 @@ public class MemberInfoController {
         return gson.toJson(resultMap);
     }
 
+    /**
+     * 修改个人资料
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = {"/modifyMemberInfo"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String modifyMemberInfo(String storeCode, String openId, String memberCode, String mobile, String idCard, String email) {
+        logger.info("start com.wfj.controller.member.MemberInfoController.modifyMemberInfo()");
+        MemberInfo memberInfo = new MemberInfo();
+        if (StringUtils.isNotEmpty(storeCode)) {
+            memberInfo.setStoreCode(storeCode.trim());
+        }
+        if (StringUtils.isNotEmpty(openId)) {
+            memberInfo.setOpenid(openId.trim());
+        }
+        if (StringUtils.isNotEmpty(memberCode)) {
+            memberInfo.setMemberCode(memberCode.trim());
+        }
+        if (StringUtils.isNotEmpty(mobile)) {
+            memberInfo.setMobile(mobile.trim());
+        }
+        if (StringUtils.isNotEmpty(idCard)) {
+            memberInfo.setIdCard(idCard.trim());
+        }
+        if (StringUtils.isNotEmpty(email)) {
+            memberInfo.setEmail(email.trim());
+        }
+        logger.info("请求参数：" + memberInfo.toString());
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+            Map<String, Object> returnMap = memberInfoService.modifyMemberInfo(memberInfo);
+            String success = returnMap.get("success") + "";
+            String desc = returnMap.get("desc") + "";
+            if ("true".equals(success)) {
+                resultMap.put("msg", desc);
+                resultMap.put("success", true);
+            } else {
+                resultMap.put("msg", desc);
+                resultMap.put("success", false);
+            }
+        } catch (Exception e) {
+            resultMap.put("msg", "系统错误");
+            resultMap.put("success", false);
+        }
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        logger.info("end com.wfj.controller.member.MemberInfoController.modifyMemberInfo(),return:" + resultMap.toString());
+        return gson.toJson(resultMap);
+    }
+
 }

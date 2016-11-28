@@ -210,4 +210,44 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         return returnDto;
     }
 
+
+    /**
+     * 修改会员信息(修改个人资料)
+     *
+     * @param paraMap
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public Map<String, Object> modifyMemberInfo(MemberInfo memberInfo) throws Exception {
+        logger.info("start com.wfj.service.impl.MemberInfoServiceImpl.modifyMemberInfo(),para:" + memberInfo.toString());
+        String openid = memberInfo.getOpenid();
+        String storeCode = memberInfo.getStoreCode();
+        String memberCode = memberInfo.getMemberCode();
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("openid", openid);
+        paramMap.put("storeCode", storeCode);
+        List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
+
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        if (memberInfoList.size() == 1) {
+            int i = memberInfoMapper.updateByParaSelective(memberInfo);
+            if (i == 1) {
+                returnMap.put("success", "true");
+                returnMap.put("desc", "修改个人资料成功！");
+            } else {
+                throw new RuntimeException("修改个人资料（com.wfj.service.impl.MemberInfoServiceImpl.changePayPassword）时操作数据库失败！");
+            }
+        } else if (memberInfoList.size() == 0) {
+            returnMap.put("success", "false");
+            returnMap.put("desc", "未注册会员信息！");
+        } else {
+            throw new RuntimeException("修改会员信息（com.wfj.service.impl.MemberInfoServiceImpl.modifyMemberInfo）时出现重复会员！");
+        }
+
+        logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.modifyMemberInfo(),return:" + returnMap.toString());
+        return returnMap;
+    }
+
 }

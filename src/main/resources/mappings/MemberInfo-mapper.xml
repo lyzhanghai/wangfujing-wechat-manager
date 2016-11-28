@@ -267,6 +267,71 @@
         </set>
         where sid = #{sid,jdbcType=BIGINT}
     </update>
+
+    <update id="updateByParaSelective" parameterType="com.wfj.entity.MemberInfo">
+        update memberinfo
+        <set>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribe != null">
+                subscribe = #{subscribe,jdbcType=INTEGER},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null">
+                language = #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="headimgurl != null">
+                headimgurl = #{headimgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeTime != null">
+                subscribe_time = #{subscribeTime,jdbcType=VARCHAR},
+            </if>
+            <if test="unionid != null">
+                unionid = #{unionid,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="groupid != null">
+                groupid = #{groupid,jdbcType=INTEGER},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where store_code = #{storeCode,jdbcType=VARCHAR} AND openid = #{openid,jdbcType=VARCHAR}
+        <if test="memberCode != null">
+            AND member_code = #{memberCode,jdbcType=VARCHAR}
+        </if>
+    </update>
+
     <update id="updateByPrimaryKey" parameterType="com.wfj.entity.MemberInfo">
     update memberinfo
     set member_code = #{memberCode,jdbcType=VARCHAR},
@@ -424,7 +489,8 @@
         </where>
     </select>
 
-    <select id="findMemberAndStoreInfoByPara" parameterType="java.util.Map" resultType="com.wfj.dto.MemberInfoReturnDto">
+    <select id="findMemberAndStoreInfoByPara" parameterType="java.util.Map"
+            resultType="com.wfj.dto.MemberInfoReturnDto">
         SELECT
         mi.store_code AS storeCode,
         mi.member_code AS memberCode,

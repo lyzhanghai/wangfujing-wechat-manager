@@ -22,4 +22,7 @@ public interface MemberInfoService {
     Map<String,Object> changePayPassword(Map<String, Object> paraMap) throws Exception;
 
     MemberInfoReturnDto findMemberAndStoreInfoByPara(Map<String, Object> paraMap);
+
+    @Transactional
+    Map<String,Object> modifyMemberInfo(MemberInfo memberInfo) throws Exception;
 }

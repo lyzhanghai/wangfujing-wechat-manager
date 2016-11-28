@@ -38,4 +38,12 @@ public interface MemberInfoMapper {
      * @return
      */
     List<MemberInfoReturnDto> findMemberAndStoreInfoByPara(Map<String, Object> paramMap);
+
+    /**
+     * 根据门店编码和openid修改会员信息
+     *
+     * @param memberInfo
+     * @return
+     */
+    int updateByParaSelective(MemberInfo memberInfo);
 }
