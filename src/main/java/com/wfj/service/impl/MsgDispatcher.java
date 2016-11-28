@@ -15,8 +15,14 @@ import com.wfj.message.resp.Article;
 import com.wfj.message.resp.BaseMessage;
 import com.wfj.message.resp.Image;
 import com.wfj.message.resp.ImageMessage;
+import com.wfj.message.resp.Music;
+import com.wfj.message.resp.MusicMessage;
 import com.wfj.message.resp.NewsMessage;
 import com.wfj.message.resp.TextMessage;
+import com.wfj.message.resp.Video;
+import com.wfj.message.resp.VideoMessage;
+import com.wfj.message.resp.Voice;
+import com.wfj.message.resp.VoiceMessage;
 import com.wfj.util.MessageUtil;
 
 @Service
@@ -46,23 +52,57 @@ public class MsgDispatcher {
 			List<MsgReply> msgList = msgReplyMapper.selectListByParam(msg);
 			if (msgList != null && msgList.size() > 0) {
 				MsgReply msgReply = msgList.get(0);
-				if (msgReply.getMsgType().equals(0)) {// (0文本,1图片,2语音,3视频,4音频,5图文)
+				if (msgReply.getMsgType().equals(0)) {// (0文本,1图片,2音频,3视频,4音乐,5图文)
 					txtmsg.setContent(msgReply.getContent());
 				} else if (msgReply.getMsgType().equals(1)) {
 					ImageMessage imgMsg = new ImageMessage();
 					Image image = new Image();
 					image.setMediaId(msgReply.getMediaId());
-					imgMsg.setImage(image);
 					imgMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
+					imgMsg.setImage(image);
 					return MessageUtil.imageMessageToXml(imgMsg);
 				} else if (msgReply.getMsgType().equals(2)) {
-
+					VoiceMessage voiMsg = new VoiceMessage();
+					Voice voice = new Voice();
+					voice.setMediaId(msgReply.getMediaId());
+					voiMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VOICE);
+					voiMsg.setVoice(voice);
+					return MessageUtil.voiceMessageToXml(voiMsg);
 				} else if (msgReply.getMsgType().equals(3)) {
-
+					VideoMessage vidMsg = new VideoMessage();
+					Video video = new Video();
+					video.setDescription(msgReply.getDescription());
+					video.setMediaId(msgReply.getMediaId());
+					video.setTitle(msgReply.getTitle());
+					vidMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VIDEO);
+					vidMsg.setVideo(video);
+					return MessageUtil.videoMessageToXml(vidMsg);
 				} else if (msgReply.getMsgType().equals(4)) {
-
+					MusicMessage musMsg = new MusicMessage();
+					Music music = new Music();
+					music.setDescription(msgReply.getDescription());
+					music.setHQMusicUrl(msgReply.getHqmusicUrl());
+					music.setMusicUrl(msgReply.getMusicUrl());
+					music.setThumbMediaId(msgReply.getThumbMediald());
+					music.setTitle(msgReply.getTitle());
+					musMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_MUSIC);
+					musMsg.setMusic(music);
+					return MessageUtil.musicMessageToXml(musMsg);
 				} else if (msgReply.getMsgType().equals(5)) {
-
+					NewsMessage newsMsg = new NewsMessage();
+					List<Article> artList = new ArrayList<Article>();
+					for (int i = 0; i < msgList.size(); i++) {
+						Article art = new Article();
+						art.setDescription(msgList.get(i).getDescription());
+						art.setPicUrl(msgList.get(i).getPicUrl());
+						art.setTitle(msgList.get(i).getTitle());
+						art.setUrl(msgList.get(i).getUrl());
+						artList.add(art);
+					}
+					newsMsg.setArticles(artList);
+					newsMsg.setArticleCount(msgList.size());
+					newsMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+					return MessageUtil.newsMessageToXml(newsMsg);
 				}
 			} else {
 				txtmsg.setContent("你好，欢迎来到王府井百货公众平台！");
@@ -72,24 +112,7 @@ public class MsgDispatcher {
 		}
 
 		if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) { // 图片消息
-			// 对图文消息
-			NewsMessage newmsg = new NewsMessage();
-			newmsg.setToUserName(openid);
-			newmsg.setFromUserName(mpid);
-			newmsg.setCreateTime(new Date().getTime());
-			newmsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
-
-			System.out.println("==============这是图片消息！");
-			Article article = new Article();
-			article.setDescription("这是图文消息 1"); // 图文消息的描述
-			article.setPicUrl("http://res.cuiyongzhi.com/2016/03/201603086749_6850.png"); // 图文消息图片地址
-			article.setTitle("图文消息 1"); // 图文消息标题
-			article.setUrl("http://www.cuiyongzhi.com"); // 图文 url 链接
-			List<Article> list = new ArrayList<Article>();
-			list.add(article); // 这里发送的是单图文，如果需要发送多图文则在这里 list 中加入多个 Article 即可！
-			newmsg.setArticleCount(list.size());
-			newmsg.setArticles(list);
-			return MessageUtil.newsMessageToXml(newmsg);
+			logger.info("==============这是图片消息！");
 		}
 
 		if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) { // 链接消息

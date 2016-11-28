@@ -7,7 +7,7 @@ package com.wfj.message.resp;
  * @Author kongqf
  * @Create In 2016年9月22日
  */
-public class VoiceMessage {
+public class VoiceMessage extends BaseMessage {
 
 	private Voice Voice;
 
