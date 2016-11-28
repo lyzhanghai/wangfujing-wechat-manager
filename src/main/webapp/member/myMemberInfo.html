@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
     <link rel="stylesheet" href="js/bootstrap-3.3.5-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="js/font/font-awesome-4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -71,157 +71,161 @@
 <script src="js/jquery.qrcode.min.js"></script>
 <script src="js/public.js"></script>
 <script type="text/javascript">
-	var rootPath = getContextPath();
-	var appId = getUrlDataByKey("appId");
-	var openId = getUrlDataByKey("openId");
-	var uid = getUrlDataByKey("uid");
-	var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
-	var cardNo = getUrlDataByKey("cardNo");
-	var custType = getUrlDataByKey("custType");//等级
-	var qrcode = getUrlDataByKey("qrcode");//二维码
-	var phone = getUrlDataByKey("mobile");
-	var mkt = getUrlDataByKey("storeCode");//门店号
-	
-	var entityCard = getUrlDataByKey("entityCard");
-	var unBund = getUrlDataByKey("unBund");
-	var updatePWD = getUrlDataByKey("updatePWD");
-	var boundPhone = getUrlDataByKey("boundPhone");
+    var rootPath = getContextPath();
+    var appId = getUrlDataByKey("appId");
+    var openId = getUrlDataByKey("openId");
+    var unionId = getUrlDataByKey("unionId");
+    var registType = getUrlDataByKey("registType");//注册类型（全渠道0或者非全渠道1）
+    var cardNo = getUrlDataByKey("cardNo");
+    var custType = getUrlDataByKey("custType");//等级
+    var qrcode = getUrlDataByKey("qrcode");//二维码
+    var phone = getUrlDataByKey("mobile");
+    var storeCode = getUrlDataByKey("storeCode");//门店号
+    var memberCode = getUrlDataByKey("memberCode");//会员编码
 
-	entityCard == 0 ? $("#bindEntityCard").show() : $("#bindEntityCard").hide();
-	unBund == 0 ? $("#unbind").show() : $("#unbind").hide();
-	updatePWD == 0 ? $("#updatePwd").show() : $("#updatePwd").hide();
-	boundPhone == 0 ? $("#bindPhone").show() : $("#bindPhone").hide();
-	
-	$(".card_code_none_style").text("NO." + cardNo);
-	
-	//会员积分
-	function memberCen(){
-		var memberCenUrl = rootPath + "/myMemberDetailInfo.html?";
-		memberCenUrl += "appId=" + appId;
-		memberCenUrl += "&openId=" + openId;
-		memberCenUrl += "&cardNo=" + cardNo;
-		memberCenUrl += "&registType=" + registType;
-		memberCenUrl += "&storeCode=" + mkt;
-		$("#memberCen").attr("href", memberCenUrl);
-	}
-	//会员权益
-	function memberBen(){
-		var memberBenUrl = rootPath + "/storeMemBenefitsHtml/memberBenefits_"+ mkt +".html";
-		$("#memberBen").attr("href", memberBenUrl);
-	}
-	
-	//解绑
-	function unBind(){
-		$.ajax({
-    		type : "post",
-    		contentType : "application/x-www-form-urlencoded;charset=utf-8",
-    		url : rootPath + "/memberCard/cardCancleBind.do",
-    		async : false,
-    		data : {
-    			"openId" : openId,
-    			"appId" : appId
-    		},
-    		dataType : "json",
-    		success : function(response) {
-    			if(response.success){
-    				$("#modal_lable").text("解绑成功！");
-    				$("#modal_msg").text(response.msg);
-    				$("#ok_button").attr("onclick", "modalShowOrHide(0, 1)");
-    				modalShowOrHide(1);
-    			} else {
-    				$("#modal_lable").text("抱歉，解绑失败！");
-    				$("#modal_msg").text(response.msg);
-    				$("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
-    				modalShowOrHide(1);
-    			}
-    		}
-    	});
-	}
-	//绑定手机
-	function bindPhone(){
-		var bindPhoneUrl = rootPath + "/unRegidterBindPhone.html?";
-		bindPhoneUrl += "uid=" + uid;
-		bindPhoneUrl += "&appId=" + appId;
-		bindPhoneUrl += "&openId=" + openId;
-		bindPhoneUrl += "&mkt=" + mkt;
-		bindPhoneUrl += "&registType=" + registType;
-		location.href = bindPhoneUrl;
-	}
-	//绑定实体卡
-	function bindEntityCard(){
-		var bindEntityCardUrl = rootPath + "/bindMemberInfo.html?bindType=2";
-		bindEntityCardUrl += "&uid=" + uid;
-		bindEntityCardUrl += "&appId=" + appId;
-		bindEntityCardUrl += "&openId=" + openId;
-		bindEntityCardUrl += "&mkt=" + mkt;
-		bindEntityCardUrl += "&registType=" + registType;
-		location.href = bindEntityCardUrl;
-	}
-	//修改密码
-	function updatePwd(){
-		var updatePwdUrl = rootPath + "/editPassword.html?";
-		updatePwdUrl += "appId=" + appId;
-		updatePwdUrl += "&openId=" + openId;
-		updatePwdUrl += "&cardNo=" + cardNo;
-		updatePwdUrl += "&phone=" + phone;
-		location.href = updatePwdUrl;
-	}
-	$(function(){
-    	$("#bindEntityCard div").click(bindEntityCard);
-    	$("#unbind div").click(unBind);
-    	$("#updatePwd div").click(updatePwd);
-    	$("#bindPhone div").click(bindPhone);
-    	memberCen();
-    	memberBen();
+    var entityCard = getUrlDataByKey("entityCard");
+    var unBund = getUrlDataByKey("unBund");
+    var updatePWD = getUrlDataByKey("updatePWD");
+    var boundPhone = getUrlDataByKey("boundPhone");
+
+    entityCard == 0 ? $("#bindEntityCard").show() : $("#bindEntityCard").hide();
+    unBund == 0 ? $("#unbind").show() : $("#unbind").hide();
+    updatePWD == 0 ? $("#updatePwd").show() : $("#updatePwd").hide();
+    boundPhone == 0 ? $("#bindPhone").show() : $("#bindPhone").hide();
+
+    $(".card_code_none_style").text("NO." + cardNo);
+
+    //会员积分
+    function memberCen() {
+        var memberCenUrl = rootPath + "/member/myMemberDetailInfo.html?";
+        memberCenUrl += "appId=" + appId;
+        memberCenUrl += "&openId=" + openId;
+        memberCenUrl += "&cardNo=" + cardNo;
+        memberCenUrl += "&registType=" + registType;
+        memberCenUrl += "&storeCode=" + storeCode;
+        memberCenUrl += "&memberCode=" + memberCode;
+        $("#memberCen").attr("href", memberCenUrl);
+    }
+    //会员权益
+    function memberBen() {
+        var memberBenUrl = rootPath + "/member/storeMemBenefitsHtml/memberBenefits_" + storeCode + ".html";
+        $("#memberBen").attr("href", memberBenUrl);
+    }
+
+    //解绑
+    function unBind() {
+        $.ajax({
+            type: "post",
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            url: rootPath + "/memberCard/cardCancleBind.do",
+            async: false,
+            data: {
+                "openId": openId,
+                "appId": appId
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#modal_lable").text("解绑成功！");
+                    $("#modal_msg").text(response.msg);
+                    $("#ok_button").attr("onclick", "modalShowOrHide(0, 1)");
+                    modalShowOrHide(1);
+                } else {
+                    $("#modal_lable").text("抱歉，解绑失败！");
+                    $("#modal_msg").text(response.msg);
+                    $("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
+                    modalShowOrHide(1);
+                }
+            }
+        });
+    }
+    //绑定手机
+    function bindPhone() {
+        var bindPhoneUrl = rootPath + "/member/unRegidterBindPhone.html?";
+        bindPhoneUrl += "unionId=" + unionId;
+        bindPhoneUrl += "&appId=" + appId;
+        bindPhoneUrl += "&openId=" + openId;
+        bindPhoneUrl += "&storeCode=" + storeCode;
+        bindPhoneUrl += "&registType=" + registType;
+        location.href = bindPhoneUrl;
+    }
+    //绑定实体卡
+    function bindEntityCard() {
+        var bindEntityCardUrl = rootPath + "/member/bindMemberInfo.html?bindType=2";
+        bindEntityCardUrl += "&unionId=" + unionId;
+        bindEntityCardUrl += "&appId=" + appId;
+        bindEntityCardUrl += "&openId=" + openId;
+        bindEntityCardUrl += "&storeCode=" + storeCode;
+        bindEntityCardUrl += "&registType=" + registType;
+        location.href = bindEntityCardUrl;
+    }
+    //修改密码
+    function updatePwd() {
+        var updatePwdUrl = rootPath + "/member/editPassword.html?";
+        updatePwdUrl += "appId=" + appId;
+        updatePwdUrl += "&openId=" + openId;
+        updatePwdUrl += "&storeCode=" + storeCode;
+        updatePwdUrl += "&memberCode=" + memberCode;
+        updatePwdUrl += "&cardNo=" + cardNo;
+        updatePwdUrl += "&phone=" + phone;
+        location.href = updatePwdUrl;
+    }
+    $(function () {
+        $("#bindEntityCard div").click(bindEntityCard);
+        $("#unbind div").click(unBind);
+        $("#updatePwd div").click(updatePwd);
+        $("#bindPhone div").click(bindPhone);
+        memberCen();
+        memberBen();
     });
 </script>
 <script>
 
-	/*识别中文*/
-	function toUtf8(str) {
-	    var out, i, len, c;
-	    out = "";
-	    len = str.length;
-	    for(i = 0; i < len; i++) {
-	        c = str.charCodeAt(i);
-	        if ((c >= 0x0001) && (c <= 0x007F)) {
-	            out += str.charAt(i);
-	        } else if (c > 0x07FF) {
-	            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-	            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
-	            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-	        } else {
-	            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
-	            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-	        }
-	    }
-	    return out;
-	}
-	
-	$("#small_code").qrcode({
-	    render: "canvas", //table方式
-	    foreground: "#C42605",
-	    width: 60, //宽度
-	    height:60, //高度
-	    text: qrcode //任意内容
-	}).click(function(){
-	    $(this).find("table").addClass("anim-0");
-	    setTimeout(function(){
-	        $("#small_code").find("table").removeClass("anim-0");
-	    },1000);
-	    $("#overLay").show();
-	    $(".large_code").addClass("anim-1").show();
+    /*识别中文*/
+    function toUtf8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    }
+
+    $("#small_code").qrcode({
+        render: "canvas", //table方式
+        foreground: "#C42605",
+        width: 60, //宽度
+        height: 60, //高度
+        text: qrcode //任意内容
+    }).click(function () {
+        $(this).find("table").addClass("anim-0");
+        setTimeout(function () {
+            $("#small_code").find("table").removeClass("anim-0");
+        }, 1000);
+        $("#overLay").show();
+        $(".large_code").addClass("anim-1").show();
     });
-    $("#overLay,.large_code").click(function(){
+    $("#overLay,.large_code").click(function () {
         $("#overLay,.large_code").hide();
     });
-	$("#large_code").qrcode({
-	    render: "canvas", //table方式
-	    foreground: "#C42605",
-	    width: 180, //宽度
-	    height:180, //高度
-	    text: qrcode //任意内容
-	});
+    $("#large_code").qrcode({
+        render: "canvas", //table方式
+        foreground: "#C42605",
+        width: 180, //宽度
+        height: 180, //高度
+        text: qrcode //任意内容
+    });
 
 </script>
 </body>

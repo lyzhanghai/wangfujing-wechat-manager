@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <link rel="stylesheet" href="js/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/font/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>修改个人资料</title>
+</head>
+<body>
+<div class="mt20">
+    <div class="container-fluid">
+        <div class="headDiv_1">
+            <div class="headpto">
+
+            </div>
+            <div class="mt20 headName"></div>
+        </div>
+        <form>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="" class="posr fl inputText" id="storeName" readonly="readonly">
+                <label class="posr fl inputName">门店</label>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="" class="posr fl inputText" id="storeCode" readonly="readonly">
+                <label class="posr fl inputName">门店号</label>
+            </div>
+            <div class="inputGroup clearfix" style="display: none">
+                <input type="text" placeholder="" class="posr fl inputText" id="memberCode" readonly="readonly">
+                <label class="posr fl inputName">会员号</label>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="" class="posr fl inputText" id="sex" readonly="readonly">
+                <label class="posr fl inputName">性别</label>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="" class="posr fl inputText" id="mobile">
+                <label class="posr fl inputName">手机号</label>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="" class="posr fl inputText" id="idCard">
+                <label class="posr fl inputName">身份证</label>
+            </div>
+            <div class="inputGroup clearfix">
+                <input type="text" placeholder="" class="posr fl inputText" id="email">
+                <label class="posr fl inputName">邮箱</label>
+            </div>
+            <div class="red-btn w100" data-toggle="modal" data-target="#myModal" id="modifyMemberInfoCommit">提交</div>
+        </form>
+
+        <div class="linkDiv mt50">
+            <a class="blue-col homeLink" id="backIndex">返回首页</a>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="tc">
+                    <h5 id="modal_lable">提示</h5>
+
+                    <p class="mt10 tishi" id="modal_msg">个人资料修改成功！</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="tc gr-col" id="ok_button">确定</div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script src="js/public.js" type="text/javascript"></script>
+<script src="js/phoneCheckCode.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var rootPath = getContextPath();
+    var appId = getUrlDataByKey("appId");
+    var openId = getUrlDataByKey("openId");
+    var storeCode = getUrlDataByKey("storeCode");//门店号
+
+    //修改个人资料
+    function modifyMemberInfo() {
+        $.ajax({
+            type: "post",
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            url: rootPath + "/memberInfo/modifyMemberInfo.json",
+            async: false,
+            data: {
+                "openId": openId,
+                "appId": appId,
+                "storeCode": storeCode,
+                "memberCode": $("#memberCode").val(),
+                "mobile": $("#mobile").val(),
+                "idCard": $("#idCard").val(),
+                "email": $("#email").val()
+            },
+            dataType: "json",
+            ajaxStart: function () {
+                $("#loading-container").prop("class", "loading-container");
+            },
+            ajaxStop: function () {
+                $("#loading-container").addClass("loading-inactive");
+            },
+            success: function (response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    $("#modal_lable").text("提示");
+                    $("#modal_msg").text(response.msg);
+                    $("#modal_msg").show();
+                    $("#ok_button").attr("onclick", "modalShowOrHide(0, 1)");
+                    modalShowOrHide(1);
+                } else {
+                    $("#modal_lable").text("提示");
+                    $("#modal_msg").text(response.msg);
+                    $("#modal_msg").show();
+                    $("#ok_button").attr("onclick", "modalShowOrHide(0, 0)");
+                    modalShowOrHide(1);
+                }
+            }
+        });
+    }
+
+    $(function () {
+        $.ajax({
+            type: "post",
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            url: rootPath + "/memberInfo/findMemberAndStoreInfoByPara.json",
+            async: false,
+            data: {
+                "openId": openId,
+                "storeCode": storeCode
+            },
+            dataType: "json",
+            ajaxStart: function () {
+                $("#loading-container").prop("class", "loading-container");
+            },
+            ajaxStop: function () {
+                $("#loading-container").addClass("loading-inactive");
+            },
+            success: function (response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    var result = response.obj;
+                    $(".headpto").html("<img src='" + result.headimgurl + "'>");
+                    $(".headName").text(result.nickname);
+
+                    $("#storeName").val(result.businessName);
+                    $("#storeCode").val(result.storeCode);
+                    $("#memberCode").val(result.memberCode);
+                    var sex = result.sex;
+                    if (typeof sex != "undefined") {
+                        if (sex == 1) {
+                            $("#sex").val("男");
+                        } else if (sex == 2) {
+                            $("#sex").val("女");
+                        } else if (sex == 0) {
+                            $("#sex").val("未知");
+                        }
+                    } else {
+                        $("#sex").val("未知");
+                    }
+                    var mobile = result.mobile;
+                    if (typeof mobile != "undefined") {
+                        $("#mobile").val(mobile);
+                    }
+                    var idCard = result.idCard;
+                    if (typeof idCard != "undefined") {
+                        $("#idCard").val(idCard);
+                    }
+                    var email = result.email;
+                    if (typeof email != "undefined") {
+                        $("#email").val(email);
+                    }
+                }
+            }
+        });
+
+        $("#modifyMemberInfoCommit").click(modifyMemberInfo);
+        $("#backIndex").prop("href", "javascript:loadIndex()");
+    })
+</script>
+</body>
+</html>

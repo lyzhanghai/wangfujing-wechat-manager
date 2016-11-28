@@ -1,5 +1,6 @@
 package com.wfj.service.intf;
 
+import com.wfj.dto.MemberInfoReturnDto;
 import com.wfj.entity.MemberInfo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,18 @@ import java.util.Map;
  */
 public interface MemberInfoService {
 
+    String generateMemberCode(Map<String, Object> paramMap);
+
     @Transactional
-    Map<String, Object> registerMember(MemberInfo memberInfo);
+    Map<String, Object> registerMember(MemberInfo memberInfo) throws Exception;
+
+    Map<String,Object> getMemberInfo(Map<String, Object> paraMap);
+
+    @Transactional
+    Map<String,Object> changePayPassword(Map<String, Object> paraMap) throws Exception;
+
+    MemberInfoReturnDto findMemberAndStoreInfoByPara(Map<String, Object> paraMap);
+
+    @Transactional
+    Map<String,Object> modifyMemberInfo(MemberInfo memberInfo) throws Exception;
 }

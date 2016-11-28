@@ -11,7 +11,11 @@ public class MemberPointInfo {
 
     private String cardCode;
 
+    private Integer pointType;//积分类型
+
     private Double points;
+
+    private Date pointTime;//积分时间
 
     private Integer status;
 
@@ -55,12 +59,28 @@ public class MemberPointInfo {
         this.cardCode = cardCode;
     }
 
+    public Integer getPointType() {
+        return pointType;
+    }
+
+    public void setPointType(Integer pointType) {
+        this.pointType = pointType;
+    }
+
     public Double getPoints() {
         return points;
     }
 
     public void setPoints(Double points) {
         this.points = points;
+    }
+
+    public Date getPointTime() {
+        return pointTime;
+    }
+
+    public void setPointTime(Date pointTime) {
+        this.pointTime = pointTime;
     }
 
     public Integer getStatus() {
@@ -101,5 +121,23 @@ public class MemberPointInfo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberPointInfo{" +
+                "sid=" + sid +
+                ", storeCode='" + storeCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
+                ", cardCode='" + cardCode + '\'' +
+                ", pointType=" + pointType +
+                ", points=" + points +
+                ", pointTime=" + pointTime +
+                ", status=" + status +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", delFlag=" + delFlag +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

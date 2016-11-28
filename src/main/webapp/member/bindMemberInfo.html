@@ -37,11 +37,11 @@
                 <input type="password" placeholder="输入6位数字" class="posr fl inputText" id="pwd" maxLength="6">
                 <label class="posr fl inputName">支付密码</label>
             </div>
-            <div class="inputGroup v-code clearfix">
+            <!--<div class="inputGroup v-code clearfix">
                 <input type="text" placeholder="输入验证码" class="posr fl inputText" id="phoneCode" maxLength="6">
                 <label class="posr fl inputName">验证码</label>
                 <div class="posr fl red-btn codeBtn" type="button" id="getVerifyCode">获取验证码</div>
-            </div>
+            </div>-->
 
             <div class="red-btn w100"  id="bindPhone">确认</div>
         </form>
@@ -130,8 +130,9 @@
 	var rootPath = getContextPath();
 	var appId = getUrlDataByKey("appId");
 	var openId = getUrlDataByKey("openId");
-	var uid= getUrlDataByKey("uid");
-	var mkt= getUrlDataByKey("mkt");
+	var unionId= getUrlDataByKey("unionId");
+    var secret = getUrlDataByKey("secret");//appsecret秘钥
+	var storeCode= getUrlDataByKey("storeCode");
 	var registType= getUrlDataByKey("registType");
 	var bindType= getUrlDataByKey("bindType");
 	
@@ -165,7 +166,7 @@
 			modalShowOrHide(0,1);
 		}); */
 		//获取验证码
-		$("#getVerifyCode").click(getPhoneCheckCode);
+//		$("#getVerifyCode").click(getPhoneCheckCode);
 		
 		//移除错误提示信息
 		$("#mytel input,#mycard input").focus(function(){
@@ -175,7 +176,7 @@
 		
 		//绑定手机
 		$("#bindPhone").click(function(){
-			var url=rootPath+"/cardBind/bindMemberCard.do";
+			var url=rootPath+"/memberInfo/bindMemberCard.json";
 			//获取参数
 			var phoneNum=$("#mobile").val();
 			var pwd=$("#pwd").val();
@@ -183,18 +184,19 @@
 			if(!validateBindPhoneParam()){
 				return false;
 			}
-			param={"uid":uid,
+			param={"unionId":unionId,
 					"openId":openId,
 					"appId":appId,
-					"idType":"2",
-					"idKeyword":phoneNum,
-					"idPassword":pwd,
-					"mkt":mkt
+					"secret":secret,
+					"cardType":"2",
+					"mobile":phoneNum,
+					"password":pwd,
+					"storeCode":storeCode
 				};
 			//显示加载框
 //			$("#loading").css("display","table");
 			$.post(url,param,function(response){
-				
+				response = JSON.parse(response);
 				if(response.success){
 					$("#modal_lable").text("恭喜");
 					$("#modal_msg").text(response.msg);
@@ -217,7 +219,7 @@
 		
 		//绑定卡号
 		$("#bindCard").click(function(){
-			var url=rootPath+"/cardBind/bindMemberCard.do";
+			var url=rootPath+"/memberInfo/bindMemberCard.json";
 			var cardNum=$("#selShop_1").val();
 			var idNum=$("#idNum").val();
 			
@@ -227,18 +229,20 @@
 			}
 			
 			//请求参数
-			param={"uid":uid,
+			param={"unionId":unionId,
 					"openId":openId,
 					"appId":appId,
-					"idType":"1",
-					"idKeyword":cardNum,
-					"idPassword":idNum,
-					"mkt":mkt
+					"secret":secret,
+					"cardType":"1",
+					"cardCode":cardNum,
+					"password":idNum,
+					"storeCode":storeCode
 				};
 			
 			//显示加载框
 //			$("#loading").css("display","table");
 			$.post(url,param,function(response){
+			    response = JSON.parse(response);
 				if(response.success){
 					$("#modal_lable").text("恭喜");
 					$("#modal_msg").text(response.msg);

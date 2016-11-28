@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wfj.mapper.MemberPointInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wfj.entity.MemberPointInfo">
+        <id column="sid" property="sid" jdbcType="BIGINT"/>
+        <result column="store_code" property="storeCode" jdbcType="VARCHAR"/>
+        <result column="member_code" property="memberCode" jdbcType="VARCHAR"/>
+        <result column="card_code" property="cardCode" jdbcType="VARCHAR"/>
+        <result column="point_type" property="pointType" jdbcType="INTEGER"/>
+        <result column="points" property="points" jdbcType="DOUBLE"/>
+        <result column="point_time" property="pointTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sid, store_code, member_code, card_code, point_type, points, point_time, status, serial_number, del_flag,
+    create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from member_point_info
+        where sid = #{sid,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member_point_info
+    where sid = #{sid,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wfj.entity.MemberPointInfo">
+    insert into member_point_info (sid, store_code, member_code, 
+      card_code, point_type, points, point_time, status,
+      serial_number, del_flag, create_time, 
+      update_time)
+    values (#{sid,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{memberCode,jdbcType=VARCHAR}, 
+      #{cardCode,jdbcType=VARCHAR}, #{pointType,jdbcType=INTEGER}, #{points,jdbcType=DOUBLE},
+      #{pointTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{serialNumber,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wfj.entity.MemberPointInfo">
+        insert into member_point_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="storeCode != null">
+                store_code,
+            </if>
+            <if test="memberCode != null">
+                member_code,
+            </if>
+            <if test="cardCode != null">
+                card_code,
+            </if>
+            <if test="pointType != null">
+                point_type,
+            </if>
+            <if test="points != null">
+                points,
+            </if>
+            <if test="pointTime != null">
+                point_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="serialNumber != null">
+                serial_number,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                #{sid,jdbcType=BIGINT},
+            </if>
+            <if test="storeCode != null">
+                #{storeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCode != null">
+                #{memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cardCode != null">
+                #{cardCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pointType != null">
+                #{pointType,jdbcType=INTEGER},
+            </if>
+            <if test="points != null">
+                #{points,jdbcType=DOUBLE},
+            </if>
+            <if test="pointTime != null">
+                #{pointTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="serialNumber != null">
+                #{serialNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.MemberPointInfo">
+        update member_point_info
+        <set>
+            <if test="storeCode != null">
+                store_code = #{storeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCode != null">
+                member_code = #{memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cardCode != null">
+                card_code = #{cardCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pointType != null">
+                point_type = #{pointType,jdbcType=INTEGER},
+            </if>
+            <if test="points != null">
+                points = #{points,jdbcType=DOUBLE},
+            </if>
+            <if test="pointTime != null">
+                point_time = #{pointTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wfj.entity.MemberPointInfo">
+    update member_point_info
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      member_code = #{memberCode,jdbcType=VARCHAR},
+      card_code = #{cardCode,jdbcType=VARCHAR},
+      point_type = #{pointType,jdbcType=INTEGER},
+      points = #{points,jdbcType=DOUBLE},
+      point_time = #{pointTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      serial_number = #{serialNumber,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectListByParam" resultMap="BaseResultMap"
+            parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from member_point_info
+        <where>
+            <if test="sid != null">
+                and sid = #{sid,jdbcType=BIGINT}
+            </if>
+            <if test="storeCode != null">
+                and store_code = #{storeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="memberCode != null">
+                and member_code = #{memberCode,jdbcType=VARCHAR}
+            </if>
+            <if test="cardCode != null">
+                and card_code = #{cardCode,jdbcType=VARCHAR}
+            </if>
+            <if test="pointType != null">
+                and point_type = #{pointType,jdbcType=INTEGER}
+            </if>
+            <if test="points != null">
+                and points = #{points,jdbcType=DOUBLE}
+            </if>
+            <if test="pointTime != null">
+                and point_time = #{pointTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="status == null">
+                and status = 0
+            </if>
+            <if test="serialNumber != null">
+                and serial_number = #{serialNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="delFlag != null">
+                and del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+            <if test="delFlag == null">
+                and del_flag = 0
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMemberPointDetailListByParam" resultType="com.wfj.dto.MemberPointInfoReturnDto"
+            parameterType="java.util.Map">
+        SELECT
+        mpi.store_code AS storeCode,
+        si.business_name AS businessName,
+        mpi.member_code AS memberCode,
+        mpi.card_code AS cardCode,
+        mpi.point_type AS pointType,
+        mpi.points AS points,
+        mpi.point_time AS pointTime,
+        mpi.status AS status,
+        mpi.serial_number AS serialNumber,
+        mpi.del_flag AS delFlag
+        FROM
+        member_point_info mpi
+        INNER JOIN storeinfo si ON mpi.store_code = si.store_code
+        <where>
+            <if test="storeCode != null">
+                and mpi.store_code = #{storeCode}
+            </if>
+            <if test="memberCode != null">
+                and mpi.member_code = #{memberCode}
+            </if>
+            <if test="cardCode != null">
+                and mpi.card_code = #{cardCode}
+            </if>
+            <if test="pointType != null">
+                and mpi.point_type = #{pointType}
+            </if>
+            <if test="status != null">
+                and mpi.status = #{status}
+            </if>
+            <if test="status == null">
+                and mpi.status = 0
+            </if>
+            <if test="serialNumber != null">
+                and mpi.serial_number = #{serialNumber}
+            </if>
+            <if test="delFlag != null">
+                and mpi.del_flag = #{delFlag}
+            </if>
+            <if test="delFlag == null">
+                and mpi.del_flag = 0
+            </if>
+        </where>
+    </select>
+
+</mapper>

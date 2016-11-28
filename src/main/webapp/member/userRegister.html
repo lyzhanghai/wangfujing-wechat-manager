@@ -28,11 +28,11 @@
                 <input type="text" placeholder="输入手机号" class="posr fl inputText" id="mobile">
                 <label class="posr fl inputName">手机号</label>
             </div>
-            <div class="inputGroup v-code clearfix">
+            <!--<div class="inputGroup v-code clearfix">
                 <input type="text" placeholder="输入验证码" class="posr fl inputText" id="checkCode">
                 <label class="posr fl inputName">验证码</label>
                 <div class="posr fl red-btn codeBtn">获取验证码</div>
-            </div>
+            </div>-->
             <div class="red-btn w100" id="register">确定</div>
         </form>
 
@@ -68,7 +68,7 @@
 	var rootPath = getContextPath();
 	var appId = getUrlDataByKey("appId");
 	var openId = getUrlDataByKey("openId");
-	var uid = getUrlDataByKey("uid");
+	var unionId = getUrlDataByKey("unionId");
 </script>
 <script>
 	//会员用户注册
@@ -76,18 +76,20 @@
 		$.ajax({
     		type : "post",
     		contentType : "application/x-www-form-urlencoded;charset=utf-8",
-    		url : rootPath + "/memberInfo/registerMember.do",
+    		url : rootPath + "/memberInfo/registerMember.json",
     		async : false,
     		data : {
-    			"mobile" : $("#mobile").val(),
-    			"shopCode" : $("#shopCode").val(),
+                "storeCode" : $("#shopCode").val(),
+                "mobile" : $("#mobile").val(),
     			"openId" : openId,
     			"appId" : appId,
-    			"uid" : uid,
+    			"unionId" : unionId,
+    			"secret" : getUrlDataByKey("secret"),
     			"registType" : getUrlDataByKey("registType")
     		},
     		dataType : "json",
     		success : function(response) {
+    		    response = JSON.parse(response);
     			if(response.success){
     				$("#modal_lable").text("恭喜");
     				$("#modal_msg").text(response.msg);
@@ -150,11 +152,12 @@
             $("#overLay,#shopList").hide();
             $(".inputGroup").find(".fa-angle-right").removeClass("fa-ro");
         });
-        $("#register").click(function(){
+        /*$("#register").click(function(){
         	return checkPhoneCheckCode(userRegister);
-        });
-        $(".v-code .codeBtn").click(getPhoneCheckCode);
-        $("#backIndex").attr("href", "javascript:loadIndex()");
+        });*/
+        $("#register").click(userRegister);
+//        $(".v-code .codeBtn").click(getPhoneCheckCode);
+        $("#backIndex").prop("href", "javascript:loadIndex()");
     })
 
 </script>
