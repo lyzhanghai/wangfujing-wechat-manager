@@ -29,7 +29,7 @@ public interface MemberInfoMapper {
      * @param paramMap
      * @return
      */
-    List<MemberInfoReturnDto> selectMemberInfoListByParam(Map<String, Object> paramMap);
+    List<MemberInfoReturnDto> selectMemberAndCardInfoListByParam(Map<String, Object> paramMap);
 
     /**
      * 查询个人资料(会员信息以及门店信息)

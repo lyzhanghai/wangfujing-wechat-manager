@@ -445,7 +445,7 @@
         </where>
     </select>
 
-    <select id="selectMemberInfoListByParam" parameterType="java.util.Map" resultType="com.wfj.dto.MemberInfoReturnDto">
+    <select id="selectMemberAndCardInfoListByParam" parameterType="java.util.Map" resultType="com.wfj.dto.MemberInfoReturnDto">
         SELECT
         mi.store_code AS storeCode,
         mi.member_code AS memberCode,

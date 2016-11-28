@@ -122,7 +122,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("storeCode", storeCode);
         paramMap.put("openid", openid);
-        List<MemberInfoReturnDto> memberInfoReturnDtoList = memberInfoMapper.selectMemberInfoListByParam(paramMap);
+        List<MemberInfoReturnDto> memberInfoReturnDtoList = memberInfoMapper.selectMemberAndCardInfoListByParam(paramMap);
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         if (memberInfoReturnDtoList.size() == 0) {
