@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.wfj.entity.MsgReply;
 import com.wfj.mapper.MsgReplyMapper;
 import com.wfj.message.resp.Article;
-import com.wfj.message.resp.BaseMessage;
 import com.wfj.message.resp.Image;
 import com.wfj.message.resp.ImageMessage;
 import com.wfj.message.resp.Music;
@@ -39,11 +38,10 @@ public class MsgDispatcher {
 		logger.info("openid" + openid + "mpid" + mpid);
 		if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) { // 文本消息
 			// 普通文本消息
-			BaseMessage basemsg = new BaseMessage();
-			basemsg.setToUserName(openid);
-			basemsg.setFromUserName(mpid);
-			basemsg.setCreateTime(new Date().getTime());
 			TextMessage txtmsg = new TextMessage();
+			txtmsg.setToUserName(openid);
+			txtmsg.setFromUserName(mpid);
+			txtmsg.setCreateTime(new Date().getTime());
 			txtmsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 			logger.info(txtmsg);
 			String content = map.get("Content");
@@ -56,6 +54,9 @@ public class MsgDispatcher {
 					txtmsg.setContent(msgReply.getContent());
 				} else if (msgReply.getMsgType().equals(1)) {
 					ImageMessage imgMsg = new ImageMessage();
+					imgMsg.setToUserName(openid);
+					imgMsg.setFromUserName(mpid);
+					imgMsg.setCreateTime(new Date().getTime());
 					Image image = new Image();
 					image.setMediaId(msgReply.getMediaId());
 					imgMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
@@ -63,6 +64,9 @@ public class MsgDispatcher {
 					return MessageUtil.imageMessageToXml(imgMsg);
 				} else if (msgReply.getMsgType().equals(2)) {
 					VoiceMessage voiMsg = new VoiceMessage();
+					voiMsg.setToUserName(openid);
+					voiMsg.setFromUserName(mpid);
+					voiMsg.setCreateTime(new Date().getTime());
 					Voice voice = new Voice();
 					voice.setMediaId(msgReply.getMediaId());
 					voiMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VOICE);
@@ -70,6 +74,9 @@ public class MsgDispatcher {
 					return MessageUtil.voiceMessageToXml(voiMsg);
 				} else if (msgReply.getMsgType().equals(3)) {
 					VideoMessage vidMsg = new VideoMessage();
+					vidMsg.setToUserName(openid);
+					vidMsg.setFromUserName(mpid);
+					vidMsg.setCreateTime(new Date().getTime());
 					Video video = new Video();
 					video.setDescription(msgReply.getDescription());
 					video.setMediaId(msgReply.getMediaId());
@@ -79,6 +86,9 @@ public class MsgDispatcher {
 					return MessageUtil.videoMessageToXml(vidMsg);
 				} else if (msgReply.getMsgType().equals(4)) {
 					MusicMessage musMsg = new MusicMessage();
+					musMsg.setToUserName(openid);
+					musMsg.setFromUserName(mpid);
+					musMsg.setCreateTime(new Date().getTime());
 					Music music = new Music();
 					music.setDescription(msgReply.getDescription());
 					music.setHQMusicUrl(msgReply.getHqmusicUrl());
@@ -90,6 +100,9 @@ public class MsgDispatcher {
 					return MessageUtil.musicMessageToXml(musMsg);
 				} else if (msgReply.getMsgType().equals(5)) {
 					NewsMessage newsMsg = new NewsMessage();
+					newsMsg.setToUserName(openid);
+					newsMsg.setFromUserName(mpid);
+					newsMsg.setCreateTime(new Date().getTime());
 					List<Article> artList = new ArrayList<Article>();
 					for (int i = 0; i < msgList.size(); i++) {
 						Article art = new Article();
