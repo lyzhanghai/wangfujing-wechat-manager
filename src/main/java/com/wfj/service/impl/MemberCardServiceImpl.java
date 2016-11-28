@@ -1,6 +1,5 @@
 package com.wfj.service.impl;
 
-import com.wfj.entity.AppAccountInfo;
 import com.wfj.entity.MemberCard;
 import com.wfj.entity.MemberInfo;
 import com.wfj.mapper.MemberCardMapper;
@@ -121,12 +120,28 @@ public class MemberCardServiceImpl implements MemberCardService {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         String cardLevel = paraMap.get("cardLevel") + "";
         String memberCode = tempMemberInfo.getMemberCode();
+
+        //判断是否绑定了会员卡
+        paramMap.clear();
+        paramMap.put("storeCode", storeCode);
+        paramMap.put("memberCode", memberCode);
+        List<MemberCard> bindCardList = memberCardMapper.selectListByParam(paramMap);
+
         if ("1".equals(cardType)) {//实体卡绑定
+            //将已经绑定的卡废弃
+            if (bindCardList.size() == 1) {
+                MemberCard memberCard = bindCardList.get(0);
+                memberCard.setStatus(1);
+                memberCardMapper.updateByPrimaryKeySelective(memberCard);
+            }
+
+            //判断此卡是否数据是否存在
             String cardCode = paraMap.get("cardCode") + "";
             paramMap.clear();
             paramMap.put("storeCode", storeCode);
             paramMap.put("memberCode", memberCode);
             paramMap.put("cardCode", cardCode);
+            paramMap.put("cardType", 1);//实体卡
             List<MemberCard> memberCardList = memberCardMapper.selectListByParam(paramMap);
             if (memberCardList.size() == 0) {
                 MemberCard memberCard = new MemberCard();
