@@ -112,4 +112,21 @@ public class WechatMenu {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "WechatMenu{" +
+                "sid=" + sid +
+                ", appid='" + appid + '\'' +
+                ", parentSid='" + parentSid + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", key='" + key + '\'' +
+                ", viewurl='" + viewurl + '\'' +
+                ", orderBy=" + orderBy +
+                ", ifdel=" + ifdel +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

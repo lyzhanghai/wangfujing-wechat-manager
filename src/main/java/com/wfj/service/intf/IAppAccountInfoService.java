@@ -1,6 +1,7 @@
 package com.wfj.service.intf;
 
 import com.wfj.entity.AppAccountInfo;
+import com.wfj.message.req.StoreInfoDto;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface IAppAccountInfoService {
      * @return
      */
     public List<AppAccountInfo> queryAppAccount(Map<String, Object> paramMap);
+
+    public StoreInfoDto getStoreInfo(String appid);
 }

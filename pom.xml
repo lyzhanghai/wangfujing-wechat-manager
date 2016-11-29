@@ -322,6 +322,12 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.8</version>
 		</dependency>
+		<!-- json包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>notebook</finalName>
