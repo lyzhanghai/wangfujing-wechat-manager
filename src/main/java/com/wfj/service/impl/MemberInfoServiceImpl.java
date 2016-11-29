@@ -112,7 +112,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
                 memberCard.setStatus(0);
                 memberCard.setDelFlag(0);
                 memberCardMapper.insertSelective(memberCard);
-            } else if (memberCardList.size() > 1) {
+            } else if (memberCardList.size() > 0) {
                 MemberCard memberCard = memberCardList.get(0);
                 memberCard.setStatus(0);
                 memberCard.setDelFlag(0);

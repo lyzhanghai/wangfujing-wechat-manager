@@ -133,7 +133,7 @@ public class MemberCardServiceImpl implements MemberCardService {
 
         if ("1".equals(cardType)) {//实体卡绑定
             //将已经绑定的卡废弃
-            if (bindCardList.size() > 1) {
+            if (bindCardList.size() > 0) {
                 for (MemberCard memberCard : bindCardList) {
                     memberCard.setStatus(1);
                     memberCard.setDelFlag(0);
@@ -196,7 +196,7 @@ public class MemberCardServiceImpl implements MemberCardService {
                     memberCard.setCardLevel(Integer.parseInt(cardLevel));
                 }
                 memberCardMapper.insertSelective(memberCard);
-            } else if (virtualCardList.size() > 1) {
+            } else if (virtualCardList.size() > 0) {
                 MemberCard memberCard = virtualCardList.get(0);
                 memberCard.setDelFlag(0);
                 memberCard.setStatus(0);
