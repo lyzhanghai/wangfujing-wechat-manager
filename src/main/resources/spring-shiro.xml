@@ -89,6 +89,8 @@
                 /storeInfo/** = anon
                 /memberInfo/** = anon
                 /appAccountInfo/** = anon
+                /msgReplyAdd.jsp = anon
+                /msgReply/** = anon
             </value>
         </property>
     </bean>
