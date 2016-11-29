@@ -78,10 +78,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
             String generateMemberCode = generateMemberCode(paramMap);
             memberInfo.setMemberCode(generateMemberCode);
             int insertSelective = memberInfoMapper.insertSelective(memberInfo);
-            if (insertSelective == 1) {
-                returnMap.put("success", "true");
-                returnMap.put("desc", "注册成功！");
-            } else {
+            if (insertSelective != 1) {
                 throw new RuntimeException("会员注册时，数据库插入会员信息（memberinfo）失败！");
             }
 
@@ -97,11 +94,36 @@ public class MemberInfoServiceImpl implements MemberInfoService {
             memberCard.setDelFlag(0);
             memberCardMapper.insertSelective(memberCard);
         } else if (memberInfoList.size() == 1) {
-            returnMap.put("success", "false");
-            returnMap.put("desc", "已经注册了！");
+            MemberInfo memberInfo1 = memberInfoList.get(0);
+            paramMap.clear();
+            paramMap.put("storeCode", storeCode);
+            paramMap.put("memberCode", memberInfo1.getMemberCode());
+            paramMap.put("cardType", 2);
+            List<MemberCard> memberCardList = memberCardMapper.selectListByParam(paramMap);
+            if (memberCardList.size() == 0) {
+                //插入虚拟卡
+                MemberCard memberCard = new MemberCard();
+                memberCard.setStoreCode(storeCode);
+                memberCard.setMemberCode(memberInfo1.getMemberCode());
+                paramMap.clear();
+                String generateCardCode = memberCardService.generateCardCode(paramMap);
+                memberCard.setCardCode(generateCardCode);
+                memberCard.setCardType(2);
+                memberCard.setStatus(0);
+                memberCard.setDelFlag(0);
+                memberCardMapper.insertSelective(memberCard);
+            } else if (memberCardList.size() == 1) {
+                MemberCard memberCard = memberCardList.get(0);
+                memberCard.setStatus(0);
+                memberCard.setDelFlag(0);
+                memberCardMapper.updateByParaSelective(memberCard);
+            }
         } else {
             throw new RuntimeException("会员注册时，会员信息（memberinfo）存在重复信息！");
         }
+
+        returnMap.put("success", "true");
+        returnMap.put("desc", "注册成功！");
 
         logger.info("end com.wfj.service.impl.MemberInfoServiceImpl.registerMember(),return:" + returnMap.toString());
         return returnMap;
