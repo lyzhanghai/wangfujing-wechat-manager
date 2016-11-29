@@ -187,13 +187,9 @@ public class MemberInfoServiceImpl implements MemberInfoService {
             String password = memberInfo.getPassword();
             if (oldPayPwd.equals(password)) {
                 memberInfo.setPassword(newPayPwd);//修改密码
-                int i = memberInfoMapper.updateByPrimaryKeySelective(memberInfo);
-                if (i == 1) {
-                    returnMap.put("success", "true");
-                    returnMap.put("desc", "修改密码成功！");
-                } else {
-                    throw new RuntimeException("修改支付密码（com.wfj.service.impl.MemberInfoServiceImpl.changePayPassword）时操作数据库失败！");
-                }
+                memberInfoMapper.updateByPrimaryKeySelective(memberInfo);
+                returnMap.put("success", "true");
+                returnMap.put("desc", "修改密码成功！");
             } else {
                 returnMap.put("success", "false");
                 returnMap.put("desc", "旧密码不正确！");
