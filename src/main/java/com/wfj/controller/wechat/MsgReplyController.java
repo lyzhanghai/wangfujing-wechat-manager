@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wfj.entity.MsgReply;
 import com.wfj.service.intf.MsgReplyService;
+import com.wfj.util.Common;
 
 /**
  * 消息管理模块
@@ -32,7 +34,15 @@ public class MsgReplyController {
 		msgReplyService.msgReplyInsertOrUpdate(msgReply);
 	}
 
-	public List<MsgReply> getMsgReplyList(@RequestBody MsgReply msgReply) {
+	@RequestMapping("list")
+	public String listUI(Model model) throws Exception {
+		MsgReply msgReply = new MsgReply();
+		model.addAttribute("res", getMsgReplyList(msgReply));
+		System.out.println(Common.BACKGROUND_PATH + "/system/msgReply/add");
+		return Common.BACKGROUND_PATH + "/system/msgReply/add";
+	}
+
+	public List<MsgReply> getMsgReplyList(MsgReply msgReply) {
 		return msgReplyService.getMsgReplyList(msgReply);
 	}
 
