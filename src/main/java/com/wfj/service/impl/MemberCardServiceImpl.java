@@ -176,19 +176,31 @@ public class MemberCardServiceImpl implements MemberCardService {
                 throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，同一门店、会员号、卡号重复数据！");
             }
         } else if ("2".equals(cardType)) {//虚拟卡
-            MemberCard memberCard = new MemberCard();
-            memberCard.setStoreCode(storeCode);
-            memberCard.setMemberCode(memberCode);
             paramMap.clear();
-            String generateCardCode = generateCardCode(paramMap);
-            memberCard.setCardCode(generateCardCode);
-            memberCard.setCardType(2);
-            memberCard.setStatus(0);
-            memberCard.setDelFlag(0);
-            if (StringUtils.isNotEmpty(cardLevel)) {
-                memberCard.setCardLevel(Integer.parseInt(cardLevel));
+            paramMap.put("storeCode", storeCode);
+            paramMap.put("memberCode", memberCode);
+            paramMap.put("cardType", 2);
+            List<MemberCard> virtualCardList = memberCardMapper.selectListByParam(paramMap);
+            if (virtualCardList.size() == 0) {
+                MemberCard memberCard = new MemberCard();
+                memberCard.setStoreCode(storeCode);
+                memberCard.setMemberCode(memberCode);
+                paramMap.clear();
+                String generateCardCode = generateCardCode(paramMap);
+                memberCard.setCardCode(generateCardCode);
+                memberCard.setCardType(2);
+                memberCard.setStatus(0);
+                memberCard.setDelFlag(0);
+                if (StringUtils.isNotEmpty(cardLevel)) {
+                    memberCard.setCardLevel(Integer.parseInt(cardLevel));
+                }
+                memberCardMapper.insertSelective(memberCard);
+            } else if (virtualCardList.size() > 1) {
+                MemberCard memberCard = virtualCardList.get(0);
+                memberCard.setDelFlag(0);
+                memberCard.setStatus(0);
+                memberCardMapper.updateByParaSelective(memberCard);
             }
-            memberCardMapper.insertSelective(memberCard);
             returnMap.put("success", "true");
             returnMap.put("desc", "绑定成功！");
         } else {
