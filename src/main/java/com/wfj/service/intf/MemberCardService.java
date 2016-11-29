@@ -12,4 +12,7 @@ public interface MemberCardService {
 
     @Transactional
     Map<String, Object> bindMemberCard(Map<String, Object> paraMap) throws Exception;
+
+    @Transactional
+    Map<String,Object> cardCancleBind(Map<String, Object> paraMap) throws Exception;
 }

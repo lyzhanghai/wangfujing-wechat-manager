@@ -117,11 +117,13 @@
         $.ajax({
             type: "post",
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            url: rootPath + "/memberCard/cardCancleBind.do",
+            url: rootPath + "/memberInfo/cardCancleBind.json",
             async: false,
             data: {
                 "openId": openId,
-                "appId": appId
+                "appId": appId,
+                "storeCode": storeCode,
+                "cardNo": cardNo
             },
             dataType: "json",
             success: function (response) {

@@ -21,4 +21,12 @@ public interface MemberCardMapper {
     List<MemberCard> selectListByParam(Map<String, Object> paramMap);
 
     Map<String, Object> selectMaxCardCodeByParam(Map<String, Object> paramMap);
+
+    /**
+     * 根据门店号会员号修改会员卡信息
+     *
+     * @param memberCard
+     * @return
+     */
+    int updateByParaSelective(MemberCard memberCard);
 }

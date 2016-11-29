@@ -1,5 +1,6 @@
 package com.wfj.service.impl;
 
+import com.wfj.dto.MemberInfoReturnDto;
 import com.wfj.entity.MemberCard;
 import com.wfj.entity.MemberInfo;
 import com.wfj.mapper.MemberCardMapper;
@@ -190,6 +191,43 @@ public class MemberCardServiceImpl implements MemberCardService {
             throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard：绑定卡操作，不符合的绑定卡类型！");
         }
         logger.info("end com.wfj.service.impl.MemberCardServiceImpl.bindMemberCard(),return:" + returnMap);
+        return returnMap;
+    }
+
+    /**
+     * 解绑实体卡
+     *
+     * @param paraMap
+     * @return
+     */
+    @Transactional
+    public Map<String, Object> cardCancleBind(Map<String, Object> paraMap) throws Exception {
+        logger.info("start com.wfj.service.impl.MemberCardServiceImpl.cardCancleBind(),para:" + paraMap.toString());
+        String storeCode = paraMap.get("storeCode") + "";
+        String openid = paraMap.get("openid") + "";
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("storeCode", storeCode);
+        paramMap.put("openid", openid);
+        List<MemberInfoReturnDto> returnDtoList = memberInfoMapper.selectMemberAndCardInfoListByParam(paramMap);
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        if (returnDtoList.size() == 1) {
+            MemberInfoReturnDto returnDto = returnDtoList.get(0);
+            MemberCard memberCard = new MemberCard();
+            memberCard.setStoreCode(storeCode);
+            memberCard.setMemberCode(returnDto.getMemberCode());
+            memberCard.setCardCode(returnDto.getCardCode());
+            memberCard.setStatus(1);
+            int i = memberCardMapper.updateByParaSelective(memberCard);
+            if (i != 1) {
+                throw new RuntimeException("com.wfj.service.impl.MemberCardServiceImpl.cardCancleBind：解绑卡时操作数据库失败！");
+            }
+        }
+
+        returnMap.put("success", "true");
+        returnMap.put("desc", "解绑成功！");
+
+        logger.info("end com.wfj.service.impl.MemberCardServiceImpl.cardCancleBind(),return:" + returnMap);
         return returnMap;
     }
 }

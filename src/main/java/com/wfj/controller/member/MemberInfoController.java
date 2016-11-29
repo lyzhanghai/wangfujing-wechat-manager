@@ -189,6 +189,51 @@ public class MemberInfoController {
     }
 
     /**
+     * 解绑实体卡
+     *
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cardCancleBind", method = {RequestMethod.GET, RequestMethod.POST})
+    public String cardCancleBind(String openId, String appId, String storeCode, String cardCode) {
+        logger.info("start com.wfj.controller.member.MemberInfoController.cardCancleBind()");
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        if (StringUtils.isNotEmpty(openId)) {
+            paraMap.put("openid", openId.trim());
+        }
+        if (StringUtils.isNotEmpty(appId)) {
+            paraMap.put("appid", appId);
+        }
+        if (StringUtils.isNotEmpty(storeCode)) {
+            paraMap.put("storeCode", storeCode.trim());
+        }
+        if (StringUtils.isNotEmpty(cardCode)) {
+            paraMap.put("cardCode", cardCode.trim());
+        }
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+            logger.info("解绑实体卡,请求数据：" + paraMap.toString());
+            Map<String, Object> returnMap = memberCardService.cardCancleBind(paraMap);
+            logger.info("解绑实体卡,响应数据：" + returnMap.toString());
+            if ("true".equals(returnMap.get("success") + "")) {
+                resultMap.put("msg", returnMap.get("desc") + "");
+                resultMap.put("success", true);
+            } else {
+                resultMap.put("msg", returnMap.get("desc") + "");
+                resultMap.put("success", false);
+            }
+        } catch (Exception e) {
+            logger.error("解绑实体卡异常", e);
+            resultMap.put("msg", "系统错误");
+            resultMap.put("success", false);
+        }
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        return gson.toJson(resultMap);
+    }
+
+    /**
      * 返回首页时去取地址(跳转页面、转向注册页面或者我的会员页面)
      *
      * @param
