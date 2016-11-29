@@ -77,12 +77,15 @@ public class MemberCardServiceImpl implements MemberCardService {
         String storeCode = paraMap.get("storeCode") + "";
         String openid = paraMap.get("openid") + "";
         String cardType = paraMap.get("cardType") + "";
+
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("storeCode", storeCode);
         paramMap.put("openid", openid);
         List<MemberInfo> memberInfoList = memberInfoMapper.selectListByParam(paramMap);
         MemberInfo tempMemberInfo = null;
-        if (memberInfoList.size() == 0) {//未生成会员信息（memberinfo）绑定卡操作，先生成会员信息（memberinfo）
+
+        //未生成会员信息（memberinfo）绑定卡操作，先生成会员信息（memberinfo）
+        if (memberInfoList.size() == 0) {
 //            paramMap.clear();
 //            paramMap.put("storeCode", storeCode);
 //            List<AppAccountInfo> appAccountInfoList = appAccountInfoService.queryAppAccount(paramMap);
