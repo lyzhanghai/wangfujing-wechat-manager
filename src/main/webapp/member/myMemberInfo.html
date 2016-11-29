@@ -127,6 +127,7 @@
             },
             dataType: "json",
             success: function (response) {
+                response = JSON.parse(response);
                 if (response.success) {
                     $("#modal_lable").text("解绑成功！");
                     $("#modal_msg").text(response.msg);
