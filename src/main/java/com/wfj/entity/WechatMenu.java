@@ -121,7 +121,7 @@ public class WechatMenu {
                 ", parentSid='" + parentSid + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", key='" + key + '\'' +
+                ", clickkey='" + clickkey + '\'' +
                 ", viewurl='" + viewurl + '\'' +
                 ", orderBy=" + orderBy +
                 ", ifdel=" + ifdel +
