@@ -65,7 +65,8 @@ public class CommonController {
             // Map<String, String> paramMap = new HashMap<String, String>();
             // paramMap.put("appid", storeInfo.getAppId());
             // paramMap.put("openid", atkDto.getOpenid());
-            String sendGet = getMemberInfo(appid, atkDto.getOpenid());// HttpUtil.sendGet("",
+            String sendGet = getMemberInfo(appid, atkDto.getOpenid(), storeInfo.getStoreCode());
+//            String sendGet = getMemberInfo(appid, atkDto.getOpenid());// HttpUtil.sendGet("",
             // paramMap);
             // String sendGet = getMemberInfo(storeInfo.getAppId(),
             // atkDto.getOpenid());
