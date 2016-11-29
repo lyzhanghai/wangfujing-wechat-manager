@@ -58,6 +58,8 @@ public class MemberInfoReturnDto {
 
     private Integer delFlag;//是否删除，1：是，0：否
 
+    private String qrcode;//生成二维码的字符串
+
     public String getMemberCode() {
         return memberCode;
     }
@@ -266,6 +268,14 @@ public class MemberInfoReturnDto {
         this.branchName = branchName;
     }
 
+    public String getQrcode() {
+        return qrcode;
+    }
+
+    public void setQrcode(String qrcode) {
+        this.qrcode = qrcode;
+    }
+
     @Override
     public String toString() {
         return "MemberInfoReturnDto{" +
@@ -295,6 +305,7 @@ public class MemberInfoReturnDto {
                 ", cardLevel=" + cardLevel +
                 ", status=" + status +
                 ", delFlag=" + delFlag +
+                ", qrcode='" + qrcode + '\'' +
                 '}';
     }
 }

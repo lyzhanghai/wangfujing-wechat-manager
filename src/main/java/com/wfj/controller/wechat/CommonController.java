@@ -90,7 +90,7 @@ public class CommonController {
      * @throws Exception
      */
     private String getMemberInfo(String appid, String openid, String storeCode) throws Exception {
-        logger.info("start com.wfj.controller.wechat.CommonController.getMemberInfo(),para:{appid:" + appid + ",openid:" + openid + "}");
+        logger.info("start com.wfj.controller.member.MemberInfoController.getMemberInfo(),para:{appid:" + appid + ",openid:" + openid + "}");
         String url = "";
         String para = "";
         Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -99,18 +99,19 @@ public class CommonController {
         paraMap.put("storeCode", storeCode);
         Map<String, Object> returnMap = memberInfoService.getMemberInfo(paraMap);
         if ("0".equals(returnMap.get("code") + "")) {// 未注册、未实体绑卡 跳转至头像首页
-            logger.info("com.wfj.controller.wechat.CommonController.getMemberInfo:未注册、未实体绑卡");
+            logger.info("com.wfj.controller.member.MemberInfoController.getMemberInfo:未注册、未实体绑卡");
             url = PropertiesUtils.findPropertiesKey("myMemberInfoInit");
         } else if ("1".equals(returnMap.get("code") + "")) {
-            MemberInfoReturnDto memberInfoReturnDto = new MemberInfoReturnDto();
-            BeanUtils.copyProperties(memberInfoReturnDto, returnMap.get("obj"));
+            MemberInfoReturnDto returnDto = new MemberInfoReturnDto();
+            BeanUtils.copyProperties(returnDto, returnMap.get("obj"));
+            returnDto.setQrcode(returnDto.getStoreCode() + returnDto.getMemberCode() + returnDto.getCardCode());
 
-            String mobile = memberInfoReturnDto.getMobile();
+            String mobile = returnDto.getMobile();
 
-            para = "memberCode=" + memberInfoReturnDto.getMemberCode() + "&cardNo=" + memberInfoReturnDto.getCardCode() +
-                    "&custType=" + memberInfoReturnDto.getCardLevel() + "&qrcode=&mobile=" + mobile;
+            para = "memberCode=" + returnDto.getMemberCode() + "&cardNo=" + returnDto.getCardCode() +
+                    "&custType=" + returnDto.getCardLevel() + "&qrcode=" + returnDto.getQrcode() + "&mobile=" + mobile;
 
-            Integer cardType = memberInfoReturnDto.getCardType();
+            Integer cardType = returnDto.getCardType();
             if (cardType != 1) {// 是否存在有实体卡,无实体卡
                 url = PropertiesUtils.findPropertiesKey("myMemberInfo");
                 para = para + "&entityCard=0&updatePWD=0";
@@ -123,7 +124,7 @@ public class CommonController {
                 }
             }
         }
-        logger.info("end com.wfj.controller.wechat.CommonController.getMemberInfo(),return:" + url + para);
+        logger.info("end com.wfj.controller.member.MemberInfoController.getMemberInfo(),return:" + url + para);
         return url + para;
     }
 

@@ -330,15 +330,16 @@ public class MemberInfoController {
             logger.info("com.wfj.controller.member.MemberInfoController.getMemberInfo:未注册、未实体绑卡");
             url = PropertiesUtils.findPropertiesKey("myMemberInfoInit");
         } else if ("1".equals(returnMap.get("code") + "")) {
-            MemberInfoReturnDto memberInfoReturnDto = new MemberInfoReturnDto();
-            BeanUtils.copyProperties(memberInfoReturnDto, returnMap.get("obj"));
+            MemberInfoReturnDto returnDto = new MemberInfoReturnDto();
+            BeanUtils.copyProperties(returnDto, returnMap.get("obj"));
+            returnDto.setQrcode(returnDto.getStoreCode() + returnDto.getMemberCode() + returnDto.getCardCode());
 
-            String mobile = memberInfoReturnDto.getMobile();
+            String mobile = returnDto.getMobile();
 
-            para = "memberCode=" + memberInfoReturnDto.getMemberCode() + "&cardNo=" + memberInfoReturnDto.getCardCode() +
-                    "&custType=" + memberInfoReturnDto.getCardLevel() + "&qrcode=&mobile=" + mobile;
+            para = "memberCode=" + returnDto.getMemberCode() + "&cardNo=" + returnDto.getCardCode() +
+                    "&custType=" + returnDto.getCardLevel() + "&qrcode=" + returnDto.getQrcode() + "&mobile=" + mobile;
 
-            Integer cardType = memberInfoReturnDto.getCardType();
+            Integer cardType = returnDto.getCardType();
             if (cardType != 1) {// 是否存在有实体卡,无实体卡
                 url = PropertiesUtils.findPropertiesKey("myMemberInfo");
                 para = para + "&entityCard=0&updatePWD=0";
