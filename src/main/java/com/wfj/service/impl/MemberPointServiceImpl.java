@@ -39,6 +39,7 @@ public class MemberPointServiceImpl implements MemberPointService {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paraMap.put("storeCode", storeCode);
         paraMap.put("memberCode", memberCode);
+        paraMap.put("delFlag", 0);
         List<MemberPoint> memberPointList = memberPointMapper.selectListByParam(paramMap);
         MemberPointReturnDto returnDto = new MemberPointReturnDto();
         if (memberPointList.size() > 0) {

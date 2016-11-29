@@ -151,9 +151,6 @@
             <if test="delFlag != null">
                 and del_flag = #{delFlag,jdbcType=INTEGER}
             </if>
-            <if test="delFlag == null">
-                and del_flag = 0
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
