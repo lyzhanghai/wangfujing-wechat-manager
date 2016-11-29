@@ -13,7 +13,7 @@ public class WechatMenu {
 
     private String type;
 
-    private String key;
+    private String clickkey;
 
     private String viewurl;
 
@@ -65,12 +65,12 @@ public class WechatMenu {
         this.type = type;
     }
 
-    public String getKey() {
-        return key;
+    public String getClickkey() {
+        return clickkey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setClickkey(String clickkey) {
+        this.clickkey = clickkey;
     }
 
     public String getViewurl() {
