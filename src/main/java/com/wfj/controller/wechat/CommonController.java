@@ -4,13 +4,13 @@ import com.wfj.dto.AccessTokenDto;
 import com.wfj.dto.MemberInfo;
 import com.wfj.dto.MemberInfoReturnDto;
 import com.wfj.message.req.StoreInfoDto;
+import com.wfj.service.intf.IAppAccountInfoService;
 import com.wfj.service.intf.MemberInfoService;
 import com.wfj.util.PropertiesUtils;
 import com.wfj.util.StringUtils;
 import com.wfj.util.WechatUtil;
 import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +26,12 @@ import java.util.Map;
 @Controller
 @RequestMapping("/common")
 public class CommonController {
-
-    private static Logger logger = LoggerFactory.getLogger(CommonController.class);
+    private Logger logger = Logger.getLogger(CommonController.class);
 
     @Autowired
     private WechatUtil util;
-
+    @Autowired
+    private IAppAccountInfoService appAccountInfoService;
     @Autowired
     private MemberInfoService memberInfoService;
 
@@ -42,7 +42,7 @@ public class CommonController {
         long starTime = System.currentTimeMillis();
         try {
             // 1 通过门店接口获取appID,appSecret
-            StoreInfoDto storeInfo = util.getStoreInfo(state);
+            StoreInfoDto storeInfo = appAccountInfoService.getStoreInfo(state);
             System.out.println("storeInfo ================ " + storeInfo);
             String appid = storeInfo.getAppId(); //"wx871d0104ae72e615";
             String secret = storeInfo.getSecret(); //"00e66c2772af76181745b6f5d92b5801";
@@ -65,8 +65,7 @@ public class CommonController {
             // Map<String, String> paramMap = new HashMap<String, String>();
             // paramMap.put("appid", storeInfo.getAppId());
             // paramMap.put("openid", atkDto.getOpenid());
-            String sendGet = getMemberInfo(appid, atkDto.getOpenid(), storeInfo.getStoreCode());
-//            String sendGet = getMemberInfo(appid, atkDto.getOpenid());// HttpUtil.sendGet("",
+            String sendGet = getMemberInfo(appid, atkDto.getOpenid());// HttpUtil.sendGet("",
             // paramMap);
             // String sendGet = getMemberInfo(storeInfo.getAppId(),
             // atkDto.getOpenid());
