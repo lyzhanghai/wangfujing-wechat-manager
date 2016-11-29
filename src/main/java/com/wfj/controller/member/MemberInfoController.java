@@ -16,8 +16,7 @@ import com.wfj.util.StringUtils;
 import com.wfj.util.WechatUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,7 @@ import java.util.Map;
 @RequestMapping(value = {"/memberInfo"})
 public class MemberInfoController {
 
-    private static Logger logger = LoggerFactory.getLogger(MemberInfoController.class);
+    private static Logger logger = Logger.getLogger(MemberInfoController.class);
 
     @Autowired
     private WechatUtil wechatUtil;
