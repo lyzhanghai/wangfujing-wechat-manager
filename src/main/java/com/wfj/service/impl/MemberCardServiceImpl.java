@@ -133,11 +133,12 @@ public class MemberCardServiceImpl implements MemberCardService {
 
         if ("1".equals(cardType)) {//实体卡绑定
             //将已经绑定的卡废弃
-            if (bindCardList.size() == 1) {
-                MemberCard memberCard = bindCardList.get(0);
-                memberCard.setStatus(1);
-                memberCard.setDelFlag(0);
-                memberCardMapper.updateByParaSelective(memberCard);
+            if (bindCardList.size() > 1) {
+                for (MemberCard memberCard : bindCardList) {
+                    memberCard.setStatus(1);
+                    memberCard.setDelFlag(0);
+                    memberCardMapper.updateByParaSelective(memberCard);
+                }
             }
 
             //判断此卡是否数据是否存在
