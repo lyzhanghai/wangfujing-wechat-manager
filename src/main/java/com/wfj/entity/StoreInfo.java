@@ -5,6 +5,8 @@ public class StoreInfo {
 
     private String storeCode;
 
+    private String poiId;
+
     private String businessName;
 
     private String branchName;
@@ -55,6 +57,14 @@ public class StoreInfo {
 
     public void setStoreCode(String storeCode) {
         this.storeCode = storeCode;
+    }
+
+    public String getPoiId() {
+        return poiId;
+    }
+
+    public void setPoiId(String poiId) {
+        this.poiId = poiId;
     }
 
     public String getBusinessName() {
@@ -206,6 +216,7 @@ public class StoreInfo {
         return "StoreInfo{" +
                 "sid=" + sid +
                 ", storeCode='" + storeCode + '\'' +
+                ", poiId='" + poiId + '\'' +
                 ", businessName='" + businessName + '\'' +
                 ", branchName='" + branchName + '\'' +
                 ", province='" + province + '\'' +

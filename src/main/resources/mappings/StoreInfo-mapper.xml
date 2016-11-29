@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.wfj.entity.StoreInfo" >
     <id column="sid" property="sid" jdbcType="BIGINT" />
     <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <result column="poi_id" property="poiId" jdbcType="VARCHAR" />
     <result column="business_name" property="businessName" jdbcType="VARCHAR" />
     <result column="branch_name" property="branchName" jdbcType="VARCHAR" />
     <result column="province" property="province" jdbcType="VARCHAR" />
@@ -24,12 +25,12 @@
     <result column="channel_type" property="channelType" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sid, store_code, business_name, branch_name, province, city, district, address, telephone, 
+    sid, store_code, poi_id, business_name, branch_name, province, city, district, address, telephone,
     categories, offset_type, longitude, latitude, photo_list, special, open_time, avg_price, 
     introduction, recommend, channel_type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from storeinfo
     where sid = #{sid,jdbcType=BIGINT}
@@ -63,6 +64,9 @@
       <if test="storeCode != null" >
         store_code,
       </if>
+        <if test="poiId != null" >
+            poi_id,
+        </if>
       <if test="businessName != null" >
         business_name,
       </if>
@@ -125,6 +129,9 @@
       <if test="storeCode != null" >
         #{storeCode,jdbcType=VARCHAR},
       </if>
+        <if test="poiId != null" >
+            #{poiId,jdbcType=VARCHAR},
+        </if>
       <if test="businessName != null" >
         #{businessName,jdbcType=VARCHAR},
       </if>
@@ -187,6 +194,9 @@
       <if test="storeCode != null" >
         store_code = #{storeCode,jdbcType=VARCHAR},
       </if>
+        <if test="poiId != null" >
+            poi_id = #{poiId,jdbcType=VARCHAR},
+        </if>
       <if test="businessName != null" >
         business_name = #{businessName,jdbcType=VARCHAR},
       </if>
@@ -280,6 +290,9 @@
       <if test="storeCode != null">
         and store_code = #{storeCode,jdbcType=VARCHAR}
       </if>
+        <if test="poiId != null">
+            and poi_id = #{poiId,jdbcType=VARCHAR}
+        </if>
       <if test="businessName != null">
         and business_name = #{businessName,jdbcType=VARCHAR}
       </if>
