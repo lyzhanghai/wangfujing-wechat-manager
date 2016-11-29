@@ -31,6 +31,10 @@
             <a class="fl vipL" href="#" id="memberCen">我的积分</a>
             <a class="fl vipR" href="#" id="memberBen">会员权益</a>
         </div>
+        <div class="tc p20 vipInfo clearfix">
+            <a class="fl vipL" href="#" id="getMemberInfo">查看个人资料</a>
+            <a class="fl vipR" href="#" id="editMemberInfo">修改个人资料</a>
+        </div>
         <div class="btnDiv clearfix">
             <div class="col-xs-6" id="unbind" style="display: none;">
                 <div class="fr red-btn">解绑</div>
@@ -112,6 +116,24 @@
         $("#memberBen").attr("href", memberBenUrl);
     }
 
+    //查看个人资料
+    function getMemberInfo() {
+        var getMemberInfoUrl = rootPath + "/member/getMemberInfo.html?";
+        getMemberInfoUrl += "appId=" + appId;
+        getMemberInfoUrl += "&openId=" + openId;
+        getMemberInfoUrl += "&storeCode=" + storeCode;
+        $("#getMemberInfo").prop("href", getMemberInfoUrl);
+    }
+
+    //修改个人资料
+    function editMemberInfo() {
+        var editMemberInfoUrl = rootPath + "/member/editMemberInfo.html?";
+        editMemberInfoUrl += "appId=" + appId;
+        editMemberInfoUrl += "&openId=" + openId;
+        editMemberInfoUrl += "&storeCode=" + storeCode;
+        $("#editMemberInfo").prop("href", editMemberInfoUrl);
+    }
+
     //解绑
     function unBind() {
         $.ajax({
@@ -180,6 +202,8 @@
         $("#bindPhone div").click(bindPhone);
         memberCen();
         memberBen();
+        getMemberInfo();
+        editMemberInfo();
     });
 </script>
 <script>
