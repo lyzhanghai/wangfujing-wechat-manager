@@ -38,9 +38,9 @@ public class MemberPointInfoServiceImpl implements MemberPointInfoService {
         String cardCode = paraMap.get("cardCode") + "";
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paraMap.put("storeCode", storeCode);
-        paraMap.put("memberCode", memberCode);
-        paraMap.put("cardCode", cardCode);
+        paramMap.put("storeCode", storeCode);
+        paramMap.put("memberCode", memberCode);
+        paramMap.put("cardCode", cardCode);
         List<MemberPointInfoReturnDto> dtoList = memberPointInfoMapper.selectMemberPointDetailListByParam(paramMap);
         for (MemberPointInfoReturnDto tempDto : dtoList) {
             Integer pointType = tempDto.getPointType();
