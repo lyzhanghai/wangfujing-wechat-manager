@@ -133,7 +133,8 @@ public class MemberCardServiceImpl implements MemberCardService {
             if (bindCardList.size() == 1) {
                 MemberCard memberCard = bindCardList.get(0);
                 memberCard.setStatus(1);
-                memberCardMapper.updateByPrimaryKeySelective(memberCard);
+                memberCard.setDelFlag(0);
+                memberCardMapper.updateByParaSelective(memberCard);
             }
 
             //判断此卡是否数据是否存在
@@ -162,7 +163,7 @@ public class MemberCardServiceImpl implements MemberCardService {
                 MemberCard tempMemberCard = memberCardList.get(0);
                 tempMemberCard.setStatus(0);
                 tempMemberCard.setDelFlag(0);
-                memberCardMapper.updateByPrimaryKeySelective(tempMemberCard);
+                memberCardMapper.updateByParaSelective(tempMemberCard);
                 returnMap.put("success", "true");
                 returnMap.put("desc", "绑定成功！");
             } else if (memberCardList.size() == 1 && memberCardList.get(0).getStatus() == 0) {

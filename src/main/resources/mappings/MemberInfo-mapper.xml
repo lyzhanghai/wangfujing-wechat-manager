@@ -445,7 +445,8 @@
         </where>
     </select>
 
-    <select id="selectMemberAndCardInfoListByParam" parameterType="java.util.Map" resultType="com.wfj.dto.MemberInfoReturnDto">
+    <select id="selectMemberAndCardInfoListByParam" parameterType="java.util.Map"
+            resultType="com.wfj.dto.MemberInfoReturnDto">
         SELECT
         mi.store_code AS storeCode,
         mi.member_code AS memberCode,
@@ -473,6 +474,9 @@
             </if>
             <if test="status == null">
                 AND mc.del_flag = 0
+            </if>
+            <if test="cardType != null">
+                AND mc.card_type = #{cardType}
             </if>
             <if test="storeCode != null">
                 AND mi.store_code = #{storeCode}
