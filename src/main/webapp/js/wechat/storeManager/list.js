@@ -1,8 +1,8 @@
 var pageii = null;
 $(function() {
-	roleList();
+	storeManagerList();
 	$("#search").click("click", function() {// 绑定查询按扭
-		roleList();
+		storeManagerList();
 	});
 	$("#addRole").click("click", function() {
 		addRole();
@@ -83,15 +83,15 @@ function delRole() {
 		}, "json");
 		if (s == "success") {
 			layer.msg('删除成功');
-			roleList();
+			storeManagerList();
 		} else {
 			layer.msg('删除失败');
 		}
 	});
 }
 
-function roleList() {
-	var roleTable = $('#roleList');
+function storeManagerList() {
+	var roleTable = $('#storeManagerList');
 	roleTable.dataTable().fnClearTable(false);
 	roleTable.dataTable().fnDestroy();
 	roleTable.dataTable({
@@ -122,7 +122,7 @@ function roleList() {
 		},
 		"aoColumns": [
 			{
-				"sTitle": '<div class="checker"><span class=""><input id="check_all" onclick="checkAll(this);" type="checkbox" class="group-checkable" data-set="#roleList .checkboxes"></span></div>',
+				"sTitle": '<div class="checker"><span class=""><input id="check_all" onclick="checkAll(this);" type="checkbox" class="group-checkable" data-set="#storeManagerList .checkboxes"></span></div>',
 				"mDataProp": null,
 				"sWidth": "3%",
 				"bSortable": false,

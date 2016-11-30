@@ -11,7 +11,7 @@
 	 				success : function(data) {
 	 					if (data=="success") {
 	 						layer.confirm('更新成功!是否关闭窗口?', function(index) {
-								window.parent.roleList();
+								window.parent.storeManagerList();
 					        	parent.layer.close(parent.pageii);
 					        	return false;
 	 						});

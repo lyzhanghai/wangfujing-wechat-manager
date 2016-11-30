@@ -35,14 +35,27 @@
 					</div>
 					<div class="portlet-body">
 						<table class="table table-striped table-bordered table-hover dataTable no-footer"
-							   id="roleList">
+							   id="storeManagerList">
 							<thead>
 							<tr role="row">
 								<th></th>
-								<th>角色名</th>
-								<th>状态</th>
-								<th>roleKey</th>
-								<th>描述</th>
+								<th>门店编码</th>
+								<th>门店名称</th>
+								<th>分店名称</th>
+								<th>省</th>
+								<th>市</th>
+								<th>区</th>
+								<th>街道地址</th>
+								<th>电话</th>
+								<th>门店类型</th>
+								<th>坐标类型</th>
+								<th>经度</th>
+								<th>纬度</th>
+								<th>特色服务</th>
+								<th>营业时间</th>
+								<th>人均价格</th>
+								<th>商户简介</th>
+								<th>推荐品</th>
 							</tr>
 							</thead>
 						</table>
