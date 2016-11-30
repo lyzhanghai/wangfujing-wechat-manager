@@ -25,9 +25,9 @@ import com.wfj.service.intf.MaterialService;
 import com.wfj.util.Common;
 
 @Controller
-@RequestMapping("article")
-public class ArticleController {
-	private static Logger logger = Logger.getLogger(ArticleController.class);
+@RequestMapping("upload")
+public class UoloadController {
+	private static Logger logger = Logger.getLogger(UoloadController.class);
 
 	@Autowired
 	private MaterialService materialService;
@@ -66,13 +66,6 @@ public class ArticleController {
 		}
 		logger.info("success");
 		return "success";
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/getArticleList", method = RequestMethod.POST)
-	public String getArticleList(@RequestBody List<ArticleDto> artList)
-			throws IllegalStateException, IOException {
-		return null;
 	}
 
 	/**
