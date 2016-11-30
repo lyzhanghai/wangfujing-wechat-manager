@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,14 +22,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.wfj.dto.ArticleDto;
 import com.wfj.dto.MediaDto;
 import com.wfj.service.intf.MaterialService;
+import com.wfj.util.Common;
 
 @Controller
-@RequestMapping("upload")
-public class UploadPhoto {
-	private static Logger logger = Logger.getLogger(UploadPhoto.class);
+@RequestMapping("article")
+public class ArticleController {
+	private static Logger logger = Logger.getLogger(ArticleController.class);
 
 	@Autowired
 	private MaterialService materialService;
+
+	/**
+	 * 图片/文件上传
+	 */
+	@RequestMapping(value = "/articleAdd")
+	public String articleAdd(Model model) throws Exception {
+		System.out.println(Common.BACKGROUND_PATH + "/system/article/add");
+		return Common.BACKGROUND_PATH + "/system/article/add";
+	}
 
 	/**
 	 * 图片/文件上传
@@ -55,6 +66,13 @@ public class UploadPhoto {
 		}
 		logger.info("success");
 		return "success";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getArticleList", method = RequestMethod.POST)
+	public String getArticleList(@RequestBody List<ArticleDto> artList)
+			throws IllegalStateException, IOException {
+		return null;
 	}
 
 	/**
