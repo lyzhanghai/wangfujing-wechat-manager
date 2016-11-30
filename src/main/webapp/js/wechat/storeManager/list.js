@@ -91,15 +91,15 @@ function delRole() {
 }
 
 function storeManagerList() {
-	var roleTable = $('#storeManagerList');
-	roleTable.dataTable().fnClearTable(false);
-	roleTable.dataTable().fnDestroy();
-	roleTable.dataTable({
+	var storeManagerTable = $('#storeManagerList');
+	storeManagerTable.dataTable().fnClearTable(false);
+	storeManagerTable.dataTable().fnDestroy();
+	storeManagerTable.dataTable({
 		"bAutoWidth": false,
 		"bDestory": true,
 		"bFilter": false,
 		"bPaginate": true,
-		"sAjaxSource": rootPath + "/role/findByPage2.shtml",
+		"sAjaxSource": rootPath + "/storeManager/findByPage2.shtml",
 		"bProcessing": true,
 		"searching": false, //去掉搜索框
 		"bLengthChange": false,// 是否允许自定义每页显示条数.
@@ -132,43 +132,82 @@ function storeManagerList() {
 				}
 			},
 			{
-				"mDataProp": 'name',
-				"sTitle": "角色名",
-				"sWidth": '10%',
-				"mRender": function (data, type, full) {
-					var name = data;
-					if (name) {
-						return name;
-					} else {
-						return "";
-					}
-				}
-			}, {
-				"mDataProp": 'state',
-				"sTitle": "状态",
+				"mDataProp": 'store_code',
+				"sTitle": "门店编码",
 				"sWidth": '10%'
 			}, {
-				"mDataProp": 'roleKey',
-				"sTitle": "roleKey",
+                "mDataProp": 'business_name',
+                "sTitle": "门店名称",
+                "sWidth": '10%',
+                "mRender": function (data, type, full) {
+                    var business_name = data;
+                    if (business_name) {
+                        return business_name;
+                    } else {
+                        return "";
+                    }
+                }
+            }, {
+				"mDataProp": 'branch_name',
+				"sTitle": "分店名称",
 				"sWidth": '10%'
-			},  {
-				"mDataProp": 'description',
-				"sTitle": "描述",
+			}, {
+				"mDataProp": 'province',
+				"sTitle": "省",
 				"sWidth": '10%'
-			}/*,
-			 {
-			 "mDataProp": '',
-			 "sTitle": "操作",
-			 "sWidth": '10%',
-			 "mRender": function (data, type, full) {
-			 var key = buttonMap.keySet();
-			 var button = "";
-			 for(var i in key){
-			 button += buttonMap.get(key[i]);
-			 }
-			 return button;
-			 }
-			 }*/],
+			}, {
+				"mDataProp": 'city',
+				"sTitle": "市",
+				"sWidth": '10%'
+			}, {
+                "mDataProp": 'district',
+                "sTitle": "区",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'address',
+                "sTitle": "街道地址",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'telephone',
+                "sTitle": "电话",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'categories',
+                "sTitle": "门店类型",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'offset_type',
+                "sTitle": "坐标类型",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'longitude',
+                "sTitle": "经度",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'latitude',
+                "sTitle": "纬度",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'special',
+                "sTitle": "特色服务",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'open_time',
+                "sTitle": "营业时间",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'avg_price',
+                "sTitle": "人均价格",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'introduction',
+                "sTitle": "商户简介",
+                "sWidth": '10%'
+            }, {
+                "mDataProp": 'recommend',
+                "sTitle": "推荐品",
+                "sWidth": '10%'
+            }],
 		"aoColumnDefs": [{
 			sDefaultContent: '',
 			aTargets: ['_all']
@@ -178,8 +217,8 @@ function storeManagerList() {
 				aoData = [];
 			}
 			aoData.push({
-				name: "name",
-				value: $("#name").val()
+				name: "business_name",
+				value: $("#businessName").val()
 			});
 			$.ajax({
 				"dataType": 'json',
@@ -190,7 +229,7 @@ function storeManagerList() {
 					if (flag && json) {
 						fnCallback(json);
 					} else {
-						roleTable.dataTable().fnProcessingIndicator(false);
+						storeManagerTable.dataTable().fnProcessingIndicator(false);
 						bootbox.alert("查询失败，请稍后再试！");
 					}
 				},
@@ -204,7 +243,7 @@ function storeManagerList() {
 					} else {
 						alert('An error occurred on the server. Please try again in a minute.');
 					}
-					roleTable.dataTable().fnProcessingIndicator(false);
+					storeManagerTable.dataTable().fnProcessingIndicator(false);
 				}
 			});
 		},

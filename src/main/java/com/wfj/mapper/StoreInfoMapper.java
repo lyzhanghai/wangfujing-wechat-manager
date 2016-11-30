@@ -1,11 +1,12 @@
 package com.wfj.mapper;
 
 import com.wfj.entity.StoreInfo;
+import com.wfj.mapper.base.BaseMapper;
 
 import java.util.List;
 import java.util.Map;
 
-public interface StoreInfoMapper {
+public interface StoreInfoMapper extends BaseMapper {
     int deleteByPrimaryKey(String sid);
 
     int insert(StoreInfo record);

@@ -8,8 +8,8 @@
 			<div class="form-group">
 				<label class="control-label"> <span
 					class="h4 font-thin v-middle">门店名:</span></label> <input
-					class="input-medium ui-autocomplete-input" id="name"
-					name="roleFormMap.roleFormMap.name">
+					class="input-medium ui-autocomplete-input" id="businessName"
+					name="storeInfoFormMap.storeInfoFormMap.business_name">
 			</div>
 			<a href="javascript:void(0)" class="btn btn-default" id="search">查询</a>
 		</form>
