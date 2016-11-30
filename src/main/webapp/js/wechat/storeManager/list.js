@@ -217,8 +217,8 @@ function storeManagerList() {
 				aoData = [];
 			}
 			aoData.push({
-				name: "business_name",
-				value: $("#businessName").val()
+				name: "storeInfoFormMap.business_name",
+				value: $("#businessName").val().trim()
 			});
 			$.ajax({
 				"dataType": 'json',
