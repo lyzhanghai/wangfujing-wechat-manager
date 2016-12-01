@@ -22,10 +22,11 @@ import com.wfj.message.resp.Video;
 import com.wfj.message.resp.VideoMessage;
 import com.wfj.message.resp.Voice;
 import com.wfj.message.resp.VoiceMessage;
+import com.wfj.service.intf.MsgDispatcherService;
 import com.wfj.util.MessageUtil;
 
 @Service
-public class MsgDispatcher {
+public class MsgDispatcher implements MsgDispatcherService {
 	private static Logger logger = Logger.getLogger(MsgDispatcher.class);
 
 	@Autowired
@@ -67,86 +68,90 @@ public class MsgDispatcher {
 	}
 
 	public String msgReplyText(String openid, String mpid, MsgReply msg) {
-		TextMessage txtmsg = new TextMessage();
-		txtmsg.setToUserName(openid);
-		txtmsg.setFromUserName(mpid);
-		txtmsg.setCreateTime(new Date().getTime());
-		txtmsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-		logger.info(txtmsg);
 		List<MsgReply> msgList = msgReplyMapper.selectListByParam(msg);
 		if (msgList != null && msgList.size() > 0) {
-			MsgReply msgReply = msgList.get(0);
-			if (msgReply.getMsgType().equals(0)) {// (0文本,1图片,2音频,3视频,4音乐,5图文)
-				txtmsg.setContent(msgReply.getContent());
-			} else if (msgReply.getMsgType().equals(1)) {
-				ImageMessage imgMsg = new ImageMessage();
-				imgMsg.setToUserName(openid);
-				imgMsg.setFromUserName(mpid);
-				imgMsg.setCreateTime(new Date().getTime());
-				Image image = new Image();
-				image.setMediaId(msgReply.getMediaId());
-				imgMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
-				imgMsg.setImage(image);
-				return MessageUtil.imageMessageToXml(imgMsg);
-			} else if (msgReply.getMsgType().equals(2)) {
-				VoiceMessage voiMsg = new VoiceMessage();
-				voiMsg.setToUserName(openid);
-				voiMsg.setFromUserName(mpid);
-				voiMsg.setCreateTime(new Date().getTime());
-				Voice voice = new Voice();
-				voice.setMediaId(msgReply.getMediaId());
-				voiMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VOICE);
-				voiMsg.setVoice(voice);
-				return MessageUtil.voiceMessageToXml(voiMsg);
-			} else if (msgReply.getMsgType().equals(3)) {
-				VideoMessage vidMsg = new VideoMessage();
-				vidMsg.setToUserName(openid);
-				vidMsg.setFromUserName(mpid);
-				vidMsg.setCreateTime(new Date().getTime());
-				Video video = new Video();
-				video.setDescription(msgReply.getDescription());
-				video.setMediaId(msgReply.getMediaId());
-				video.setTitle(msgReply.getTitle());
-				vidMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VIDEO);
-				vidMsg.setVideo(video);
-				return MessageUtil.videoMessageToXml(vidMsg);
-			} else if (msgReply.getMsgType().equals(4)) {
-				MusicMessage musMsg = new MusicMessage();
-				musMsg.setToUserName(openid);
-				musMsg.setFromUserName(mpid);
-				musMsg.setCreateTime(new Date().getTime());
-				Music music = new Music();
-				music.setDescription(msgReply.getDescription());
-				music.setHQMusicUrl(msgReply.getHqmusicUrl());
-				music.setMusicUrl(msgReply.getMusicUrl());
-				music.setThumbMediaId(msgReply.getThumbMediald());
-				music.setTitle(msgReply.getTitle());
-				musMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_MUSIC);
-				musMsg.setMusic(music);
-				return MessageUtil.musicMessageToXml(musMsg);
-			} else if (msgReply.getMsgType().equals(5)) {
-				NewsMessage newsMsg = new NewsMessage();
-				newsMsg.setToUserName(openid);
-				newsMsg.setFromUserName(mpid);
-				newsMsg.setCreateTime(new Date().getTime());
-				List<Article> artList = new ArrayList<Article>();
-				for (int i = 0; i < msgList.size(); i++) {
-					Article art = new Article();
-					art.setDescription(msgList.get(i).getDescription());
-					art.setPicUrl(msgList.get(i).getPicUrl());
-					art.setTitle(msgList.get(i).getTitle());
-					art.setUrl(msgList.get(i).getUrl());
-					artList.add(art);
-				}
-				newsMsg.setArticles(artList);
-				newsMsg.setArticleCount(msgList.size());
-				newsMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
-				return MessageUtil.newsMessageToXml(newsMsg);
-			}
+			return getReplyXml(openid, mpid, msgList);
 		} else {
-			txtmsg.setContent("你好，欢迎来到王府井百货公众平台！");
-			return MessageUtil.textMessageToXml(txtmsg);
+			return null;
 		}
-		return MessageUtil.textMessageToXml(txtmsg);
 	}
+
+	public String getReplyXml(String openid, String mpid, List<MsgReply> msgList) {
+		MsgReply msgReply = msgList.get(0);
+		if (msgReply.getMsgType().equals(0)) {// (0文本,1图片,2音频,3视频,4音乐,5图文)
+			TextMessage txtmsg = new TextMessage();
+			txtmsg.setToUserName(openid);
+			txtmsg.setFromUserName(mpid);
+			txtmsg.setCreateTime(new Date().getTime());
+			txtmsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			txtmsg.setContent(msgReply.getContent());
+			return MessageUtil.textMessageToXml(txtmsg);
+		} else if (msgReply.getMsgType().equals(1)) {
+			ImageMessage imgMsg = new ImageMessage();
+			imgMsg.setToUserName(openid);
+			imgMsg.setFromUserName(mpid);
+			imgMsg.setCreateTime(new Date().getTime());
+			Image image = new Image();
+			image.setMediaId(msgReply.getMediaId());
+			imgMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
+			imgMsg.setImage(image);
+			return MessageUtil.imageMessageToXml(imgMsg);
+		} else if (msgReply.getMsgType().equals(2)) {
+			VoiceMessage voiMsg = new VoiceMessage();
+			voiMsg.setToUserName(openid);
+			voiMsg.setFromUserName(mpid);
+			voiMsg.setCreateTime(new Date().getTime());
+			Voice voice = new Voice();
+			voice.setMediaId(msgReply.getMediaId());
+			voiMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VOICE);
+			voiMsg.setVoice(voice);
+			return MessageUtil.voiceMessageToXml(voiMsg);
+		} else if (msgReply.getMsgType().equals(3)) {
+			VideoMessage vidMsg = new VideoMessage();
+			vidMsg.setToUserName(openid);
+			vidMsg.setFromUserName(mpid);
+			vidMsg.setCreateTime(new Date().getTime());
+			Video video = new Video();
+			video.setDescription(msgReply.getDescription());
+			video.setMediaId(msgReply.getMediaId());
+			video.setTitle(msgReply.getTitle());
+			vidMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VIDEO);
+			vidMsg.setVideo(video);
+			return MessageUtil.videoMessageToXml(vidMsg);
+		} else if (msgReply.getMsgType().equals(4)) {
+			MusicMessage musMsg = new MusicMessage();
+			musMsg.setToUserName(openid);
+			musMsg.setFromUserName(mpid);
+			musMsg.setCreateTime(new Date().getTime());
+			Music music = new Music();
+			music.setDescription(msgReply.getDescription());
+			music.setHQMusicUrl(msgReply.getHqmusicUrl());
+			music.setMusicUrl(msgReply.getMusicUrl());
+			music.setThumbMediaId(msgReply.getThumbMediald());
+			music.setTitle(msgReply.getTitle());
+			musMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_MUSIC);
+			musMsg.setMusic(music);
+			return MessageUtil.musicMessageToXml(musMsg);
+		} else if (msgReply.getMsgType().equals(5)) {
+			NewsMessage newsMsg = new NewsMessage();
+			newsMsg.setToUserName(openid);
+			newsMsg.setFromUserName(mpid);
+			newsMsg.setCreateTime(new Date().getTime());
+			List<Article> artList = new ArrayList<Article>();
+			for (int i = 0; i < msgList.size(); i++) {
+				Article art = new Article();
+				art.setDescription(msgList.get(i).getDescription());
+				art.setPicUrl(msgList.get(i).getPicUrl());
+				art.setTitle(msgList.get(i).getTitle());
+				art.setUrl(msgList.get(i).getUrl());
+				artList.add(art);
+			}
+			newsMsg.setArticles(artList);
+			newsMsg.setArticleCount(msgList.size());
+			newsMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+			return MessageUtil.newsMessageToXml(newsMsg);
+		}
+		return null;
+	}
+
 }
