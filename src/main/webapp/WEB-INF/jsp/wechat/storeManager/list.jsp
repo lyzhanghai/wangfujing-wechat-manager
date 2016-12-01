@@ -9,7 +9,7 @@
 				<label class="control-label"> <span
 					class="h4 font-thin v-middle">门店名:</span></label> <input
 					class="input-medium ui-autocomplete-input" id="businessName"
-					name="storeInfoFormMap.business_name">
+					name="businessName">
 			</div>
 			<a href="javascript:void(0)" class="btn btn-default" id="search">查询</a>
 		</form>

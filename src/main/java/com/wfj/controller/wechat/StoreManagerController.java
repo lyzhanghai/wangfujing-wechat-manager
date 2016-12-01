@@ -3,7 +3,7 @@ package com.wfj.controller.wechat;
 import com.wfj.controller.index.BaseController;
 import com.wfj.entity.DataTableParams;
 import com.wfj.entity.DataTableResult;
-import com.wfj.entity.StoreInfoFormMap;
+import com.wfj.entity.StoreInfo;
 import com.wfj.mapper.StoreInfoMapper;
 import com.wfj.util.Common;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangxuan on 2016-11-30 0030.
@@ -39,17 +41,17 @@ public class StoreManagerController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/findByPage2")
-    public DataTableResult findByPage2(DataTableParams dataTableParams) throws Exception {
-        StoreInfoFormMap storeInfoFormMap = getFormMap(StoreInfoFormMap.class);
-        String pageNow = ((dataTableParams.getiDisplayStart() + 1) % dataTableParams.getiDisplayLength() > 0 ? (dataTableParams.getiDisplayStart() + 1) / dataTableParams.getiDisplayLength() + 1 : (dataTableParams.getiDisplayStart() + 1) / dataTableParams.getiDisplayLength()) + "";
-        storeInfoFormMap = toFormMap(storeInfoFormMap, pageNow, dataTableParams.getiDisplayLength() + "", storeInfoFormMap.getStr("orderby"));
-        List<StoreInfoFormMap> page = storeInfoMapper.findByPage(storeInfoFormMap);
-        pageView.setRecords(page);
-        DataTableResult<StoreInfoFormMap> dataTableResult = new DataTableResult<StoreInfoFormMap>();
+    public DataTableResult findByPage2(DataTableParams dataTableParams, String businessName) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        if (Common.isNotEmpty(businessName)) paramMap.put("businessName", businessName.trim());
+        List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
+
+        DataTableResult<StoreInfo> dataTableResult = new DataTableResult<StoreInfo>();
         dataTableResult.setsEcho(dataTableParams.getsEcho());
-        dataTableResult.setAaData(page);
-        dataTableResult.setiTotalDisplayRecords(pageView.getRowCount());
-        dataTableResult.setiTotalRecords(pageView.getRowCount());
+        dataTableResult.setAaData(storeInfoList);
+        dataTableResult.setiTotalDisplayRecords(storeInfoList.size());
+        dataTableResult.setiTotalRecords(storeInfoList.size());
         return dataTableResult;
     }
 
