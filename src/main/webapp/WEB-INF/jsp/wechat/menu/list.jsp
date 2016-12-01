@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">resKey
+                                            <label class="control-label col-md-3">click_key
                                             </label>
 
                                             <div class="col-md-8">
@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">类型
+                                            <label class="control-label col-md-3">子菜单内容
                                             </label>
 
                                             <div class="col-md-8">
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">resUrl
+                                            <label class="control-label col-md-3">页面地址
                                             </label>
 
                                             <div class="col-md-8">

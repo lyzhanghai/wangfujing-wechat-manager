@@ -1,6 +1,8 @@
 package com.wfj.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class WechatMenu {
     private Long sid;
@@ -23,7 +25,16 @@ public class WechatMenu {
 
     private Date createTime;
 
+    public List<WechatMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<WechatMenu> children) {
+        this.children = children;
+    }
+
     private Date updateTime;
+    List<WechatMenu> children = new ArrayList<WechatMenu>();
 
     public Long getSid() {
         return sid;
