@@ -34,36 +34,49 @@ tr {
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="tab-pane fade" id="article">
-		<form
-			action="${pageContext.request.contextPath}/resources/addEntity.shtml"
-			method="post" enctype="multipart/form-data">
-			<div class="input-group input-group-lg">
-				<input type="text" class="form-control inputBorder"
-					placeholder="请在这里输入标题" style="width: 800px;"> <br>
+	<table>
+		<tr>
+			<td>
+				图文信息
+			</td>
+			<td>
+				<div class="tab-pane fade" id="article">
+				<form
+					action="${pageContext.request.contextPath}/resources/addEntity.shtml"
+					method="post" enctype="multipart/form-data">
+					<div class="input-group input-group-lg">
+						<input type="text" class="form-control inputBorder"
+							placeholder="请在这里输入标题" style="width: 800px;"> <br>
+					</div>
+					<div class="input-group input-group-sm">
+						<input type="text" class="form-control inputBorder"
+							placeholder="请输入作者" style="width: 800px;">
+					</div>
+					<hr>
+					<div id="editor">
+					</div>
+					<hr>
+					<input type="checkbox" id="checkbox1" />原文链接
+					<br>
+					<input type="text" id="orgUrlInp" style="display:none; width: 300px" />
+					<label>封面</label>&nbsp;&nbsp;<label style="color: #808080">大图片建议尺寸：900像素 * 500像素</label>
+					<br>
+					<button class="btn btn-info">从正文选择</button>
+					<button class="btn btn-info">从图片库选择</button>
+					<br><br>
+					<label>摘要</label>&nbsp;&nbsp;<label style="color: #808080">选填，如果不填写会默认抓取正文前54个字</label>
+					<br>
+					<textarea rows="8" cols="97"></textarea>
+					<input type="submit" value="保存">
+				</form>
 			</div>
-			<div class="input-group input-group-sm">
-				<input type="text" class="form-control inputBorder"
-					placeholder="请输入作者" style="width: 800px;">
-			</div>
-			<hr>
-			<div id="editor">
-			</div>
-			<hr>
-			<input type="checkbox" id="checkbox1" />原文链接
-			<br>
-			<input type="text" id="orgUrlInp" style="display:none; width: 300px" />
-			<label>封面</label>&nbsp;&nbsp;<label style="color: #808080">大图片建议尺寸：900像素 * 500像素</label>
-			<br>
-			<button class="btn btn-info">从正文选择</button>
-			<button class="btn btn-info">从图片库选择</button>
-			<br><br>
-			<label>摘要</label>&nbsp;&nbsp;<label style="color: #808080">选填，如果不填写会默认抓取正文前54个字</label>
-			<br>
-			<textarea rows="8" cols="97"></textarea>
-			<input type="submit" value="保存">
-		</form>
-	</div>
+			</td>
+			<td>
+			
+			</td>
+		</tr>
+	</table>
+	
 </body>
 <script type="text/javascript">
 	$(function(){
