@@ -4,8 +4,8 @@ $(function() {
 	$("#search").click("click", function() {// 绑定查询按扭
 		storeManagerList();
 	});
-	$("#addRole").click("click", function() {
-		addRole();
+	$("#addFun").click("click", function() {
+		addFun();
 	});
 	$("#editRole").click("click", function() {
 		editRole();
@@ -56,12 +56,12 @@ function permissions() {
 		content : url
 	});
 }
-function addRole() {
+function addFun() {
 	pageii = layer.open({
 		title : "新增",
 		type : 2,
-		area : [ "40%", "40%" ],
-		content : rootPath + '/role/addUI.shtml'
+		area : [ "40%", "80%" ],
+		content : rootPath + '/storeManager/addUI.shtml'
 	});
 }
 function delRole() {

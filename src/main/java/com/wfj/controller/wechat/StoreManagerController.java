@@ -1,10 +1,13 @@
 package com.wfj.controller.wechat;
 
+import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
+import com.wfj.dto.ReturnDto;
 import com.wfj.entity.DataTableParams;
 import com.wfj.entity.DataTableResult;
 import com.wfj.entity.StoreInfo;
 import com.wfj.mapper.StoreInfoMapper;
+import com.wfj.service.intf.StoreInfoService;
 import com.wfj.util.Common;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,9 @@ public class StoreManagerController extends BaseController {
 
     @Inject
     private StoreInfoMapper storeInfoMapper;
+
+    @Inject
+    private StoreInfoService storeInfoService;
 
     /**
      * 访问展示页面
@@ -81,6 +87,21 @@ public class StoreManagerController extends BaseController {
     @RequestMapping(value = {"/addUI"})
     public String addUI() throws Exception {
         return Common.BACKGROUND_PATH + "/wechat/storeManager/add";
+    }
+
+    /**
+     * 添加门店
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = {"/addStore"})
+    @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
+    public String addStore(StoreInfo storeInfo) throws Exception {
+        ReturnDto returnDto = storeInfoService.addStore(storeInfo);
+        return "success";
     }
 
 
