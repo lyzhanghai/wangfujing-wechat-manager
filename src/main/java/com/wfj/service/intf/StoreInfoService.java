@@ -10,4 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface StoreInfoService {
     @Transactional
     ReturnDto addStore(StoreInfo storeInfo) throws Exception;
+
+    @Transactional
+    ReturnDto editStore(StoreInfo storeInfo) throws Exception;
 }

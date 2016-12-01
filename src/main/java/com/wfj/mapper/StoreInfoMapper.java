@@ -22,4 +22,5 @@ public interface StoreInfoMapper {
 
     List<StoreInfo> selectListByParamLike(Map<String, Object> paramMap);
 
+    int updateByParaSelective(StoreInfo storeInfo);
 }

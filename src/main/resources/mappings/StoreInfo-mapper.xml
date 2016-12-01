@@ -188,6 +188,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.StoreInfo">
         update storeinfo
         <set>
@@ -254,6 +255,74 @@
         </set>
         where sid = #{sid,jdbcType=BIGINT}
     </update>
+
+    <update id="updateByParaSelective" parameterType="com.wfj.entity.StoreInfo">
+        update storeinfo
+        <set>
+            <if test="poiId != null">
+                poi_id = #{poiId,jdbcType=VARCHAR},
+            </if>
+            <if test="businessName != null">
+                business_name = #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="branchName != null">
+                branch_name = #{branchName,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="categories != null">
+                categories = #{categories,jdbcType=VARCHAR},
+            </if>
+            <if test="offsetType != null">
+                offset_type = #{offsetType,jdbcType=INTEGER},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="photoList != null">
+                photo_list = #{photoList,jdbcType=VARCHAR},
+            </if>
+            <if test="special != null">
+                special = #{special,jdbcType=VARCHAR},
+            </if>
+            <if test="openTime != null">
+                open_time = #{openTime,jdbcType=VARCHAR},
+            </if>
+            <if test="avgPrice != null">
+                avg_price = #{avgPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=VARCHAR},
+            </if>
+            <if test="channelType != null">
+                channel_type = #{channelType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where store_code = #{storeCode,jdbcType=VARCHAR}
+        <if test="sid != null">
+            and sid = #{sid,jdbcType=BIGINT}
+        </if>
+    </update>
+
     <update id="updateByPrimaryKey" parameterType="com.wfj.entity.StoreInfo">
     update storeinfo
     set store_code = #{storeCode,jdbcType=VARCHAR},

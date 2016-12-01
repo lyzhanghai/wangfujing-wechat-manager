@@ -131,4 +131,11 @@ public class StoreManagerController extends BaseController {
         return Common.BACKGROUND_PATH + "/wechat/storeManager/edit";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/editStore")
+    public String editStore(StoreInfo storeInfo) throws Exception {
+        ReturnDto returnDto = storeInfoService.editStore(storeInfo);
+        return "success";
+    }
+
 }

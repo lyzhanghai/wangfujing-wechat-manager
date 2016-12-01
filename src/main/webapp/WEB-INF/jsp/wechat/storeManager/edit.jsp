@@ -21,16 +21,16 @@
 <body>
 	<div class="l_err" style="width: 100%; margin-top: 2px;"></div>
 	<form id="form" name="form" class="form-horizontal" method="post"
-		action="${ctx}/role/editEntity.shtml">
+		action="${ctx}/storeManager/editStore.shtml">
 		<input type="hidden" class="form-control checkacc" value="${store.sid}"
-			name="roleFormMap.id" id="id">
+			name="sid" id="id">
 		<section class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group">
 					<label class="col-sm-3 control-label">门店编码</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control checkacc"
-							   placeholder="请输入门店编码" name="storeCode" id="storeCode" value="${store.storeCode}">
+							   placeholder="请输入门店编码" name="storeCode" id="storeCode" value="${store.storeCode}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -165,7 +165,7 @@
 			</div>
 			<footer class="panel-footer text-right bg-light lter">
 			<button type="submit" class="btn btn-success btn-s-xs">提交</button>
-		</footer> 
+		</footer>
 	</section>
 	</form>
 	<script type='text/javascript'>
