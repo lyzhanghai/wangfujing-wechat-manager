@@ -30,6 +30,13 @@ tr {
 	background: transparent;
 	border-style: none;
 }
+
+.textareaBorder {
+	border: 1px;
+	background: transparent;
+	border-style: none;
+}
+
 </style>
 </head>
 <body>
@@ -47,7 +54,13 @@ tr {
 			</ul>
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade in active" id="txt">
-					<textarea rows="10" cols="50"></textarea>
+					<div id="editor">
+					</div>
+					<br><br><br>
+					<button type="submit" class="btn btn-default">保存</button>
+				</div>
+				<div class="tab-pane fade" id="article">
+					<button class="btn btn-success" style = "float: right; margin-right: 150px;">新建图文信息</button>
 				</div>
 				<%-- <div class="tab-pane fade" id="article">
 					<form
