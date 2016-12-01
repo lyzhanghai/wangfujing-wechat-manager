@@ -3,111 +3,137 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="http://cdn.gbtags.com/summernote/0.5.2/summernote.min.js"></script>
 <style type="text/css">
-* {
-	margin: 0;
-	padding: 0
+   	@import url('http://cdn.gbtags.com/font-awesome/4.1.0/css/font-awesome.min.css');
+    @import url('http://cdn.gbtags.com/summernote/0.5.2/summernote.css');
+</style>
+<style type="text/css">
+table {
+	text-align: center overflow: hidden;
 }
 
-ul, li {
-	list-style: none
-}
-
-.tabClick {
-	background: #f3f3f3;
-	overflow: hidden
-}
-
-.tabClick2 {
-	background: #f3f3f3;
-	overflow: hidden
-}
-
-.tabClick2 li {
-	height: 40px;
-	line-height: 40px;
-	width: 33%;
-	float: left;
-	text-align: center
-}
-
-.tabClick li {
-	height: 40px;
-	line-height: 40px;
-	width: 10%;
-	float: left;
-	text-align: center
-}
-
-.tabClick li.active {
-	color: #099;
-	transition: 0.1s;
-	font-weight: bold
-}
-
-.tabCon {
-	overflow: hidden
-}
-
-.tabBox {
-	position: relative
-}
-
-.tabList {
-	word-break: break-all;
-	width: 100%;
-	float: left;
-	line-height: 100px;
+th {
 	text-align: center;
-	color: #D3D3D3;
-	font-size: 36px;
-	font-family: "Arial Black"
-}
-
-.lineBorder {
-	height: 2px;
 	overflow: hidden;
-	border-bottom: 1px solid #099;
-	background: #f3f3f3
+	height: 50px;
 }
 
-.lineDiv {
-	background: #099;
-	height: 2px;
-	width: 10%;
+tr {
+	text-align: center;
+	overflow: hidden;
+	height: 50px;
+}
+
+.inputBorder {
+	border: 1px;
+	background: transparent;
+	border-style: none;
 }
 </style>
-<script type="text/javascript">
-	$(function(){
-		$("button").click(){
-			alert("aaa");
-		};	
-	});
-</script>
 </head>
 <body>
-	<div class="wrap" id="wrap">
-		<button>aaaaa</button>
-		<ul class="tabClick">
-			<li id="tb1" class="active"">文字</li>
-			<li>图片</li>
-			<li>语音</li>
-			<li>视频</li>
-		</ul>
-		<div class="lineBorder">
-			<div class="lineDiv">
-				<!--移动的div-->
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#home" data-toggle="tab">被关注后自动回复</a></li>
+		<li><a href="#ios" data-toggle="tab">消息自动回复</a></li>
+		<li><a href="#java" data-toggle="tab">关键词自动回复</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="home">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#txt" data-toggle="tab">文本</a></li>
+				<!-- ${pageContext.request.contextPath}/upload/articleAdd.shtml -->
+				<li><a href="#article" data-toggle="tab">图文</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="txt">
+					<textarea rows="10" cols="50"></textarea>
+				</div>
+				<%-- <div class="tab-pane fade" id="article">
+					<form
+						action="${pageContext.request.contextPath}/resources/addEntity.shtml"
+						method="post" enctype="multipart/form-data">
+						<div class="input-group input-group-lg">
+							<input type="text" class="form-control inputBorder"
+								placeholder="请在这里输入标题" style="width: 800px;"> <br>
+						</div>
+						<div class="input-group input-group-sm">
+							<input type="text" class="form-control inputBorder"
+								placeholder="请输入作者" style="width: 800px;">
+						</div>
+						<hr>
+						<div id="editor">
+						</div>
+						<hr>
+						<input type="checkbox" id="checkbox1" />原文链接
+						<br>
+						<input type="text" id="orgUrlInp" style="display:none; width: 300px" />
+						<label>封面</label>&nbsp;&nbsp;<label style="color: #808080">大图片建议尺寸：900像素 * 500像素</label>
+						<br>
+						<button class="btn btn-info">从正文选择</button>
+						<button class="btn btn-info">从图片库选择</button>
+						<br><br>
+						<label>摘要</label>&nbsp;&nbsp;<label style="color: #808080">选填，如果不填写会默认抓取正文前54个字</label>
+						<textarea rows="8" cols="97"></textarea>
+					</form>
+				</div> --%>
 			</div>
 		</div>
-		<div class="tabCon">
-			<div class="tabBox">
-				<div class="tabList">1</div>
-				<div class="tabList" style="display: none">2</div>
-				<div class="tabList" style="display: none">3</div>
-				<div class="tabList" style="display: none">4</div>
+		<div class="tab-pane fade" id="ios">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#txt" data-toggle="tab">文本</a></li>
+				<li><a href="#article" data-toggle="tab">图文</a></li>
+			</ul>
+		</div>
+		<div class="tab-pane fade" id="java">
+			<div>
+				<button type="button" class="btn btn-success">新建规则</button>
+				<br> <br> <br>
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<tr>
+						<th>规则名称</th>
+						<th>关键字</th>
+						<th>回复消息类型</th>
+						<th>操作</th>
+					</tr>
+					<tr>
+						<td>规则名称</td>
+						<td>关键字</td>
+						<td>回复消息类型</td>
+						<td>操作</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	$(function(){
+		$('#editor').summernote({
+			toolbar:[
+				['style', ['bold', 'italic', 'underline', 'clear']],
+			    ['font', ['strikethrough', 'superscript', 'subscript']],
+			    ['fontsize', ['fontsize']],
+			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']]
+			],
+			width: 800,
+			height: 300,                 // set editor height
+			minHeight: null,             // set minimum height of editor
+			maxHeight: null,             // set maximum height of editor
+			focus: true                  // set focus to editable area after initializing summernote
+		});
+		$('#checkbox1').click(function(){
+			var check = $('#checkbox1').is(':checked');
+			if(check == true){
+		    	$('#orgUrlInp').show();
+			}else{
+		    	$('#orgUrlInp').hide();
+			}
+		});
+	});
+</script>
 </html>
 
