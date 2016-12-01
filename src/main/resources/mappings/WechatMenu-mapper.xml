@@ -24,6 +24,29 @@
         from wechat_menu
         where sid = #{sid,jdbcType=BIGINT}
     </select>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.wfj.entity.WechatMenu">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_menu
+        <where>
+            <if test="sid != null">
+                sid = #{sid,jdbcType=BIGINT}
+            </if>
+            <if test="appid != null">
+                AND appid= #{appid,jdbcType=VARCHAR}
+            </if>
+            <if test="parentSid != null">
+                AND parent_sid= #{parentSid,jdbcType=VARCHAR}
+            </if>
+            <if test="ifdel != null">
+                AND ifdel= #{ifdel,jdbcType=INTEGER}
+            </if>
+            <if test="ifdel = null">
+                AND ifdel=0
+            </if>
+        </where>
+        ORDER BY order_by ASC
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from wechat_menu
     where sid = #{sid,jdbcType=BIGINT}
