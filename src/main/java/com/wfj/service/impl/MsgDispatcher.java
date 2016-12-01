@@ -85,6 +85,7 @@ public class MsgDispatcher implements MsgDispatcherService {
 			txtmsg.setCreateTime(new Date().getTime());
 			txtmsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 			txtmsg.setContent(msgReply.getContent());
+			return MessageUtil.textMessageToXml(txtmsg);
 		} else if (msgReply.getMsgType().equals(1)) {
 			ImageMessage imgMsg = new ImageMessage();
 			imgMsg.setToUserName(openid);

@@ -23,6 +23,11 @@ public class EventDispatcher {
 			// msgDispatcher.msgReplyText(openid, mpid, msg);
 			logger.info("-------------------" + map);
 			logger.info("==============这是关注事件！");
+			String openid = map.get("FromUserName"); // 用户 openid
+			String mpid = map.get("ToUserName"); // 公众号原始 ID
+			MsgReply msgRelpy = new MsgReply();
+			msgRelpy.setEventType("subscribe");
+			para = msgDispatcher.msgReplyText(openid, mpid, msgRelpy);
 		}
 
 		if (map.get("Event").equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) { // 取消关注事件

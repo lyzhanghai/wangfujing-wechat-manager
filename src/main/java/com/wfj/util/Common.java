@@ -56,7 +56,7 @@ public class Common {
 	/**
 	 * String转换double
 	 * 
-	 * @param string
+	 * @param String
 	 * @return double
 	 */
 	public static double convertSourData(String dataStr) throws Exception {

@@ -6,13 +6,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.wfj.entity.WechatMenu;
 import com.wfj.mapper.WechatMenuMapper;
 import com.wfj.service.intf.IMenuService;
-import com.wfj.util.HttpUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,22 +32,102 @@ public class MenuServiceImpl implements IMenuService {
      * @param menus
      * @return
      */
-    public boolean initMenus(String menus) {
+    public boolean initMenus(String menus, String appid) {
         List<WechatMenu> menuList = new ArrayList<WechatMenu>();
         WechatMenu menu = null;
         JSONArray result = (JSON.parseObject(menus)).getJSONObject("menu").getJSONArray("button");
-        getMenus(result,"0");
+        getMenus(result, "0", appid);
         return false;
     }
 
-    public  void getMenus(JSONArray jsonArray, String parentSid) {
+    public List<WechatMenu> queryMenus(WechatMenu record) {
+        return menuMapper.selectByParam(record);
+    }
+
+    /**
+     * 实体转换成json
+     *
+     * @param menuList
+     * @return
+     */
+    public JSONObject generatorMenuJson(List<WechatMenu> menuList, boolean isSid) {
+        JSONObject menuObject = new JSONObject();
+        JSONObject buttonOject = new JSONObject();
+        JSONArray button = new JSONArray();
+        if (menuList != null) {
+            JSONObject object = null;
+            for (WechatMenu model : menuList) {
+                object = new JSONObject();
+                if (isSid) {
+                    object.put("id", model.getSid());
+                }
+                object.put("name", model.getName());
+
+                String parentSid = model.getSid().toString();
+                if ("click".equals(model.getType())) {
+                    object.put("type", model.getType());
+                    object.put("key", model.getClickkey());
+                }
+                object.put("sub_button", getSub_buttonJson(parentSid, isSid));
+                button.add(object);
+            }
+        }
+        if (button.size() != 0) {
+            buttonOject.put("button", button);
+            menuObject.put("menu", buttonOject);
+        }
+        return menuObject;
+    }
+
+    public JSONArray getSub_buttonJson(String parentSid, boolean isSid) {
+        JSONArray sub_button = new JSONArray();
+        JSONObject menuObject = new JSONObject();
+
+        WechatMenu menuModel = new WechatMenu();
+        menuModel.setParentSid(parentSid);
+        List<WechatMenu> menuList = queryMenus(menuModel);
+        if (menuList != null) {
+            JSONObject object = null;
+            for (WechatMenu model : menuList) {
+                object = new JSONObject();
+                if (isSid) {
+                    object.put("id", model.getSid());
+                }
+                object.put("name", model.getName());
+                String subSid = model.getSid().toString();
+                if ("click".equals(model.getType())) {
+                    object.put("type", model.getType());
+                    object.put("key", model.getClickkey());
+                } else if ("view".equals(model.getType())) {
+                    object.put("type", model.getType());
+                    object.put("url", model.getViewurl());
+                }
+                object.put("sub_button", getSub_buttonJson(subSid, isSid));
+                sub_button.add(object);
+            }
+        }
+        return sub_button;
+    }
+
+    /**
+     * 解析并保存菜单
+     *
+     * @param jsonArray
+     * @param parentSid
+     * @param appid
+     */
+    public void getMenus(JSONArray jsonArray, String parentSid, String appid) {
         WechatMenu menu = null;
+
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.size(); i++) {
                 menu = new WechatMenu();
                 JSONObject object = (JSONObject) jsonArray.get(i);
+                menu.setAppid(appid);
+                menu.setParentSid(parentSid);
+                menu.setOrderBy(new Integer(i));
+
                 menu.setName(object.get("name").toString());
-                JSONArray subOject = object.getJSONArray("sub_button");
                 if (object.containsKey("type")) {
                     menu.setType(object.get("type").toString());
                 }
@@ -59,40 +137,58 @@ public class MenuServiceImpl implements IMenuService {
                 if (object.containsKey("url")) {
                     menu.setViewurl(object.get("url").toString());
                 }
-
-                System.out.println(menu.toString());
-                System.out.println(subOject.size());
-
                 int count = menuMapper.insertSelective(menu);
-                System.out.println("count:"+count);
-                parentSid = menu.getSid().toString();
-                System.out.println("parentSid:"+parentSid);
+                String sub_sid = menu.getSid().toString();
+                JSONArray subOject = object.getJSONArray("sub_button");
                 if (subOject.size() != 0) {
-                    getMenus(subOject, parentSid);
+                    getMenus(subOject, sub_sid, appid);
                 }
-
             }
         }
     }
 
-    public static String getMenus() {
-        String token = "Zri6_MUGQ-IJYXdkieUx1-CbWexc5eDp2xLgjHLgcJGBzzz-NOTwMWGw92qnNKNkTfqogb5g40C4Ogs22dbOXZAvmpVDoyqLCKL_DlPMAL-Ti9B4bmEAuApw0W6gcm-aRELaABAERY";
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("access_token", token);
-        String menus = "";
-        try {
-            menus = HttpUtil.sendGet("https://api.weixin.qq.com/cgi-bin/menu/get", params);
-        } catch (Exception e) {
-
+    /**
+     * 添加菜单
+     *
+     * @param wechatMenu
+     * @return
+     */
+    public boolean saveMenu(WechatMenu wechatMenu) {
+        boolean flag = false;
+        int count = menuMapper.insertSelective(wechatMenu);
+        if (count != 0) {
+            flag = true;
         }
-        return menus;
-
+        return flag;
     }
 
-    public static void main(String[] args) {
-        String menus = getMenus();
-        JSONArray result = (JSON.parseObject(menus)).getJSONObject("menu").getJSONArray("button");
-      //  getMenus(result, "0");
-        System.out.println();
+    /**
+     * 更新菜单
+     *
+     * @param wechatMenu
+     * @return
+     */
+    public boolean updateMenu(WechatMenu wechatMenu) {
+        boolean flag = false;
+        int count = menuMapper.updateByPrimaryKeySelective(wechatMenu);
+        if (count != 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @param wechatMenu
+     * @return
+     */
+    public boolean delMenu(WechatMenu wechatMenu) {
+        boolean flag = false;
+        int count = menuMapper.deleteByPrimaryKey(wechatMenu.getSid());
+        if (count != 0) {
+            flag = true;
+        }
+        return flag;
     }
 }
