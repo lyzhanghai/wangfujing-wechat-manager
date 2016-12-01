@@ -3,21 +3,28 @@ package com.wfj.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wfj.service.intf.MsgDispatcherService;
 import com.wfj.util.HttpUtils;
 import com.wfj.util.MessageUtil;
-
-import net.sf.json.JSONObject;
 
 @Service
 public class EventDispatcher {
 	private static Logger logger = Logger.getLogger(EventDispatcher.class);
 
+	@Autowired
+	MsgDispatcherService msgDispatcher;
+
 	public String processEvent(Map<String, String> map) {
 		String para = null;
 		if (map.get("Event").equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) { // 关注事件
+			// msgDispatcher.msgReplyText(openid, mpid, msg);
+			logger.info("-------------------" + map);
 			logger.info("==============这是关注事件！");
 		}
 

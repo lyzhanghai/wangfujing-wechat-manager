@@ -3,7 +3,7 @@
 <mapper namespace="com.wfj.mapper.MsgReplyMapper">
 	<resultMap id="BaseResultMap" type="com.wfj.entity.MsgReply">
 		<id column="sid" property="sid" jdbcType="INTEGER" />
-		<result column="app_id" property="appId" jdbcType="VARCHAR" />
+		<result column="event_type" property="eventType" jdbcType="VARCHAR" />
 		<result column="app_secret" property="appSecret" jdbcType="VARCHAR" />
 		<result column="msg_key" property="msgKey" jdbcType="VARCHAR" />
 		<result column="msg_type" property="msgType" jdbcType="INTEGER" />
@@ -21,7 +21,7 @@
 		<result column="url" property="url" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		sid, app_id, app_secret, msg_key, msg_type, content, media_id, title, description, music_url,
+		sid, event_type, app_secret, msg_key, msg_type, content, media_id, title, description, music_url,
 		hqmusic_url,
 		thumb_mediald, article_count, pic_url, url
 	</sql>
@@ -41,8 +41,8 @@
 			<if test="sid != null">
 				sid,
 			</if>
-			<if test="appId != null">
-				app_id,
+			<if test="eventType != null">
+				event_type,
 			</if>
 			<if test="appSecret != null">
 				app_secret,
@@ -88,8 +88,8 @@
 			<if test="sid != null">
 				#{sid,jdbcType=INTEGER},
 			</if>
-			<if test="appId != null">
-				#{appId,jdbcType=VARCHAR},
+			<if test="eventType != null">
+				#{eventType,jdbcType=VARCHAR},
 			</if>
 			<if test="appSecret != null">
 				#{appSecret,jdbcType=VARCHAR},
@@ -135,8 +135,8 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.MsgReply">
 		update msg_reply
 		<set>
-			<if test="appId != null">
-				app_id = #{appId,jdbcType=VARCHAR},
+			<if test="eventType != null">
+				event_type = #{eventType,jdbcType=VARCHAR},
 			</if>
 			<if test="appSecret != null">
 				app_secret = #{appSecret,jdbcType=VARCHAR},
@@ -188,8 +188,8 @@
 		<include refid="Base_Column_List" />
 		from msg_reply
 		<where>
-			<if test="appId != null">
-				and app_id = #{appId,jdbcType=VARCHAR}
+			<if test="eventType != null">
+				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
 			<if test="appSecret != null">
 				and app_secret = #{appSecret,jdbcType=VARCHAR}
@@ -238,8 +238,8 @@
 		<include refid="Base_Column_List" />
 		from msg_reply
 		<where>
-			<if test="appId != null">
-				and app_id = #{appId,jdbcType=VARCHAR}
+			<if test="eventType != null">
+				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
 			<if test="appSecret != null">
 				and app_secret = #{appSecret,jdbcType=VARCHAR}
@@ -292,8 +292,8 @@
 		count(sid)
 		from msg_reply
 		<where>
-			<if test="appId != null">
-				and app_id = #{appId,jdbcType=VARCHAR}
+			<if test="eventType != null">
+				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
 			<if test="appSecret != null">
 				and app_secret = #{appSecret,jdbcType=VARCHAR}
