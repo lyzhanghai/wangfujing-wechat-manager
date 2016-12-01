@@ -506,7 +506,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- END SIDEBAR TOGGLER BUTTON -->
                 </li>
                 <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-                <li class="sidebar-search-wrapper">
+                <%--<li class="sidebar-search-wrapper">
                     <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
                     <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
                     <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
@@ -523,7 +523,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                     </form>
                     <!-- END RESPONSIVE QUICK SEARCH FORM -->
-                </li>
+                </li>--%>
                 <li class="start active open">
                     <a href="${pageContext.servletContext.contextPath }/index.shtml">
                         <i class="icon-home"></i>
