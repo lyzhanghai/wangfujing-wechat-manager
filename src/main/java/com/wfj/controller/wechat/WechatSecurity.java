@@ -42,12 +42,11 @@ public class WechatSecurity {
 		list.add(dto.getNonce());
 		list.add("qwertyuiop123");
 		Collections.sort(list);
-		logger.info(DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2))
-				.equals(dto.getSignature()));
+		logger.info(DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2)).equals(
+				dto.getSignature()));
 		logger.info(DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2)));
 		logger.info(dto.getSignature());
-		if (DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2))
-				.equals(dto.getSignature())) {
+		if (DigestUtils.shaHex(list.get(0) + list.get(1) + list.get(2)).equals(dto.getSignature())) {
 			logger.info(dto.getEchostr());
 			return Long.parseLong(dto.getEchostr());
 		}
@@ -76,7 +75,7 @@ public class WechatSecurity {
 			logger.error(e);
 			e.printStackTrace();
 		}
-		logger.info("processMessage" + processMessage);
+		logger.info("---------------------processMessage" + processMessage);
 		response.setHeader("Content-type", "text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
