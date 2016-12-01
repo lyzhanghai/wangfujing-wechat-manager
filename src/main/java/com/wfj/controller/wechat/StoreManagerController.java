@@ -42,6 +42,13 @@ public class StoreManagerController extends BaseController {
         return Common.BACKGROUND_PATH + "/wechat/storeManager/list";
     }
 
+    /**
+     * 查询门店
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @RequestMapping(value = "/findByPage2")
     public DataTableResult findByPage2(DataTableParams dataTableParams, String businessName) throws Exception {
