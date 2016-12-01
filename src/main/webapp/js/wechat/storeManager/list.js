@@ -60,7 +60,7 @@ function addFun() {
 	pageii = layer.open({
 		title : "新增",
 		type : 2,
-		area : [ "40%", "80%" ],
+		area : [ "50%", "80%" ],
 		content : rootPath + '/storeManager/addUI.shtml'
 	});
 }
