@@ -420,7 +420,7 @@
                 and channel_type = #{channelType,jdbcType=INTEGER}
             </if>
         </where>
-        <if test="start != null and start != '' and limit != null and limit != ''">
+        <if test="start != null and limit != null">
             limit #{start},#{limit}
         </if>
     </select>

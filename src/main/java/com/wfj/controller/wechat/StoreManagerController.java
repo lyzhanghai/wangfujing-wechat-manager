@@ -58,7 +58,7 @@ public class StoreManagerController extends BaseController {
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
         if (displayStart != null) paramMap.put("start", displayStart);
-        if (displayLength != null) paramMap.put("limit", displayStart);
+        if (displayLength != null) paramMap.put("limit", displayLength);
         if (Common.isNotEmpty(businessName)) paramMap.put("businessName", businessName.trim());
         logger.debug("com.wfj.controller.wechat.StoreManagerController.findByPage2,para:" + paramMap.toString());
         List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParamLike(paramMap);
@@ -70,6 +70,17 @@ public class StoreManagerController extends BaseController {
         dataTableResult.setiTotalRecords(storeInfoList.size());
         logger.debug("end com.wfj.controller.wechat.StoreManagerController.findByPage2(),return:" + dataTableResult.toString());
         return dataTableResult;
+    }
+
+    /**
+     * 跳转添加页面
+     *
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = {"/addUI"})
+    public String addUI() throws Exception {
+        return Common.BACKGROUND_PATH + "/wechat/storeManager/add";
     }
 
 
