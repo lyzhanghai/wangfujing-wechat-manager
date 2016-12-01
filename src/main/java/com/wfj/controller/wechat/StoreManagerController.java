@@ -1,5 +1,6 @@
 package com.wfj.controller.wechat;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.dto.ReturnDto;
@@ -99,10 +100,35 @@ public class StoreManagerController extends BaseController {
     @ResponseBody
     @RequestMapping(value = {"/addStore"})
     @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
-    public String addStore(StoreInfo storeInfo) throws Exception {
+    public JSONObject addStore(StoreInfo storeInfo) throws Exception {
+        JSONObject jsonObject = new JSONObject();
         ReturnDto returnDto = storeInfoService.addStore(storeInfo);
-        return "success";
+        String code = returnDto.getCode();
+        String desc = returnDto.getDesc();
+        jsonObject.put("msg", desc);
+        if ("1".equals(code)) {
+            jsonObject.put("success", "true");
+        } else {
+            jsonObject.put("success", "false");
+        }
+        return jsonObject;
     }
 
+    /**
+     * 跳转修改页面
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/editUI")
+    public String editUI(Model model, String storeCode) throws Exception {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        if (Common.isNotEmpty(storeCode)) {
+            paramMap.put("storeCode", storeCode.trim());
+            List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
+            if (storeInfoList.size() == 1) model.addAttribute("store", storeInfoList.get(0));
+        }
+        return Common.BACKGROUND_PATH + "/wechat/storeManager/edit";
+    }
 
 }

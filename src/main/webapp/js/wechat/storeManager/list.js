@@ -7,8 +7,8 @@ $(function() {
 	$("#addFun").click("click", function() {
 		addFun();
 	});
-	$("#editRole").click("click", function() {
-		editRole();
+	$("#editFun").click("click", function() {
+		editFun();
 	});
 	$("#delRole").click("click", function() {
 		delRole();
@@ -17,7 +17,7 @@ $(function() {
 		permissions();
 	});
 });
-function editRole() {
+function editFun() {
 	var ids = [];
 	$("input.checkboxes[name='id']:checkbox").each(function () {
 		if ($(this).attr("checked")) {
@@ -32,8 +32,8 @@ function editRole() {
 	pageii = layer.open({
 		title : "编辑",
 		type : 2,
-		area : [ "40%", "40%" ],
-		content : rootPath + '/role/editUI.shtml?id=' + ids
+		area : [ "50%", "80%" ],
+		content : rootPath + '/storeManager/editUI.shtml?storeCode=' + ids
 	});
 }
 function permissions() {
@@ -127,7 +127,7 @@ function storeManagerList() {
 				"sWidth": "3%",
 				"bSortable": false,
 				"mRender": function (data, type, full) {
-					var id = full["id"];
+					var id = full["storeCode"];
 					return '<div class="checker"><span><input name="id" onclick="checkThis(this);" type="checkbox" class="checkboxes" value="' + id + '"></span></div>';
 				}
 			},

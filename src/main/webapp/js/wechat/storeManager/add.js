@@ -3,13 +3,14 @@
 	 	 return this.optional(element) || ((value.length <= 10) && (value.length>=3));
 	 }, "角色名由3至10位字符组合构成");
 	 $(function() {
-	 	$("form").validate({
+	 	$("#form").validate({
 	 		submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
 	 			ly.ajaxSubmit(form,{//验证新增是否成功
 	 				type : "post",
 	 				dataType:"json",
 	 				success : function(data) {
-	 					if (data=="success") {
+	 					console.debug(data);
+	 					if (data.success =="true") {
 	 						layer.confirm('添加成功!是否关闭窗口?', function(index) {
 								window.parent.storeManagerList();
 					        	parent.layer.close(parent.pageii);
@@ -17,7 +18,7 @@
 	 						});
 	 						$("#form")[0].reset();
 	 					} else {
-	 						layer.msg('添加失败！');
+	 						layer.msg(data.msg);
 	 					}
 	 				}
 	 			});
