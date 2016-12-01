@@ -20,4 +20,6 @@ public interface StoreInfoMapper {
 
     List<StoreInfo> selectListByParam(Map<String, Object> paramMap);
 
+    List<StoreInfo> selectListByParamLike(Map<String, Object> paramMap);
+
 }
