@@ -3,7 +3,7 @@ package com.wfj.entity;
 public class MsgReply {
 	private Integer sid;
 
-	private String appId;
+	private String eventType;
 
 	private String appSecret;
 
@@ -31,12 +31,12 @@ public class MsgReply {
 
 	private String url;
 
-	public String getAppId() {
-		return appId;
+	public String getEventType() {
+		return eventType;
 	}
 
-	public void setAppId(String appId) {
-		this.appId = appId;
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
 	}
 
 	public String getAppSecret() {
@@ -153,7 +153,7 @@ public class MsgReply {
 
 	@Override
 	public String toString() {
-		return "MsgReply [sid=" + sid + ", appId=" + appId + ", appSecret=" + appSecret
+		return "MsgReply [sid=" + sid + ", eventType=" + eventType + ", appSecret=" + appSecret
 				+ ", msgKey=" + msgKey + ", msgType=" + msgType + ", content=" + content
 				+ ", mediaId=" + mediaId + ", title=" + title + ", description=" + description
 				+ ", musicUrl=" + musicUrl + ", hqmusicUrl=" + hqmusicUrl + ", thumbMediald="
