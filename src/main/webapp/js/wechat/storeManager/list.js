@@ -132,11 +132,11 @@ function storeManagerList() {
 				}
 			},
 			{
-				"mDataProp": 'store_code',
+				"mDataProp": 'storeCode',
 				"sTitle": "门店编码",
 				"sWidth": '10%'
 			}, {
-                "mDataProp": 'business_name',
+                "mDataProp": 'businessName',
                 "sTitle": "门店名称",
                 "sWidth": '10%',
                 "mRender": function (data, type, full) {
@@ -148,7 +148,7 @@ function storeManagerList() {
                     }
                 }
             }, {
-				"mDataProp": 'branch_name',
+				"mDataProp": 'branchName',
 				"sTitle": "分店名称",
 				"sWidth": '10%'
 			}, {
@@ -176,7 +176,7 @@ function storeManagerList() {
                 "sTitle": "门店类型",
                 "sWidth": '10%'
             }, {
-                "mDataProp": 'offset_type',
+                "mDataProp": 'offsetType',
                 "sTitle": "坐标类型",
                 "sWidth": '10%'
             }, {
@@ -192,11 +192,11 @@ function storeManagerList() {
                 "sTitle": "特色服务",
                 "sWidth": '10%'
             }, {
-                "mDataProp": 'open_time',
+                "mDataProp": 'openTime',
                 "sTitle": "营业时间",
                 "sWidth": '10%'
             }, {
-                "mDataProp": 'avg_price',
+                "mDataProp": 'avgPrice',
                 "sTitle": "人均价格",
                 "sWidth": '10%'
             }, {
@@ -217,7 +217,7 @@ function storeManagerList() {
 				aoData = [];
 			}
 			aoData.push({
-				name: "storeInfoFormMap.business_name",
+				name: "businessName",
 				value: $("#businessName").val().trim()
 			});
 			$.ajax({
