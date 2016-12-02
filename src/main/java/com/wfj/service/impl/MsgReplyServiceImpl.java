@@ -20,6 +20,7 @@ public class MsgReplyServiceImpl implements MsgReplyService {
 		logger.info("start-msgReplyInsertOrUpdate");
 		MsgReply entity = new MsgReply();
 		entity.setMsgKey(msgReply.getMsgKey());
+		entity.setEventType(msgReply.getEventType());
 		List<MsgReply> msgReplyList = msgReplyMapper.selectListByParam(entity);
 		if (msgReplyList != null && msgReplyList.size() > 0) {
 			msgReply.setSid(msgReplyList.get(0).getSid());
