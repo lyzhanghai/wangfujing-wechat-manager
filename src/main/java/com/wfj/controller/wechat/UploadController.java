@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.wfj.dto.ArticleDto;
 import com.wfj.dto.MediaDto;
+import com.wfj.entity.MsgReply;
 import com.wfj.service.intf.MaterialService;
+import com.wfj.service.intf.MsgReplyService;
 import com.wfj.util.Common;
 
 @Controller
@@ -31,6 +33,9 @@ public class UploadController {
 
 	@Autowired
 	private MaterialService materialService;
+
+	@Autowired
+	private MsgReplyService msgReplyService;
 
 	/**
 	 * 图片/文件上传
@@ -48,8 +53,19 @@ public class UploadController {
 	@RequestMapping(value = "/photoUpload", method = RequestMethod.POST)
 	public Map<String, Object> photoUpload(MultipartFile file, HttpServletRequest request,
 			HttpServletResponse response) throws IllegalStateException, IOException {
-		Map<String, Object> paramMap = fileUpload(file, request, response);
-		return paramMap;
+		String fileType = request.getParameter("fileType");
+		if (fileType.equals("text")) {
+			String eventType = request.getParameter("eventType");
+			String textContent = request.getParameter("textContent");
+			MsgReply msgReply = new MsgReply();
+			msgReply.setEventType(eventType);
+			msgReply.setContent(textContent);
+			int iORu = msgReplyService.msgReplyInsertOrUpdate(msgReply);
+			logger.info(iORu);
+		} else {
+			Map<String, Object> paramMap = fileUpload(file, request, response);
+		}
+		return null;
 	}
 
 	/**
@@ -140,7 +156,7 @@ public class UploadController {
 			String title = null;// 视频标题
 			String introduction = null;// 视频内容
 			String fileName = file.getOriginalFilename();// 文件原名称
-			String fileType = request.getParameter("type");
+			String fileType = request.getParameter("fileType");
 			logger.info("上传的文件原名称:" + fileName);
 			// 判断文件类型
 			type = fileName.indexOf(".") != -1

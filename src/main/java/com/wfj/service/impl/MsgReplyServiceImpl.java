@@ -16,16 +16,16 @@ public class MsgReplyServiceImpl implements MsgReplyService {
 	@Autowired
 	private MsgReplyMapper msgReplyMapper;
 
-	public void msgReplyInsertOrUpdate(MsgReply msgReply) {
+	public int msgReplyInsertOrUpdate(MsgReply msgReply) {
 		logger.info("start-msgReplyInsertOrUpdate");
 		MsgReply entity = new MsgReply();
 		entity.setMsgKey(msgReply.getMsgKey());
 		List<MsgReply> msgReplyList = msgReplyMapper.selectListByParam(entity);
 		if (msgReplyList != null && msgReplyList.size() > 0) {
 			msgReply.setSid(msgReplyList.get(0).getSid());
-			msgReplyMapper.updateByPrimaryKey(msgReply);
+			return msgReplyMapper.updateByPrimaryKeySelective(msgReply);
 		} else {
-			msgReplyMapper.insertSelective(msgReply);
+			return msgReplyMapper.insertSelective(msgReply);
 		}
 	}
 
