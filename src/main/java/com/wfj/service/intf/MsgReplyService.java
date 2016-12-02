@@ -5,7 +5,7 @@ import java.util.List;
 import com.wfj.entity.MsgReply;
 
 public interface MsgReplyService {
-	public void msgReplyInsertOrUpdate(MsgReply msgReply);
+	public int msgReplyInsertOrUpdate(MsgReply msgReply);
 
 	public List<MsgReply> getMsgReplyList(MsgReply msgReply);
 
