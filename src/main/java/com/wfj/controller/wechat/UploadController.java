@@ -26,8 +26,8 @@ import com.wfj.util.Common;
 
 @Controller
 @RequestMapping("upload")
-public class UoloadController {
-	private static Logger logger = Logger.getLogger(UoloadController.class);
+public class UploadController {
+	private static Logger logger = Logger.getLogger(UploadController.class);
 
 	@Autowired
 	private MaterialService materialService;
