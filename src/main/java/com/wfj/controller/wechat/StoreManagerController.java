@@ -60,7 +60,7 @@ public class StoreManagerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/findByPage2")
-    public DataTableResult findByPage2(DataTableParams dataTableParams, String businessName) throws Exception {
+    public DataTableResult findByPage2(DataTableParams dataTableParams, String storeCode, String businessName) throws Exception {
         logger.debug("start com.wfj.controller.wechat.StoreManagerController.findByPage2()");
         Integer displayStart = dataTableParams.getiDisplayStart();
         Integer displayLength = dataTableParams.getiDisplayLength();
@@ -68,6 +68,7 @@ public class StoreManagerController extends BaseController {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         if (displayStart != null) paramMap.put("start", displayStart);
         if (displayLength != null) paramMap.put("limit", displayLength);
+        if (Common.isNotEmpty(storeCode)) paramMap.put("storeCode", storeCode.trim());
         if (Common.isNotEmpty(businessName)) paramMap.put("businessName", businessName.trim());
         logger.debug("com.wfj.controller.wechat.StoreManagerController.findByPage2,para:" + paramMap.toString());
         List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParamLike(paramMap);

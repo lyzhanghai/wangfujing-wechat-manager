@@ -145,7 +145,7 @@ function storeManagerList() {
                 "sWidth": '10%',
                 "mRender": function (data, type, full) {
                     var storeCode = full["storeCode"];
-                    return '<a href="javascript:void(0);" onclick="getDetailUI(' + storeCode + ');">' + storeCode + '</a>';
+                    return '<a href="javascript:void(0)" onclick="getDetailUI(' + storeCode + ');">' + storeCode + '</a>';
                 }
             }, {
                 "mDataProp": 'businessName',
@@ -154,7 +154,7 @@ function storeManagerList() {
                 "mRender": function (data, type, full) {
                     var storeCode = full["storeCode"];
                     var businessName = full["businessName"];
-                    return '<a href="javascript:void(0);" onclick="getDetailUI(' + storeCode + ');">' + businessName + '</a>';
+                    return '<a href="javascript:void(0)" onclick="getDetailUI(' + storeCode + ');">' + businessName + '</a>';
                 }
             }, {
                 "mDataProp": 'branchName',
@@ -196,26 +196,6 @@ function storeManagerList() {
                 "mDataProp": 'latitude',
                 "sTitle": "纬度",
                 "sWidth": '10%'
-            }, {
-                "mDataProp": 'special',
-                "sTitle": "特色服务",
-                "sWidth": '10%'
-            }, {
-                "mDataProp": 'openTime',
-                "sTitle": "营业时间",
-                "sWidth": '10%'
-            }, {
-                "mDataProp": 'avgPrice',
-                "sTitle": "人均价格",
-                "sWidth": '10%'
-            }, {
-                "mDataProp": 'introduction',
-                "sTitle": "商户简介",
-                "sWidth": '10%'
-            }, {
-                "mDataProp": 'recommend',
-                "sTitle": "推荐品",
-                "sWidth": '10%'
             }],
         "aoColumnDefs": [{
             sDefaultContent: '',
@@ -227,7 +207,9 @@ function storeManagerList() {
             }
             aoData.push({
                 name: "businessName",
-                value: $("#businessName").val().trim()
+                value: $("#businessName").val().trim(),
+                name: "storeCode",
+                value: $.trim($("#storeCode").val())
             });
             $.ajax({
                 "dataType": 'json',
