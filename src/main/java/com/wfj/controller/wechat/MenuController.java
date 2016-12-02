@@ -140,7 +140,7 @@ public class MenuController extends BaseController {
             return "success";
 
         } else {
-    return  "faile";
+            return "faile";
         }
     }
 
@@ -164,5 +164,58 @@ public class MenuController extends BaseController {
             }
         }
         return Common.BACKGROUND_PATH + "/wechat/menu/edit";
+    }
+
+    /**
+     * 根据ID删除菜单
+     *
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("deleteEntity")
+    @SystemLog(module = "系统管理", methods = "资源管理-删除资源")
+    public String deleteEntity(Model model) throws Exception {
+        String ids = getPara("ids");
+        if (StringUtils.isNotEmpty(ids)) {
+            String[] array = ids.split(",");
+            for (String id : array) {
+                menuService.delMenu(new Long(id));
+            }
+        }
+
+        return "success";
+    }
+
+    /**
+     * 发布菜单
+     *
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("releaseMenu")
+    @SystemLog(module = "系统管理", methods = "资源管理-删除资源")
+    public String releaseMenu() throws Exception {
+        StoreInfoDto storeInfo = appAccountInfoService.getStoreInfo(PropertiesUtils.findPropertiesKey("appid"));
+        logger.info("storeInfo ================ " + storeInfo);
+        String appid = storeInfo.getAppId();
+        String secret = storeInfo.getSecret();
+        WechatMenu menuModel = new WechatMenu();
+        menuModel.setAppid(appid);
+        menuModel.setParentSid("0");
+        List<WechatMenu> menuList = menuService.queryMenus(menuModel);
+        String menus = "";
+        JSONObject treeObjec = new JSONObject();
+        if (menuList != null && menuList.size() > 0) {
+            JSONObject menuJson = menuService.generatorMenuJson(menuList, false);
+            menus = menuJson.getJSONObject("menu").toJSONString();
+            if (StringUtils.isNotEmpty(menus)) {
+                wechatUtil.createMenus(appid, secret, menus);
+            }
+        }
+
+        return "success";
     }
 }
