@@ -44,6 +44,7 @@ public class MsgDispatcher implements MsgDispatcherService {
 			msg.setMsgKey(content);
 			String msgReplyText = msgReplyText(openid, mpid, msg);
 			if (msgReplyText == null) {
+				msg.setMsgKey(null);
 				msg.setEventType("disReply");
 				msgReplyText = msgReplyText(openid, mpid, msg);
 			}
