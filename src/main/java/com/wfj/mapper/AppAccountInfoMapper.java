@@ -1,5 +1,6 @@
 package com.wfj.mapper;
 
+import com.wfj.dto.WechatAppDto;
 import com.wfj.entity.AppAccountInfo;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface AppAccountInfoMapper {
     int updateByPrimaryKey(AppAccountInfo record);
 
     List<AppAccountInfo> selectListByParam(Map<String, Object> paramMap);
+
+    List<WechatAppDto> selectAppInfoListByParam(WechatAppDto dto);
 }

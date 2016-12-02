@@ -165,3 +165,8 @@ function tree() {
 		data.instance.open_all();
 	});
 }
+
+function refreshTree() {
+	console.debug("11111111111");
+	$("#menuTree").jstree(true).refresh();
+}
