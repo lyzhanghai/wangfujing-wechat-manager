@@ -55,4 +55,49 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         logger.debug("end com.wfj.service.impl.StoreInfoServiceImpl.addStore(),return:" + returnDto);
         return returnDto;
     }
+
+    /**
+     * 修改门店
+     *
+     * @param storeInfo
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public ReturnDto editStore(StoreInfo storeInfo) throws Exception {
+        logger.debug("start com.wfj.service.impl.StoreInfoServiceImpl.editStore,para:" + storeInfo.toString());
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("storeCode", storeInfo.getStoreCode());
+        List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
+
+        ReturnDto returnDto = new ReturnDto();
+        if (storeInfoList.size() == 1) {
+            storeInfoMapper.updateByParaSelective(storeInfo);
+            returnDto.setCode("1");
+            returnDto.setDesc("修改成功！");
+        } else {
+            returnDto.setCode("0");
+            returnDto.setDesc("修改的门店不存在！");
+        }
+
+        logger.debug("end com.wfj.service.impl.StoreInfoServiceImpl.editStore,return:" + returnDto.toString());
+        return returnDto;
+    }
+
+    /**
+     * 批量删除门店
+     *
+     * @param
+     * @return
+     */
+    @Transactional
+    public ReturnDto batchDelStore(List<String> storeCodeList) {
+        logger.debug("start com.wfj.service.impl.StoreInfoServiceImpl.delBatchStore(),para:" + storeCodeList.toString());
+        ReturnDto returnDto = new ReturnDto();
+        int i = storeInfoMapper.batchDeleteByPara(storeCodeList);
+        returnDto.setCode("1");
+        returnDto.setDesc("批量删除成功！");
+        logger.debug("end com.wfj.service.impl.StoreInfoServiceImpl.delBatchStore(),return:" + returnDto.toString());
+        return returnDto;
+    }
 }

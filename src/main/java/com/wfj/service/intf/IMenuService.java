@@ -57,5 +57,5 @@ public interface IMenuService {
      * @param wechatMenu
      * @return
      */
-    public boolean delMenu(WechatMenu wechatMenu);
+    public boolean delMenu(Long sid);
 }

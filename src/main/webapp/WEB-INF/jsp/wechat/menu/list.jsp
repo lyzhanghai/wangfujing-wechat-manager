@@ -75,9 +75,26 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" id="divMenuType">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">click_key
+                                            <label class="control-label col-md-3">菜单内容
+                                            </label>
+
+                                            <div class="col-md-8">
+
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="radioMenuType" id="menuType1"
+                                                           value="click" disabled> 发送消息 </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="radioMenuType" id="menuType2"
+                                                           value="view" disabled> 跳转网页 </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" id="divClick" style="display: none">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">消息内容
                                             </label>
 
                                             <div class="col-md-8">
@@ -86,40 +103,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">子菜单内容
-                                            </label>
-
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" name="typeDetail"
-                                                       id="typeDetail" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">图标
-                                            </label>
-
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" name="iconDetail"
-                                                       id="iconDetail" value="" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">父节点编码
-                                            </label>
-
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" name="parentDetail"
-                                                       id="parentDetail" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" id="divView" style="display: none">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">页面地址
                                             </label>
@@ -127,17 +111,6 @@
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" name="resUrlDetail"
                                                        id="resUrlDetail" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="text-align: center" id="opt">
-                                            <label class="control-label col-md-3">是否隐藏
-                                            </label>
-
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" name="isHide"
-                                                       id="isHide" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
