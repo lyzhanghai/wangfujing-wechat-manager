@@ -4,20 +4,20 @@ $(function() {
 	$("#search").click("click", function() {// 绑定查询按扭
 		storeManagerList();
 	});
-	$("#addRole").click("click", function() {
-		addRole();
+	$("#addFun").click("click", function() {
+		addFun();
 	});
-	$("#editRole").click("click", function() {
-		editRole();
+	$("#editFun").click("click", function() {
+		editFun();
 	});
-	$("#delRole").click("click", function() {
-		delRole();
+	$("#delFun").click("click", function() {
+		delFun();
 	});
 	$("#permissions").click("click", function() {
 		permissions();
 	});
 });
-function editRole() {
+function editFun() {
 	var ids = [];
 	$("input.checkboxes[name='id']:checkbox").each(function () {
 		if ($(this).attr("checked")) {
@@ -32,8 +32,8 @@ function editRole() {
 	pageii = layer.open({
 		title : "编辑",
 		type : 2,
-		area : [ "40%", "40%" ],
-		content : rootPath + '/role/editUI.shtml?id=' + ids
+		area : [ "50%", "80%" ],
+		content : rootPath + '/storeManager/editUI.shtml?storeCode=' + ids
 	});
 }
 function permissions() {
@@ -56,15 +56,15 @@ function permissions() {
 		content : url
 	});
 }
-function addRole() {
+function addFun() {
 	pageii = layer.open({
 		title : "新增",
 		type : 2,
-		area : [ "40%", "40%" ],
-		content : rootPath + '/role/addUI.shtml'
+		area : [ "50%", "80%" ],
+		content : rootPath + '/storeManager/addUI.shtml'
 	});
 }
-function delRole() {
+function delFun() {
 	var ids = [];
 	$("input.checkboxes[name='id']:checkbox").each(function () {
 		if ($(this).attr("checked")) {
@@ -77,9 +77,9 @@ function delRole() {
 		return;
 	}
 	layer.confirm('是否删除？', function(index) {
-		var url = rootPath + '/role/deleteEntity.shtml';
+		var url = rootPath + '/storeManager/batchDelStore.shtml';
 		var s = CommnUtil.ajax(url, {
-			ids : ids.join(",")
+            storeCodes : ids
 		}, "json");
 		if (s == "success") {
 			layer.msg('删除成功');
@@ -127,7 +127,7 @@ function storeManagerList() {
 				"sWidth": "3%",
 				"bSortable": false,
 				"mRender": function (data, type, full) {
-					var id = full["id"];
+					var id = full["storeCode"];
 					return '<div class="checker"><span><input name="id" onclick="checkThis(this);" type="checkbox" class="checkboxes" value="' + id + '"></span></div>';
 				}
 			},

@@ -1,18 +1,24 @@
 package com.wfj.controller.wechat;
 
+import com.alibaba.fastjson.JSONObject;
+import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
+import com.wfj.dto.ReturnDto;
 import com.wfj.entity.DataTableParams;
 import com.wfj.entity.DataTableResult;
 import com.wfj.entity.StoreInfo;
 import com.wfj.mapper.StoreInfoMapper;
+import com.wfj.service.intf.StoreInfoService;
 import com.wfj.util.Common;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +35,9 @@ public class StoreManagerController extends BaseController {
 
     @Inject
     private StoreInfoMapper storeInfoMapper;
+
+    @Inject
+    private StoreInfoService storeInfoService;
 
     /**
      * 访问展示页面
@@ -83,5 +92,76 @@ public class StoreManagerController extends BaseController {
         return Common.BACKGROUND_PATH + "/wechat/storeManager/add";
     }
 
+    /**
+     * 添加门店
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = {"/addStore"})
+    @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
+    public JSONObject addStore(StoreInfo storeInfo) throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        ReturnDto returnDto = storeInfoService.addStore(storeInfo);
+        String code = returnDto.getCode();
+        String desc = returnDto.getDesc();
+        jsonObject.put("msg", desc);
+        if ("1".equals(code)) {
+            jsonObject.put("success", "true");
+        } else {
+            jsonObject.put("success", "false");
+        }
+        return jsonObject;
+    }
 
+    /**
+     * 跳转修改页面
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/editUI")
+    public String editUI(Model model, String storeCode) throws Exception {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        if (Common.isNotEmpty(storeCode)) {
+            paramMap.put("storeCode", storeCode.trim());
+            List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
+            if (storeInfoList.size() == 1) model.addAttribute("store", storeInfoList.get(0));
+        }
+        return Common.BACKGROUND_PATH + "/wechat/storeManager/edit";
+    }
+
+    /**
+     * 修改门店
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/editStore")
+    @SystemLog(module = "门店管理", methods = "门店管理-修改门店")
+    public String editStore(StoreInfo storeInfo) throws Exception {
+        ReturnDto returnDto = storeInfoService.editStore(storeInfo);
+        return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/batchDelStore")
+    @SystemLog(module = "门店管理", methods = "门店管理-删除门店")
+    public String batchDelStore(@RequestParam(value = "storeCodes[]") String[] storeCodes) {
+        List<String> storeCodeList = new ArrayList<String>();
+        if (storeCodes != null && storeCodes.length != 0) {
+            for (String storeCode : storeCodes) {
+                if (Common.isNotEmpty(storeCode) && !"undefined".equals(storeCode))
+                    storeCodeList.add(storeCode);
+            }
+        }
+        if (storeCodeList.size() > 0) {
+            ReturnDto returnDto = storeInfoService.batchDelStore(storeCodeList);
+        }
+        return "success";
+    }
 }

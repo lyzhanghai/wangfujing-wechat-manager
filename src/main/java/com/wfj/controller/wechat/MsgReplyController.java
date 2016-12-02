@@ -37,7 +37,7 @@ public class MsgReplyController {
 	@RequestMapping("list")
 	public String listUI(Model model) throws Exception {
 		MsgReply msgReply = new MsgReply();
-		model.addAttribute("res", getMsgReplyList(msgReply));
+		model.addAttribute("msgReplyList", getMsgReplyList(msgReply));
 		System.out.println(Common.BACKGROUND_PATH + "/system/msgReply/add");
 		return Common.BACKGROUND_PATH + "/system/msgReply/add";
 	}
