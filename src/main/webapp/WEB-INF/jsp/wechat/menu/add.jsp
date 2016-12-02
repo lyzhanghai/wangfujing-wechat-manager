@@ -29,9 +29,19 @@
 <body>
 <div class="l_err" style="width: 100%; margin-top: 2px;"></div>
 <form id="form" name="form" class="form-horizontal" method="post"
-      action="${pageContext.request.contextPath}/resources/addEntity.shtml">
+      action="${pageContext.request.contextPath}/menu/addEntity.shtml">
     <section class="panel panel-default">
         <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">上级菜单</label>
+
+                <div class="col-sm-9">
+                    <select id="parentId" name="menuParentId" class="form-control m-b"
+                            tabindex="-1">
+                    </select>
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">菜单名称</label>
 
@@ -43,28 +53,30 @@
             <div class="line line-dashed line-lg pull-in"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">菜单内容</label>
-                <div class="col-sm-9">
-                    发送消息<input type="radio" name="radioMenuType" id="menuType1" value="click">
-                    &nbsp;&nbsp;跳转网页<input type="radio" name="radioMenuType" id="menuType2" value="view" checked="checked">
+                <div class="col-md-8">
+                    <label class="radio-inline">
+                        <input type="radio" name="radioMenuType" id="menuType1"
+                               value="click" checked> 发送消息 </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radioMenuType" id="menuType2"
+                               value="view"> 跳转网页 </label>
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">菜单url</label>
+            <div class="form-group" id="divView">
+                <label class="col-sm-3 control-label">页面地址</label>
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control checkacc"
-                           placeholder="请输入菜单url" name="menuUrl" id="resUrl">
+                           placeholder="请输入页面地址" name="menuUrl" id="resUrl">
                 </div>
             </div>
-            <div class="line line-dashed line-lg pull-in"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">上级菜单</label>
+            <div class="form-group" id="divClick" >
+                <label class="col-sm-3 control-label">消息内容</label>
 
                 <div class="col-sm-9">
-                    <select id="parentId" name="menuParentId" class="form-control m-b"
-                            tabindex="-1">
-                    </select>
+                    <input type="text" class="form-control checkacc"
+                           placeholder="请输入消息内容" name="menuContent" id="resContent">
                 </div>
             </div>
         </div>

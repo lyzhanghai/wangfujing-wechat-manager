@@ -11,7 +11,7 @@ $(function () {
                 success: function (response) {
                     if (response == "success") {
                         layer.confirm('添加成功!是否关闭窗口?', function (index) {
-                            //window.parent.tree();
+                            window.parent.refreshTree();
                             parent.layer.close(parent.pageii);
                             return false;
                         });
@@ -87,6 +87,18 @@ $(function () {
     } else {
         layer.msg("获取菜单信息错误，请联系管理员！");
     }
+    $("#divView").hide();
+    $("input[name='radioMenuType']").change(function () {
+        var type = $(this).val();
+        if (type == 'view') {
+            $("#divView").show();
+            $("#divClick").hide();
+        } else if (type == 'click') {
+            $("#divView").hide();
+            $("#divClick").show();
+        }
+    });
+
 });
 function but(v) {
     if (v.value == 2) {

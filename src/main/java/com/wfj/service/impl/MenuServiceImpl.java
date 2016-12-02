@@ -180,12 +180,12 @@ public class MenuServiceImpl implements IMenuService {
     /**
      * 删除菜单
      *
-     * @param wechatMenu
+     * @param sid
      * @return
      */
-    public boolean delMenu(WechatMenu wechatMenu) {
+    public boolean delMenu(Long sid) {
         boolean flag = false;
-        int count = menuMapper.deleteByPrimaryKey(wechatMenu.getSid());
+        int count = menuMapper.deleteByPrimaryKey(sid);
         if (count != 0) {
             flag = true;
         }
