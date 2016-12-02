@@ -33,6 +33,16 @@
     <input type="hidden" value="${resources.sid}" name="sid"
            id="id">
     <section class="panel panel-default">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">上级菜单</label>
+
+            <div class="col-sm-9">
+                <select id="parentId" name="menuParentId"
+                        class="form-control m-b">
+                </select>
+            </div>
+        </div>
+        <div class="line line-dashed line-lg pull-in"></div>
         <div class="panel-body">
             <div class="form-group">
                 <label class="col-sm-3 control-label">菜单名称</label>
@@ -48,15 +58,19 @@
                 <label class="col-sm-3 control-label">菜单内容</label>
 
                 <div class="col-sm-9">
-                    发送消息<input type="radio" name="radioMenuType" id="menuType1" value="click"
-                <c:if test="${resources.type eq 'click'}"> checked="checked"</c:if>>
-                    &nbsp;&nbsp;跳转网页<input type="radio" name="radioMenuType" id="menuType2" value="view"
-                <c:if test="${resources.type eq 'view'}"> checked="checked"</c:if>>
+                    <label class="radio-inline">
+                        <input type="radio" name="radioMenuType" id="menuType1"
+                               value="click" <c:if test="${resources.type eq 'click'}"> checked="checked"</c:if>> 发送消息
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radioMenuType" id="menuType2"
+                               value="view" <c:if test="${resources.type eq 'view'}"> checked="checked"</c:if>> 跳转网页
+                    </label>
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">菜单url</label>
+                <label class="col-sm-3 control-label">页面地址</label>
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control checkacc"
@@ -64,16 +78,7 @@
                            value="${resources.viewurl}">
                 </div>
             </div>
-            <div class="line line-dashed line-lg pull-in"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">上级菜单</label>
 
-                <div class="col-sm-9">
-                    <select id="parentId" name="menuParentId"
-                            class="form-control m-b">
-                    </select>
-                </div>
-            </div>
             <footer class="panel-footer text-right bg-light lter">
                 <button type="submit" class="btn btn-success btn-s-xs">提交</button>
             </footer>

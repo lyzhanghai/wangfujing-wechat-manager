@@ -42,7 +42,13 @@ public class MsgDispatcher implements MsgDispatcherService {
 			MsgReply msg = new MsgReply();
 			String content = map.get("Content");
 			msg.setMsgKey(content);
-			return msgReplyText(openid, mpid, msg);
+			String msgReplyText = msgReplyText(openid, mpid, msg);
+			if (msgReplyText == null) {
+				msg.setMsgKey(null);
+				msg.setEventType("disReply");
+				msgReplyText = msgReplyText(openid, mpid, msg);
+			}
+			return msgReplyText;
 		}
 
 		if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) { // 图片消息

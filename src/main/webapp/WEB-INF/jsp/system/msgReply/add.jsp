@@ -3,11 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="http://cdn.gbtags.com/summernote/0.5.2/summernote.min.js"></script>
-<style type="text/css">
-   	@import url('http://cdn.gbtags.com/font-awesome/4.1.0/css/font-awesome.min.css');
-    @import url('http://cdn.gbtags.com/summernote/0.5.2/summernote.css');
-</style>
 <style type="text/css">
 table {
 	text-align: center overflow: hidden;
@@ -37,66 +32,34 @@ tr {
 	border-style: none;
 }
 
+button{
+}
 </style>
 </head>
 <body>
 	<ul id="myTab" class="nav nav-tabs">
-		<li class="active"><a href="#home" data-toggle="tab">被关注后自动回复</a></li>
-		<li><a href="#ios" data-toggle="tab">消息自动回复</a></li>
+		<li class="active"><a id="subscribe" href="#home" data-toggle="tab">被关注后自动回复</a></li>
+		<li><a id="disReply" href="#home" data-toggle="tab">消息自动回复</a></li>
 		<li><a href="#java" data-toggle="tab">关键词自动回复</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade in active" id="home">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="#txt" data-toggle="tab">文本</a></li>
-				<!-- ${pageContext.request.contextPath}/upload/articleAdd.shtml -->
-				<li><a href="#article" data-toggle="tab">图文</a></li>
-			</ul>
-			<div id="myTabContent" class="tab-content">
-				<div class="tab-pane fade in active" id="txt">
-					<div id="editor">
-					</div>
-					<br><br><br>
-					<button type="submit" class="btn btn-default">保存</button>
-				</div>
-				<div class="tab-pane fade" id="article">
-					<button class="btn btn-success" style = "float: right; margin-right: 150px;">新建图文信息</button>
-				</div>
-				<%-- <div class="tab-pane fade" id="article">
-					<form
-						action="${pageContext.request.contextPath}/resources/addEntity.shtml"
-						method="post" enctype="multipart/form-data">
-						<div class="input-group input-group-lg">
-							<input type="text" class="form-control inputBorder"
-								placeholder="请在这里输入标题" style="width: 800px;"> <br>
-						</div>
-						<div class="input-group input-group-sm">
-							<input type="text" class="form-control inputBorder"
-								placeholder="请输入作者" style="width: 800px;">
-						</div>
-						<hr>
-						<div id="editor">
-						</div>
-						<hr>
-						<input type="checkbox" id="checkbox1" />原文链接
-						<br>
-						<input type="text" id="orgUrlInp" style="display:none; width: 300px" />
-						<label>封面</label>&nbsp;&nbsp;<label style="color: #808080">大图片建议尺寸：900像素 * 500像素</label>
-						<br>
-						<button class="btn btn-info">从正文选择</button>
-						<button class="btn btn-info">从图片库选择</button>
-						<br><br>
-						<label>摘要</label>&nbsp;&nbsp;<label style="color: #808080">选填，如果不填写会默认抓取正文前54个字</label>
-						<textarea rows="8" cols="97"></textarea>
-					</form>
-				</div> --%>
+			<div>
+				<form action="${pageContext.request.contextPath}/upload/photoUpload.shtml" method="post" enctype="multipart/form-data">
+					<button id="btnText" type="button" class="btn btn-default">文本</button>
+					<button id="btnImage" type="button" class="btn btn-default">图片</button>
+					<button id="btnVideo" type="button" class="btn btn-default">视频</button>
+					<button id="btnVoice" type="button" class="btn btn-default">语音</button>
+					<br>
+					<textarea id="textID" name="textContent" rows="10" cols="50"></textarea>
+					<input id="fileID" type="file" name="file" />
+					<input type="hidden" id="fileType" name="fileType" value="text">
+					<input type="hidden" id="eventType" name="eventType" value="subscribe" >
+					<br>
+					<button type="submit" class="btn btn-success">保存</button>
+					<button type="button" class="btn btn-danger">删除</button>
+				</form>
 			</div>
-		</div>
-		<div class="tab-pane fade" id="ios">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="#txt" data-toggle="tab">文本</a></li>
-				<li><a href="#article" data-toggle="tab">图文</a></li>
-			</ul>
 		</div>
 		<div class="tab-pane fade" id="java">
 			<div>
@@ -123,28 +86,35 @@ tr {
 </body>
 <script type="text/javascript">
 	$(function(){
-		$('#editor').summernote({
-			toolbar:[
-				['style', ['bold', 'italic', 'underline', 'clear']],
-			    ['font', ['strikethrough', 'superscript', 'subscript']],
-			    ['fontsize', ['fontsize']],
-			    ['color', ['color']],
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['height', ['height']]
-			],
-			width: 800,
-			height: 300,                 // set editor height
-			minHeight: null,             // set minimum height of editor
-			maxHeight: null,             // set maximum height of editor
-			focus: true                  // set focus to editable area after initializing summernote
+		$('#fileID').hide();
+		$('#subscribe').click(function(){
+			$('#eventType').attr("value",'sunscribe');
 		});
-		$('#checkbox1').click(function(){
-			var check = $('#checkbox1').is(':checked');
-			if(check == true){
-		    	$('#orgUrlInp').show();
-			}else{
-		    	$('#orgUrlInp').hide();
-			}
+		$('#disReply').click(function(){
+			$('#eventType').attr("value",'disReply');
+		});
+		$('#btnText').click(function(){
+			$('#fileType').attr("value",'test');
+			$('#fileID').hide();
+			$('#textID').show();
+		});
+		$('#btnImage').click(function(){
+			$('#fileType').attr("value",'image');
+			$('#fileID').attr("accept",'image/jpeg,image/png,image/gif');//PNG\JPEG\JPG\GIF 2M
+			$('#fileID').show();
+			$('#textID').hide();
+		});
+		$('#btnVideo').click(function(){
+			$('#fileType').attr("value",'video');
+			$('#fileID').attr("accept",'video/mp4');//MP4 10M
+			$('#fileID').show();
+			$('#textID').hide();
+		});
+		$('#btnVoice').click(function(){
+			$('#fileType').attr("value",'voice');
+			$('#fileID').attr("accept",'audio/mpeg');//AMR\MP3 2M
+			$('#fileID').show();
+			$('#textID').hide();
 		});
 	});
 </script>

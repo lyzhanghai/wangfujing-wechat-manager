@@ -3,22 +3,22 @@ var id = null;
 var res = new Map();
 $(function () {
     tree();
-    $.ajax({
-        url: rootPath + '/resources/reslists.shtml',
-        type: 'post',
-        dataType: 'json',
-        data: {},
-        async: false,
-        success: function (data) {
-            if (data != "") {
-                for (var i in data) {
-                    res.put(data[i]["id"], data[i]);
-                }
-            } else {
-                bootbox.alert("查询资源列表出错！");
-            }
-        }
-    });
+    /*$.ajax({
+     url: rootPath + '/resources/reslists.shtml',
+     type: 'post',
+     dataType: 'json',
+     data: {},
+     async: false,
+     success: function (data) {
+     if (data != "") {
+     for (var i in data) {
+     res.put(data[i]["id"], data[i]);
+     }
+     } else {
+     bootbox.alert("查询资源列表出错！");
+     }
+     }
+     });*/
     $("#seach").click("click", function () {// 绑定查询按扭
         var searchParams = $("#searchForm").serializeJson();
         grid.setOptions({
@@ -33,6 +33,9 @@ $(function () {
     });
     $("#delFun").click("click", function () {
         delFun();
+    });
+    $("#releaseFun").click("click", function () {
+        releaseFun();
     });
     $("#lyGridUp").click("click", function () {// 上移
         var jsonUrl = rootPath + '/background/resources/sortUpdate.shtml';
@@ -78,17 +81,32 @@ function delFun() {
     ids.push(id.get("id"));
     ids.push(id.get("children"));
     layer.confirm('是否删除？', function (index) {
-        var url = rootPath + '/resources/deleteEntity.shtml';
+        var url = rootPath + '/menu/deleteEntity.shtml';
         var s = CommnUtil.ajax(url, {
-            ids: ids.join(",")
+            ids: ids.join()
         }, "json");
         if (s == "success") {
             layer.msg('删除成功');
-            tree();
+            refreshTree();
         } else {
             layer.msg('删除失败');
         }
     });
+}
+function releaseFun() {
+    layer.confirm('确认要同步到微信端吗？', function (index) {
+        var url = rootPath + '/menu/releaseMenu.shtml';
+        var s = CommnUtil.ajax(url, {}, "json");
+        if (s == "success") {
+            layer.msg('发布成功');
+        } else {
+            layer.msg('发布失败');
+        }
+    });
+}
+
+function refreshTree() {
+    $("#menuTree").jstree(true).refresh();
 }
 
 function tree() {
@@ -123,63 +141,70 @@ function tree() {
         },
         "state": {"key": "demo2"},
         "plugins": ["dnd", "state", "types"]
-    }).on('move_node.jstree', function (e, data) {
-        console.debug("1111111111");
-        console.debug(data);
-       /* $.get(contextPath + '/menuManage/move.json', {'sid': data.node.id, 'parent': data.parent})
-            .done(function (d) {
-                data.instance.refresh();
-            })
-            .fail(function () {
-                data.instance.refresh();
-            });*/
-    }).on('select_node.jstree', function (e, data) {
-        console.debug(data);
-        id = new Map();
-        var idd = data.node.original.id;
-        id.put("id", idd);
-        $("#nameDetail").val(data.node.text);
-        var type = data.node.original.type;
-        var typeName;
-        if (type == 'view') {
-            typeName = "跳转网页";
-        } else if (type == 'click') {
-            typeName = "发送消息";
-        } else {
-            typeName = "目录";
-        }
-        $("#typeDetail").val(typeName);
-        $("#resKeyDetail").val(data.node.original.key);
-        $("#resUrlDetail").val(data.node.original.url);
-        /*id = new Map();
-         var idd = data.node.id;
-         id.put("id",idd);
-         var children = data.node.children_d;
-         id.put("children",children);
-         var res_id = res.get(parseInt(idd));
-         $("#nameDetail").val(res_id.name.trim());
-         $("#resKeyDetail").val(res_id.resKey);
-         var type = res_id.type;
-         var typeName;
-         if(type == 0){
-         typeName = "目录";
-         }else if (type == 1){
-         typeName = "菜单";
-         }else{
-         typeName = "按钮";
-         }
-         $("#typeDetail").val(typeName);
-         $("#iconDetail").val(res_id.icon);
-         $("#parentDetail").val(res_id.parentId);
-         $("#resUrlDetail").val(res_id.resUrl);
-         var isHide = res_id.ishide;
-         if(isHide == 0){
-         $("#isHide").val("否");
-         }else{
-         $("#isHide").val("是");
-         }*/
+    })./*on('move_node.jstree', function (e, data) {
+     /!* $.get(contextPath + '/menuManage/move.json', {'sid': data.node.id, 'parent': data.parent})
+     .done(function (d) {
+     data.instance.refresh();
+     })
+     .fail(function () {
+     data.instance.refresh();
+     });*!/
+     }).*/on('select_node.jstree', function (e, data) {
+            console.debug(data);
+            id = new Map();
+            var idd = data.node.original.id;
+            id.put("id", idd);
+            var children = data.node.children_d;
+            id.put("children", children);
+            $("#nameDetail").val(data.node.text);
+            var type = data.node.original.type;
+            if (type == 'view') {
+                $("input[name='radioMenuType'][value='view']").attr("checked", 'checked');
+                $("#divClick").hide();
+                $("#divView").show();
+                $("#divMenuType").show();
+            } else if (type == 'click') {
+                $("input[name='radioMenuType'][value='click']").attr("checked", 'checked');
+                $("#divClick").show();
+                $("#divView").hide();
+                $("#divMenuType").show();
+            } else {
+                $("#divView").hide();
+                $("#divClick").hide();
+                $("#divMenuType").hide();
+            }
 
-    }).on("ready.jstree", function (e, data) {
-        data.instance.open_all();
-    });
+            $("#resKeyDetail").val(data.node.original.key);
+            $("#resUrlDetail").val(data.node.original.url);
+            /*id = new Map();
+             var idd = data.node.id;
+             id.put("id",idd);
+             var children = data.node.children_d;
+             id.put("children",children);
+             var res_id = res.get(parseInt(idd));
+             $("#nameDetail").val(res_id.name.trim());
+             $("#resKeyDetail").val(res_id.resKey);
+             var type = res_id.type;
+             var typeName;
+             if(type == 0){
+             typeName = "目录";
+             }else if (type == 1){
+             typeName = "菜单";
+             }else{
+             typeName = "按钮";
+             }
+             $("#typeDetail").val(typeName);
+             $("#iconDetail").val(res_id.icon);
+             $("#parentDetail").val(res_id.parentId);
+             $("#resUrlDetail").val(res_id.resUrl);
+             var isHide = res_id.ishide;
+             if(isHide == 0){
+             $("#isHide").val("否");
+             }else{
+             $("#isHide").val("是");
+             }*/
+
+        }).on("ready.jstree", function (e, data) {
+            data.instance.open_all();
+        });
 }
