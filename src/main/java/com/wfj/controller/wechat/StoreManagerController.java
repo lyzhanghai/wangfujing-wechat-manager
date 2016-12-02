@@ -14,9 +14,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,11 +133,35 @@ public class StoreManagerController extends BaseController {
         return Common.BACKGROUND_PATH + "/wechat/storeManager/edit";
     }
 
+    /**
+     * 修改门店
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @RequestMapping(value = "/editStore")
+    @SystemLog(module = "门店管理", methods = "门店管理-修改门店")
     public String editStore(StoreInfo storeInfo) throws Exception {
         ReturnDto returnDto = storeInfoService.editStore(storeInfo);
         return "success";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/batchDelStore")
+    @SystemLog(module = "门店管理", methods = "门店管理-删除门店")
+    public String batchDelStore(@RequestParam(value = "storeCodes[]") String[] storeCodes) {
+        List<String> storeCodeList = new ArrayList<String>();
+        if (storeCodes != null && storeCodes.length != 0) {
+            for (String storeCode : storeCodes) {
+                if (Common.isNotEmpty(storeCode) && !"undefined".equals(storeCode))
+                    storeCodeList.add(storeCode);
+            }
+        }
+        if (storeCodeList.size() > 0) {
+            ReturnDto returnDto = storeInfoService.batchDelStore(storeCodeList);
+        }
+        return "success";
+    }
 }

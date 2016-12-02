@@ -80,7 +80,24 @@ public class StoreInfoServiceImpl implements StoreInfoService {
             returnDto.setDesc("修改的门店不存在！");
         }
 
-        logger.debug("end com.wfj.service.impl.StoreInfoServiceImpl.editStore,para:" + returnDto.toString());
+        logger.debug("end com.wfj.service.impl.StoreInfoServiceImpl.editStore,return:" + returnDto.toString());
+        return returnDto;
+    }
+
+    /**
+     * 批量删除门店
+     *
+     * @param
+     * @return
+     */
+    @Transactional
+    public ReturnDto batchDelStore(List<String> storeCodeList) {
+        logger.debug("start com.wfj.service.impl.StoreInfoServiceImpl.delBatchStore(),para:" + storeCodeList.toString());
+        ReturnDto returnDto = new ReturnDto();
+        int i = storeInfoMapper.batchDeleteByPara(storeCodeList);
+        returnDto.setCode("1");
+        returnDto.setDesc("批量删除成功！");
+        logger.debug("end com.wfj.service.impl.StoreInfoServiceImpl.delBatchStore(),return:" + returnDto.toString());
         return returnDto;
     }
 }

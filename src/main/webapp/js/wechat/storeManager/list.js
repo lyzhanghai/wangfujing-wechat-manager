@@ -10,8 +10,8 @@ $(function() {
 	$("#editFun").click("click", function() {
 		editFun();
 	});
-	$("#delRole").click("click", function() {
-		delRole();
+	$("#delFun").click("click", function() {
+		delFun();
 	});
 	$("#permissions").click("click", function() {
 		permissions();
@@ -64,7 +64,7 @@ function addFun() {
 		content : rootPath + '/storeManager/addUI.shtml'
 	});
 }
-function delRole() {
+function delFun() {
 	var ids = [];
 	$("input.checkboxes[name='id']:checkbox").each(function () {
 		if ($(this).attr("checked")) {
@@ -77,9 +77,9 @@ function delRole() {
 		return;
 	}
 	layer.confirm('是否删除？', function(index) {
-		var url = rootPath + '/role/deleteEntity.shtml';
+		var url = rootPath + '/storeManager/batchDelStore.shtml';
 		var s = CommnUtil.ajax(url, {
-			ids : ids.join(",")
+            storeCodes : ids
 		}, "json");
 		if (s == "success") {
 			layer.msg('删除成功');

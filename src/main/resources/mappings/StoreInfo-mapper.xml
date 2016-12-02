@@ -35,10 +35,19 @@
         from storeinfo
         where sid = #{sid,jdbcType=BIGINT}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from storeinfo
-    where sid = #{sid,jdbcType=BIGINT}
-  </delete>
+        delete from storeinfo
+        where sid = #{sid,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByPara" parameterType="java.util.List">
+        DELETE FROM storeinfo WHERE store_code IN
+        <foreach collection="list" open="(" separator="," item="item" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <insert id="insert" parameterType="com.wfj.entity.StoreInfo">
     insert into storeinfo (sid, store_code, business_name, 
       branch_name, province, city, 
@@ -55,6 +64,7 @@
       #{openTime,jdbcType=VARCHAR}, #{avgPrice,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
       #{recommend,jdbcType=VARCHAR}, #{channelType,jdbcType=INTEGER})
   </insert>
+
     <insert id="insertSelective" parameterType="com.wfj.entity.StoreInfo">
         insert into storeinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
