@@ -117,6 +117,25 @@ public class StoreManagerController extends BaseController {
     }
 
     /**
+     * 查询具体门店信息
+     *
+     * @param
+     * @return
+     */
+    private StoreInfo getStoreInfo(String storeCode) {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        StoreInfo storeInfo = null;
+        if (Common.isNotEmpty(storeCode)) {
+            paramMap.put("storeCode", storeCode.trim());
+            List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
+            if (storeInfoList.size() == 1) {
+                storeInfo = storeInfoList.get(0);
+            }
+        }
+        return storeInfo;
+    }
+
+    /**
      * 跳转修改页面
      *
      * @param
@@ -124,13 +143,22 @@ public class StoreManagerController extends BaseController {
      */
     @RequestMapping(value = "/editUI")
     public String editUI(Model model, String storeCode) throws Exception {
-        Map<String, Object> paramMap = new HashMap<String, Object>();
-        if (Common.isNotEmpty(storeCode)) {
-            paramMap.put("storeCode", storeCode.trim());
-            List<StoreInfo> storeInfoList = storeInfoMapper.selectListByParam(paramMap);
-            if (storeInfoList.size() == 1) model.addAttribute("store", storeInfoList.get(0));
-        }
+        StoreInfo storeInfo = getStoreInfo(storeCode);
+        model.addAttribute("store", storeInfo);
         return Common.BACKGROUND_PATH + "/wechat/storeManager/edit";
+    }
+
+    /**
+     * 跳转详情页面
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/getDetailUI")
+    public String getDetailUI(Model model, String storeCode) throws Exception {
+        StoreInfo storeInfo = getStoreInfo(storeCode);
+        model.addAttribute("store", storeInfo);
+        return Common.BACKGROUND_PATH + "/wechat/storeManager/detail";
     }
 
     /**
@@ -148,6 +176,12 @@ public class StoreManagerController extends BaseController {
         return "success";
     }
 
+    /**
+     * 批量删除门店
+     *
+     * @param
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/batchDelStore")
     @SystemLog(module = "门店管理", methods = "门店管理-删除门店")
