@@ -48,6 +48,7 @@ button{
 				<form action="${pageContext.request.contextPath}/upload/photoUpload.shtml" method="post" enctype="multipart/form-data">
 					<div id="msgKeyDiv">
 						规则名称：<input id="ruleName" name="ruleName" />
+						<br>
 						关键字：<input id="msgKey" name="msgKey" />
 					</div>
 					<button id="btnText" type="button" class="btn btn-default">文本</button>
@@ -99,6 +100,7 @@ button{
 		$('#msgKeyDiv').hide();
 		$('#addRule').click(function(){
 			$('#msgKeyDiv').show();
+			$('#eventType').attr("value",'ruleKey');
 		});
 		$('#subscribe').click(function(){
 			$('#msgKeyDiv').hide();
