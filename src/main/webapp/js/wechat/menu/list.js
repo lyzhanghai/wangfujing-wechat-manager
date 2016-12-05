@@ -150,7 +150,6 @@ function tree() {
      data.instance.refresh();
      });*!/
      }).*/on('select_node.jstree', function (e, data) {
-            console.debug(data);
             id = new Map();
             var idd = data.node.original.id;
             id.put("id", idd);

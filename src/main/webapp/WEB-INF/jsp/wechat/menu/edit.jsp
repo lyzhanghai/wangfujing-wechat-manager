@@ -53,32 +53,45 @@
                            value="${resources.name}">
                 </div>
             </div>
-            <div class="line line-dashed line-lg pull-in"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">菜单内容</label>
+            <c:if test="${resources.type ne null }">
+                <div class="line line-dashed line-lg pull-in"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">菜单内容</label>
 
-                <div class="col-sm-9">
-                    <label class="radio-inline">
-                        <input type="radio" name="radioMenuType" id="menuType1"
-                               value="click" <c:if test="${resources.type eq 'click'}"> checked="checked"</c:if>> 发送消息
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="radioMenuType" id="menuType2"
-                               value="view" <c:if test="${resources.type eq 'view'}"> checked="checked"</c:if>> 跳转网页
-                    </label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline">
+                            <input type="radio" name="radioMenuType" id="menuType1"
+                                   value="click" <c:if test="${resources.type eq 'click'}"> checked="checked"</c:if>>
+                            发送消息
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radioMenuType" id="menuType2"
+                                   value="view" <c:if test="${resources.type eq 'view'}"> checked="checked"</c:if>> 跳转网页
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="line line-dashed line-lg pull-in"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">页面地址</label>
+                <div class="line line-dashed line-lg pull-in"></div>
+                <div class="form-group" id="divView" <c:if
+                        test="${resources.type eq 'click'}"> style="display: none"</c:if>>
+                    <label class="col-sm-3 control-label">页面地址</label>
 
-                <div class="col-sm-9">
-                    <input type="text" class="form-control checkacc"
-                           placeholder="请输入菜单url" name="menuUrl" id="resUrl"
-                           value="${resources.viewurl}">
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control checkacc"
+                               placeholder="请输入菜单url" name="menuUrl" id="resUrl"
+                               value="${resources.viewurl}">
+                    </div>
                 </div>
-            </div>
+                <div class="form-group" id="divClick" <c:if
+                        test="${resources.type eq 'view'}"> style="display: none"</c:if>>
+                    <label class="col-sm-3 control-label">消息内容</label>
 
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control checkacc"
+                               placeholder="请输入消息内容" name="menuContent" id="resContent"
+                               value="${resources.clickkey}">
+                    </div>
+                </div>
+            </c:if>
             <footer class="panel-footer text-right bg-light lter">
                 <button type="submit" class="btn btn-success btn-s-xs">提交</button>
             </footer>
@@ -87,6 +100,16 @@
 </form>
 <script type="text/javascript">
     byRes("${resources.parentSid}");
+    $("input[name='radioMenuType']").change(function () {
+        var type = $(this).val();
+        if (type == 'view') {
+            $("#divView").show();
+            $("#divClick").hide();
+        } else if (type == 'click') {
+            $("#divView").hide();
+            $("#divClick").show();
+        }
+    });
 </script>
 </body>
 </html>

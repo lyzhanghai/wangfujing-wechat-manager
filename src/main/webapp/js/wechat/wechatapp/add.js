@@ -25,7 +25,7 @@ $(function () {
             });
         },
         rules: {
-            "resFormMap.name": {
+           /* "resFormMap.name": {
                 required: true,
                 remote: { // 异步验证是否存在
                     type: "POST",
@@ -37,7 +37,7 @@ $(function () {
                     }
                 }
             },
-            "resFormMap.resKey": {
+            "appid": {
                 required: true,
                 remote: { // 异步验证是否存在
                     type: "POST",
@@ -48,22 +48,22 @@ $(function () {
                         }
                     }
                 }
-            },
-            "resFormMap.resUrl": {
+            },*/
+            "appsecret": {
                 required: true
             }
         },
         messages: {
-            "resFormMap.name": {
+          /*  "resFormMap.name": {
                 required: "菜单名称不能为空",
                 remote: "该菜单名称已经存在"
             },
-            "resFormMap.resKey": {
-                required: "菜单标识不能为空",
+            "appid": {
+                required: "appid不能为空",
                 remote: "该标识已经存在"
-            },
-            "resFormMap.resUrl": {
-                required: "url连接不能为空"
+            },*/
+            "appsecret": {
+                required: "appsecret不能为空"
             }
         },
         errorPlacement: function (error, element) {// 自定义提示错误位置
