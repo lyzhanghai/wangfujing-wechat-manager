@@ -12,7 +12,7 @@
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-globe"></i>菜单管理
+                    <i class="fa fa-weixin"></i>菜单管理
                 </div>
                 <div class="tools">
                 </div>
@@ -44,7 +44,7 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-globe"></i>菜单详情
+                            <i class="fa fa-weixin"></i>菜单详情
                         </div>
                         <div class="tools">
                         </div>

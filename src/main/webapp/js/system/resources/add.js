@@ -8,7 +8,7 @@ $(function() {
 				success : function(data) {
 					if (data == "success") {
 						layer.confirm('添加成功!是否关闭窗口?', function(index) {
-							window.parent.tree();
+							window.parent.refreshTree();
 				        	parent.layer.close(parent.pageii);
 				        	return false;
 						});
