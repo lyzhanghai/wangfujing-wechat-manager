@@ -56,11 +56,15 @@ public class UploadController {
 			HttpServletResponse response) throws IllegalStateException, IOException {
 		String fileType = request.getParameter("fileType");
 		String eventType = request.getParameter("eventType");
+		String ruleName = request.getParameter("ruleName");
+		String msgKey = request.getParameter("msgKey");
 		if (fileType.equals("text")) {
 			String textContent = request.getParameter("textContent");
 			MsgReply msgReply = new MsgReply();
 			msgReply.setEventType(eventType);
 			msgReply.setContent(textContent);
+			msgReply.setMsgKey(msgKey);
+			msgReply.setRuleName(ruleName);
 			int iORu = msgReplyService.msgReplyInsertOrUpdate(msgReply);
 			logger.info(iORu);
 		} else {// 回复类型(0文本,1图片,2语音,3视频,4音频,5图文)
@@ -69,6 +73,8 @@ public class UploadController {
 				MediaDto material = (MediaDto) paramMap.get("material");
 				MsgReply msgReply = new MsgReply();
 				msgReply.setEventType(eventType);
+				msgReply.setMsgKey(msgKey);
+				msgReply.setRuleName(ruleName);
 				if (fileType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
 					msgReply.setMsgType(1);
 				} else if (fileType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
@@ -81,6 +87,7 @@ public class UploadController {
 					msgReply.setMsgType(2);
 				}
 				msgReply.setMediaId(material.getMedia_id());
+				msgReply.setPicUrl(material.getUrl());
 				int iORu = msgReplyService.msgReplyInsertOrUpdate(msgReply);
 				logger.info(iORu);
 			}
