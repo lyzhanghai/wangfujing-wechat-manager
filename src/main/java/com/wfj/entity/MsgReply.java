@@ -5,7 +5,7 @@ public class MsgReply {
 
 	private String eventType;
 
-	private String appSecret;
+	private String ruleName;
 
 	private String msgKey;
 
@@ -37,14 +37,6 @@ public class MsgReply {
 
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
-	}
-
-	public String getAppSecret() {
-		return appSecret;
-	}
-
-	public void setAppSecret(String appSecret) {
-		this.appSecret = appSecret;
 	}
 
 	public Integer getSid() {
@@ -151,9 +143,17 @@ public class MsgReply {
 		this.url = url;
 	}
 
+	public String getRuleName() {
+		return ruleName;
+	}
+
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
+
 	@Override
 	public String toString() {
-		return "MsgReply [sid=" + sid + ", eventType=" + eventType + ", appSecret=" + appSecret
+		return "MsgReply [sid=" + sid + ", eventType=" + eventType + ", ruleName=" + ruleName
 				+ ", msgKey=" + msgKey + ", msgType=" + msgType + ", content=" + content
 				+ ", mediaId=" + mediaId + ", title=" + title + ", description=" + description
 				+ ", musicUrl=" + musicUrl + ", hqmusicUrl=" + hqmusicUrl + ", thumbMediald="

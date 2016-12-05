@@ -96,6 +96,8 @@ public class MaterialServiceImpl implements MaterialService {
 		logger.info("start-uploadPhoto,param ,filePath" + filePath + "type " + type);
 		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
 				"00e66c2772af76181745b6f5d92b5801");
+		// String access_token = tokenUtil.getAccessToken("wx7aec942c6742752d",
+		// "c27b7472a3bb1e9874c240a681b87880");
 		String reString = "";
 		String[] cmds = { "curl", "-F", "media=@" + filePath,
 				"https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="
@@ -105,11 +107,13 @@ public class MaterialServiceImpl implements MaterialService {
 		// -F media=@media.file -F description='{"title":VIDEO_TITLE,
 		// "introduction":INTRODUCTION}'
 		if (type.equals("video")) {
+			String description = "description='{\"title\":\"" + title + "\",\"introduction\":\""
+					+ introduction + "\"}'";
+			logger.info("+++++++++++++++" + description);
 			String[] cmds2 = { "curl",
-					"https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="
-							+ access_token + "&type=" + type,
-					"-F", "media=@" + filePath, "-F", "description='{\"title\":" + title
-							+ ",\"introduction\":" + introduction + "\"}'" };
+					"\"https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="
+							+ access_token + "&type=" + type + "\" -F " + "media=@" + filePath,
+					" -F " + description };
 			cmds = cmds2;
 		}
 
@@ -117,6 +121,8 @@ public class MaterialServiceImpl implements MaterialService {
 		pb.redirectErrorStream(true);
 		Process p;
 		try {
+			logger.info(pb.environment());
+			logger.info(pb.command());
 			p = pb.start();
 			BufferedReader br = null;
 			String line = null;
@@ -125,6 +131,7 @@ public class MaterialServiceImpl implements MaterialService {
 			while ((line = br.readLine()) != null) {
 				reString = line;
 			}
+			System.out.println("---------" + reString);
 			MediaDto media = JsonUtil.getJacksonDTO(reString, MediaDto.class);
 			br.close();
 			return media;

@@ -4,7 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.wfj.entity.MsgReply">
 		<id column="sid" property="sid" jdbcType="INTEGER" />
 		<result column="event_type" property="eventType" jdbcType="VARCHAR" />
-		<result column="app_secret" property="appSecret" jdbcType="VARCHAR" />
+		<result column="rule_name" property="ruleName" jdbcType="VARCHAR" />
 		<result column="msg_key" property="msgKey" jdbcType="VARCHAR" />
 		<result column="msg_type" property="msgType" jdbcType="INTEGER" />
 		<result column="content" property="content" jdbcType="VARCHAR" />
@@ -21,7 +21,7 @@
 		<result column="url" property="url" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		sid, event_type, app_secret, msg_key, msg_type, content, media_id, title, description, music_url,
+		sid, event_type, rule_name, msg_key, msg_type, content, media_id, title, description, music_url,
 		hqmusic_url,
 		thumb_mediald, article_count, pic_url, url
 	</sql>
@@ -44,8 +44,8 @@
 			<if test="eventType != null">
 				event_type,
 			</if>
-			<if test="appSecret != null">
-				app_secret,
+			<if test="ruleName != null">
+				rule_name,
 			</if>
 			<if test="msgKey != null">
 				msg_key,
@@ -91,8 +91,8 @@
 			<if test="eventType != null">
 				#{eventType,jdbcType=VARCHAR},
 			</if>
-			<if test="appSecret != null">
-				#{appSecret,jdbcType=VARCHAR},
+			<if test="ruleName != null">
+				#{ruleName,jdbcType=VARCHAR},
 			</if>
 			<if test="msgKey != null">
 				#{msgKey,jdbcType=VARCHAR},
@@ -138,8 +138,8 @@
 			<if test="eventType != null">
 				event_type = #{eventType,jdbcType=VARCHAR},
 			</if>
-			<if test="appSecret != null">
-				app_secret = #{appSecret,jdbcType=VARCHAR},
+			<if test="ruleName != null">
+				rule_name = #{ruleName,jdbcType=VARCHAR},
 			</if>
 			<if test="msgKey != null">
 				msg_key = #{msgKey,jdbcType=VARCHAR},
@@ -191,8 +191,8 @@
 			<if test="eventType != null">
 				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
-			<if test="appSecret != null">
-				and app_secret = #{appSecret,jdbcType=VARCHAR}
+			<if test="ruleName != null">
+				and rule_name = #{ruleName,jdbcType=VARCHAR}
 			</if>
 			<if test="msgKey != null">
 				and msg_key = #{msgKey,jdbcType=VARCHAR}
@@ -241,8 +241,8 @@
 			<if test="eventType != null">
 				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
-			<if test="appSecret != null">
-				and app_secret = #{appSecret,jdbcType=VARCHAR}
+			<if test="ruleName != null">
+				and rule_name = #{ruleName,jdbcType=VARCHAR}
 			</if>
 			<if test="msgKey != null">
 				and msg_key = #{msgKey,jdbcType=VARCHAR}
@@ -295,8 +295,8 @@
 			<if test="eventType != null">
 				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
-			<if test="appSecret != null">
-				and app_secret = #{appSecret,jdbcType=VARCHAR}
+			<if test="ruleName != null">
+				and rule_name = #{ruleName,jdbcType=VARCHAR}
 			</if>
 			<if test="msgKey != null">
 				and msg_key = #{msgKey,jdbcType=VARCHAR}

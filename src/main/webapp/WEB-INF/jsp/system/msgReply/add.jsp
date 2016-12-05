@@ -46,12 +46,20 @@ button{
 		<div class="tab-pane fade in active" id="home">
 			<div>
 				<form action="${pageContext.request.contextPath}/upload/photoUpload.shtml" method="post" enctype="multipart/form-data">
+					<div id="msgKeyDiv">
+						规则名称：<input id="ruleName" name="ruleName" />
+						关键字：<input id="msgKey" name="msgKey" />
+					</div>
 					<button id="btnText" type="button" class="btn btn-default">文本</button>
 					<button id="btnImage" type="button" class="btn btn-default">图片</button>
 					<button id="btnVideo" type="button" class="btn btn-default">视频</button>
 					<button id="btnVoice" type="button" class="btn btn-default">语音</button>
 					<br>
 					<textarea id="textID" name="textContent" rows="10" cols="50"></textarea>
+					<div class="input-group" id="titleDiv">
+			            <input type="text" name="title" class="form-control" placeholder="视频标题">
+			            <input type="text" name="introduction" class="form-control" placeholder="视频描述">
+			        </div>
 					<input id="fileID" type="file" name="file" />
 					<input type="hidden" id="fileType" name="fileType" value="text">
 					<input type="hidden" id="eventType" name="eventType" value="subscribe" >
@@ -63,7 +71,7 @@ button{
 		</div>
 		<div class="tab-pane fade" id="java">
 			<div>
-				<button type="button" class="btn btn-success">新建规则</button>
+				<a href="#home" data-toggle="tab" id="addRule">新建规则</a>
 				<br> <br> <br>
 				<table
 					class="table table-striped table-bordered table-hover table-condensed">
@@ -87,30 +95,41 @@ button{
 <script type="text/javascript">
 	$(function(){
 		$('#fileID').hide();
+		$('#titleDiv').hide();
+		$('#msgKeyDiv').hide();
+		$('#addRule').click(function(){
+			$('#msgKeyDiv').show();
+		});
 		$('#subscribe').click(function(){
+			$('#msgKeyDiv').hide();
 			$('#eventType').attr("value",'sunscribe');
 		});
 		$('#disReply').click(function(){
+			$('#msgKeyDiv').hide();
 			$('#eventType').attr("value",'disReply');
 		});
 		$('#btnText').click(function(){
+			$('#titleDiv').hide();
 			$('#fileType').attr("value",'test');
 			$('#fileID').hide();
 			$('#textID').show();
 		});
 		$('#btnImage').click(function(){
+			$('#titleDiv').hide();
 			$('#fileType').attr("value",'image');
 			$('#fileID').attr("accept",'image/jpeg,image/png,image/gif');//PNG\JPEG\JPG\GIF 2M
 			$('#fileID').show();
 			$('#textID').hide();
 		});
 		$('#btnVideo').click(function(){
+			$('#titleDiv').show();
 			$('#fileType').attr("value",'video');
 			$('#fileID').attr("accept",'video/mp4');//MP4 10M
 			$('#fileID').show();
 			$('#textID').hide();
 		});
 		$('#btnVoice').click(function(){
+			$('#titleDiv').hide();
 			$('#fileType').attr("value",'voice');
 			$('#fileID').attr("accept",'audio/mpeg');//AMR\MP3 2M
 			$('#fileID').show();

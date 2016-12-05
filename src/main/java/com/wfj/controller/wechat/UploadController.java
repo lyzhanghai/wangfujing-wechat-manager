@@ -25,6 +25,7 @@ import com.wfj.entity.MsgReply;
 import com.wfj.service.intf.MaterialService;
 import com.wfj.service.intf.MsgReplyService;
 import com.wfj.util.Common;
+import com.wfj.util.MessageUtil;
 
 @Controller
 @RequestMapping("upload")
@@ -54,16 +55,35 @@ public class UploadController {
 	public Map<String, Object> photoUpload(MultipartFile file, HttpServletRequest request,
 			HttpServletResponse response) throws IllegalStateException, IOException {
 		String fileType = request.getParameter("fileType");
+		String eventType = request.getParameter("eventType");
 		if (fileType.equals("text")) {
-			String eventType = request.getParameter("eventType");
 			String textContent = request.getParameter("textContent");
 			MsgReply msgReply = new MsgReply();
 			msgReply.setEventType(eventType);
 			msgReply.setContent(textContent);
 			int iORu = msgReplyService.msgReplyInsertOrUpdate(msgReply);
 			logger.info(iORu);
-		} else {
+		} else {// 回复类型(0文本,1图片,2语音,3视频,4音频,5图文)
 			Map<String, Object> paramMap = fileUpload(file, request, response);
+			if ("success".equals((String) paramMap.get("success"))) {
+				MediaDto material = (MediaDto) paramMap.get("material");
+				MsgReply msgReply = new MsgReply();
+				msgReply.setEventType(eventType);
+				if (fileType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
+					msgReply.setMsgType(1);
+				} else if (fileType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
+					msgReply.setMsgType(3);
+					String title = request.getParameter("title");
+					String introduction = request.getParameter("introduction");
+					msgReply.setTitle(title);
+					msgReply.setDescription(introduction);
+				} else if (fileType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
+					msgReply.setMsgType(2);
+				}
+				msgReply.setMediaId(material.getMedia_id());
+				int iORu = msgReplyService.msgReplyInsertOrUpdate(msgReply);
+				logger.info(iORu);
+			}
 		}
 		return null;
 	}
@@ -171,7 +191,7 @@ public class UploadController {
 				}
 				if (fileType.equals("video")) {
 					title = request.getParameter("title");
-					introduction = request.getParameter("title");
+					introduction = request.getParameter("introduction");
 				}
 				// 项目在容器中实际发布运行的根路径
 				// String realPath =
