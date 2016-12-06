@@ -1,6 +1,5 @@
 package com.wfj.controller.wechat;
 
-import com.alibaba.fastjson.JSONObject;
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.dto.ReturnDto;
@@ -103,18 +102,9 @@ public class StoreManagerController extends BaseController {
     @ResponseBody
     @RequestMapping(value = {"/addStore"})
     @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
-    public JSONObject addStore(StoreInfo storeInfo) throws Exception {
-        JSONObject jsonObject = new JSONObject();
+    public String addStore(StoreInfo storeInfo) throws Exception {
         ReturnDto returnDto = storeInfoService.addStore(storeInfo);
-        String code = returnDto.getCode();
-        String desc = returnDto.getDesc();
-        jsonObject.put("msg", desc);
-        if ("1".equals(code)) {
-            jsonObject.put("success", "true");
-        } else {
-            jsonObject.put("success", "false");
-        }
-        return jsonObject;
+        return "success";
     }
 
     /**
