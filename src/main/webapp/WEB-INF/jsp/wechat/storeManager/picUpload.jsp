@@ -4,7 +4,7 @@
 <html>
 <head>
     <%@include file="/common/common.jspf" %>
-    <script type="text/javascript" src="${ctx}/js/wechat/storeManager/add.js">
+    <script type="text/javascript" src="${ctx}/js/wechat/storeManager/picUpload.js">
     </script>
     <style type="text/css">
         .col-sm-3 {
@@ -55,7 +55,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">图片</label>
                 <div class="col-sm-9">
-                    <input type="file" name="buffer" id="buffer">
+                    <input type="file" name="file" id="file">
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
