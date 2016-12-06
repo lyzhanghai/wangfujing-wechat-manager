@@ -96,6 +96,7 @@ public class StoreSynServiceImpl implements StoreSynService {
             String appid = appAccountInfo.getAppid();
             String appsecret = appAccountInfo.getAppsecret();
             url = imageInsert(appid, appsecret, path, param);//上传图片，调用微信接口
+            logger.info("com.wfj.service.impl.StoreSynServiceImpl.imageInsert:" + url);
 
             //上传图片后更新图片字段
             StoreInfo storeInfo = new StoreInfo();
