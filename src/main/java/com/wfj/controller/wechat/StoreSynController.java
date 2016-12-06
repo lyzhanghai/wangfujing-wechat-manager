@@ -4,8 +4,8 @@ import com.wfj.controller.index.BaseController;
 import com.wfj.entity.AppAccountInfo;
 import com.wfj.mapper.AppAccountInfoMapper;
 import com.wfj.service.intf.MaterialService;
+import com.wfj.service.intf.StoreSynService;
 import com.wfj.util.Common;
-import com.wfj.util.PropertiesUtils;
 import com.wfj.util.WechatUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -38,6 +38,9 @@ public class StoreSynController extends BaseController {
     private WechatUtil wechatUtil;
 
     @Inject
+    private StoreSynService storeSynService;
+
+    @Inject
     private MaterialService materialService;
 
     /**
@@ -66,12 +69,9 @@ public class StoreSynController extends BaseController {
      */
     @RequestMapping(value = {"/picUpload"})
     @ResponseBody
-    public String picUpload(MultipartFile file, String appid, String appsecret, HttpServletRequest request) throws Exception {
-//        String appid = request.getParameter("appid");
-//        String appsecret = request.getParameter("appsecret");
+    public String picUpload(MultipartFile file, String storecode, String appid, String appsecret, HttpServletRequest request) throws Exception {
         appid = "wx9bf0a9f2f36e4405";
         appsecret = "5c52aad67b44b9f81dd5643500ab0088";
-        String accessToken = wechatUtil.getAccessToken(appid, appsecret);
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("success", "error");
@@ -101,8 +101,12 @@ public class StoreSynController extends BaseController {
                 // 转存文件到指定的路径
                 file.transferTo(new File(path));
                 logger.info("文件成功上传到指定目录下");
-                String url = materialService.imageInsert(path, "buffer");
-                if (url != null) {
+//                String url = materialService.imageInsert(path, "buffer");
+//                String url = storeSynService.imageInsert(appid, appsecret, path, "buffer");
+                String url = storeSynService.uploadPhotoList(storecode, path, "buffer");
+                logger.info("上传门店图片返回的URL地址：" + url);
+                System.out.println("上传门店图片返回的URL地址：" + url);
+                if (Common.isNotEmpty(url)) {
                     paramMap.put("success", "success");
                     paramMap.put("url", url);
                     return "";

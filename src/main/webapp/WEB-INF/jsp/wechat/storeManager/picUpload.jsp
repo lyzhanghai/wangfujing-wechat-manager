@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
-            <div class="form-group">
+            <%--<div class="form-group">
                 <label class="col-sm-3 control-label">AppID</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control checkacc"
@@ -51,7 +51,7 @@
                            name="appsecret" id="appsecret" value="${store.appsecret}" readonly="readonly">
                 </div>
             </div>
-            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="line line-dashed line-lg pull-in"></div>--%>
             <div class="form-group">
                 <label class="col-sm-3 control-label">图片</label>
                 <div class="col-sm-9">
