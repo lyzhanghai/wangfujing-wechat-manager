@@ -9,15 +9,17 @@ $(function () {
                 type: "post",
                 dataType: "json",
                 success: function (data) {
-                    if (data == "success") {
-                        layer.confirm('添加成功!是否关闭窗口?', function (index) {
+                    if (data.success == "success") {
+                        $("#photoUrl").prop("src", data.url);
+                        $("#photoUrl").css('display', 'none');
+                        layer.confirm('上传成功!是否关闭窗口?', function (index) {
                             window.parent.storeManagerList();
                             parent.layer.close(parent.pageii);
                             return false;
                         });
                         $("#form")[0].reset();
                     } else {
-                        layer.msg('添加失败！');
+                        layer.msg('上传失败！');
                     }
                 }
             });

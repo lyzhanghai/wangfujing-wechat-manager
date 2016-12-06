@@ -71,7 +71,7 @@ public class StoreSynController extends BaseController {
     @ResponseBody
     @RequestMapping(value = {"/picUpload"})
     @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
-    public String picUpload(MultipartFile file, String storecode, HttpServletRequest request) throws Exception {
+    public Map<String, Object> picUpload(MultipartFile file, String storecode, HttpServletRequest request) throws Exception {
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("success", "error");
@@ -87,7 +87,8 @@ public class StoreSynController extends BaseController {
                 if (!"PNG".equals(type.toUpperCase()) && !"JPG".equals(type.toUpperCase())) {
                     logger.info("不是我们想要的文件类型,请按要求重新上传");
                     paramMap.put("errMsg", "不是我们想要的文件类型,请按要求重新上传");
-                    return "";
+                    return paramMap;
+//                    return "";
                 }
                 // 项目在容器中实际发布运行的根路径
                 // String realPath =
@@ -109,19 +110,23 @@ public class StoreSynController extends BaseController {
                 if (Common.isNotEmpty(url)) {
                     paramMap.put("success", "success");
                     paramMap.put("url", url);
-                    return "success";
+                    return paramMap;
+//                    return "success";
                 }
             } else {
                 logger.info("文件类型为空");
                 paramMap.put("errorMsg", "文件类型为空");
-                return "";
+                return paramMap;
+//                return "";
             }
         } else {
             logger.info("没有找到相对应的文件");
             paramMap.put("errorMsg", "没有找到相对应的文件");
-            return "";
+            return paramMap;
+//            return "";
         }
-        return "success";
+        return paramMap;
+//        return "success";
     }
 
 }
