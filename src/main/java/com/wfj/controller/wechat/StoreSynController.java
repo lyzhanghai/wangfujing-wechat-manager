@@ -72,7 +72,6 @@ public class StoreSynController extends BaseController {
         appid = "wx9bf0a9f2f36e4405";
         appsecret = "5c52aad67b44b9f81dd5643500ab0088";
         String accessToken = wechatUtil.getAccessToken(appid, appsecret);
-        String uploadStorePicUrl = PropertiesUtils.findPropertiesKey("uploadStorePicUrl");
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("success", "error");
