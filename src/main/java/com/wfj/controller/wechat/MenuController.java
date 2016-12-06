@@ -5,11 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
+import com.wfj.entity.MsgReply;
 import com.wfj.entity.ResFormMap;
 import com.wfj.entity.WechatMenu;
 import com.wfj.message.req.StoreInfoDto;
 import com.wfj.service.intf.IAppAccountInfoService;
 import com.wfj.service.intf.IMenuService;
+import com.wfj.service.intf.MsgReplyService;
 import com.wfj.util.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class MenuController extends BaseController {
     private IAppAccountInfoService appAccountInfoService;
     @Autowired
     private IMenuService menuService;
+    @Autowired
+    private MsgReplyService msgReplyService;
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -158,6 +162,15 @@ public class MenuController extends BaseController {
         if (Common.isNotEmpty(id)) {
             List<WechatMenu> list = menuService.queryMenus(wechatMenu);
             if (list != null && list.size() > 0) {
+                WechatMenu menu = list.get(0);
+                if (menu.getType().equals("click")) {
+                    MsgReply msgReply = new MsgReply();
+                    msgReply.setMsgKey(menu.getClickkey());
+                    List<MsgReply> msgReplyList = msgReplyService.getMsgReplyList(msgReply);
+                    if (msgReplyList != null && msgReplyList.size() > 0) {
+
+                    }
+                }
                 model.addAttribute("resources", list.get(0));
             } else {
                 model.addAttribute("resources", null);

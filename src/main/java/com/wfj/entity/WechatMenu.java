@@ -17,6 +17,8 @@ public class WechatMenu {
 
     private String clickkey;
 
+    private String menuContent;
+
     private String viewurl;
 
     private Integer orderBy;
@@ -124,6 +126,14 @@ public class WechatMenu {
         this.updateTime = updateTime;
     }
 
+    public String getMenuContent() {
+        return menuContent;
+    }
+
+    public void setMenuContent(String menuContent) {
+        this.menuContent = menuContent;
+    }
+
     @Override
     public String toString() {
         return "WechatMenu{" +
@@ -133,11 +143,13 @@ public class WechatMenu {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", clickkey='" + clickkey + '\'' +
+                ", menuContent='" + menuContent + '\'' +
                 ", viewurl='" + viewurl + '\'' +
                 ", orderBy=" + orderBy +
                 ", ifdel=" + ifdel +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", children=" + children +
                 '}';
     }
 }

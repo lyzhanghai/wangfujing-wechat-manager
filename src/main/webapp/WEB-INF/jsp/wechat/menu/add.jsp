@@ -53,6 +53,7 @@
             <div class="line line-dashed line-lg pull-in"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">菜单内容</label>
+
                 <div class="col-md-8">
                     <label class="radio-inline">
                         <input type="radio" name="radioMenuType" id="menuType1"
@@ -71,14 +72,25 @@
                            placeholder="请输入页面地址" name="menuUrl" id="resUrl">
                 </div>
             </div>
-            <div class="form-group" id="divClick" >
+            <%--<div class="form-group" id="divClick">
                 <label class="col-sm-3 control-label">消息内容</label>
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control checkacc"
                            placeholder="请输入消息内容" name="menuContent" id="resContent">
                 </div>
+            </div>--%>
+            <div class="form-group" id="divClick">
+                <label class="col-sm-3 control-lable">消息内容</label>
+
+                <div class="col-sm-9">
+                   <textarea name="menuContent" id="resContent" placeholder="请输入消息内容"
+                             class="form-control readLength exlimit"
+                             rows="4"
+                             maxlength="256"></textarea>
+                </div>
             </div>
+        </div>
         </div>
         <footer class="panel-footer text-right bg-light lter">
             <button type="submit" class="btn btn-success btn-s-xs">提交</button>

@@ -12,7 +12,7 @@
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-weixin"></i>菜单管理
+                    <i class="fa fa-weixin"></i>微信自定义菜单管理
                 </div>
                 <div class="tools">
                 </div>
