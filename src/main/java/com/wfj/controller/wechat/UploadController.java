@@ -150,7 +150,7 @@ public class UploadController {
 				// 转存文件到指定的路径
 				file.transferTo(new File(path));
 				logger.info("文件成功上传到指定目录下");
-				String url = materialService.imageInsert(path);
+				String url = materialService.imageInsert(null, path);
 				if (url != null) {
 					paramMap.put("success", "success");
 					paramMap.put("url", url);
