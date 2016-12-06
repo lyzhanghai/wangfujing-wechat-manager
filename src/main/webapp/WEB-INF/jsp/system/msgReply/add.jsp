@@ -138,7 +138,7 @@ button{
 		$('#titleDiv').hide();
 		$('#msgKeyDiv').hide();
 		$('#addRule').click(function(){
-			$('#msgKeyDiv').show();
+			$('#msgKeyDiv').hide();
 			$('#eventType').attr("value",'ruleKey');
 		});
 		$('#subscribe').click(function(){
