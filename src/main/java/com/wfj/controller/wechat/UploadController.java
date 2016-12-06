@@ -68,7 +68,13 @@ public class UploadController {
 			int iORu = msgReplyService.msgReplyInsertOrUpdate(msgReply);
 			logger.info(iORu);
 		} else {// 回复类型(0文本,1图片,2语音,3视频,4音频,5图文)
-			Map<String, Object> paramMap = fileUpload(file, request, response);
+			String imgMedia = request.getParameter("imgMedia");
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			if (imgMedia != null) {
+				paramMap = materialService.getMaterialByMediaId(imgMedia);
+			} else {
+				paramMap = fileUpload(file, request, response);
+			}
 			if ("success".equals((String) paramMap.get("success"))) {
 				MediaDto material = (MediaDto) paramMap.get("material");
 				MsgReply msgReply = new MsgReply();

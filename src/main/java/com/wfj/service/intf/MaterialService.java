@@ -1,6 +1,7 @@
 package com.wfj.service.intf;
 
 import java.util.List;
+import java.util.Map;
 
 import com.wfj.dto.ArticleDto;
 import com.wfj.dto.MaterialDto;
@@ -14,4 +15,6 @@ public interface MaterialService {
 	public String imageInsert(String path);
 
 	public MaterialDto getMaterialList(int start, int limit, String type);
+
+	public Map<String, Object> getMaterialByMediaId(String mediaId);
 }

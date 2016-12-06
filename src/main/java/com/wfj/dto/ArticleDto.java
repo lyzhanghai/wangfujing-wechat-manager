@@ -9,6 +9,15 @@ public class ArticleDto {
 	private String show_cover_pic;// 是否显示封面，0 为false，即不显示，1 为true，即显示
 	private String content;// 图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS
 	private String content_source_url;// 图文消息的原文地址，即点击“阅读原文”后的URL
+	private String url;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getTitle() {
 		return title;
@@ -70,7 +79,8 @@ public class ArticleDto {
 	public String toString() {
 		return "ArticleDto [title=" + title + ", thumb_media_id=" + thumb_media_id + ", author="
 				+ author + ", digest=" + digest + ", show_cover_pic=" + show_cover_pic
-				+ ", content=" + content + ", content_source_url=" + content_source_url + "]";
+				+ ", content=" + content + ", content_source_url=" + content_source_url + ", url="
+				+ url + "]";
 	}
 
 }
