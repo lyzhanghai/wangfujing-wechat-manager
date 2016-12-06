@@ -1,5 +1,6 @@
 package com.wfj.controller.wechat;
 
+import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.entity.AppAccountInfo;
 import com.wfj.mapper.AppAccountInfoMapper;
@@ -67,11 +68,10 @@ public class StoreSynController extends BaseController {
      * @param
      * @return
      */
-    @RequestMapping(value = {"/picUpload"})
     @ResponseBody
-    public String picUpload(MultipartFile file, String storecode, String appid, String appsecret, HttpServletRequest request) throws Exception {
-        appid = "wx9bf0a9f2f36e4405";
-        appsecret = "5c52aad67b44b9f81dd5643500ab0088";
+    @RequestMapping(value = {"/picUpload"})
+    @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
+    public String picUpload(MultipartFile file, String storecode, HttpServletRequest request) throws Exception {
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("success", "error");
@@ -109,7 +109,7 @@ public class StoreSynController extends BaseController {
                 if (Common.isNotEmpty(url)) {
                     paramMap.put("success", "success");
                     paramMap.put("url", url);
-                    return "";
+                    return "success";
                 }
             } else {
                 logger.info("文件类型为空");
