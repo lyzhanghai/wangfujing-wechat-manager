@@ -58,12 +58,15 @@ public class MaterialServiceImpl implements MaterialService {
 
 	/**
 	 * 返回url的图片上传
+	 * @param path
+	 * @param param buffer/media
+	 * @return
 	 */
-	public String imageInsert(String path) {
+	public String imageInsert(String path,String param) {
 		logger.info("start-imageInsert,param ,path" + path);
 		String reString = null;
 		String access_token = tokenUtil.getAccessToken(appId, appSecret);
-		String[] cmds = { "curl", "-F", "media=@" + path,
+		String[] cmds = { "curl", "-F", ""+param+"=@" + path,
 				"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=" + access_token };
 		ProcessBuilder pb = new ProcessBuilder(cmds);
 		pb.redirectErrorStream(true);
