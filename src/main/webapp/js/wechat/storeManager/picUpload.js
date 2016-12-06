@@ -11,7 +11,7 @@ $(function () {
                 success: function (data) {
                     if (data.success == "success") {
                         $("#photoUrl").prop("src", data.url);
-                        $("#photoUrl").css('display', 'none');
+                        $("#photoUrl").css('display', 'block');
                         layer.confirm('上传成功!是否关闭窗口?', function (index) {
                             window.parent.storeManagerList();
                             parent.layer.close(parent.pageii);

@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
-            <img id="photoUrl" style="display: block; width: 200px; height: 200px;" src="">
+            <img id="photoUrl" style="display: none; width: 200px; height: 200px;" src="">
         </div>
         <footer class="panel-footer text-right bg-light lter">
             <button type="submit" class="btn btn-success btn-s-xs">提交</button>
