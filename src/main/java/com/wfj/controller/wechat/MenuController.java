@@ -168,6 +168,11 @@ public class MenuController extends BaseController {
                     msgReply.setMsgKey(menu.getClickkey());
                     List<MsgReply> msgReplyList = msgReplyService.getMsgReplyList(msgReply);
                     if (msgReplyList != null && msgReplyList.size() > 0) {
+                        MsgReply ms = msgReplyList.get(0);
+                        menu.setClickType(ms.getMsgType());
+                        if (ms.getMsgType().equals(0)) {
+                            menu.setMenuContent(ms.getContent());
+                        }
 
                     }
                 }

@@ -88,7 +88,7 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control checkacc"
                                placeholder="请输入消息内容" name="menuContent" id="resContent"
-                               value="${resources.clickkey}">
+                               value="${resources.menuContent}">
                     </div>
                 </div>
             </c:if>

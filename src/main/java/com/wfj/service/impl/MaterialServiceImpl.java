@@ -27,6 +27,11 @@ public class MaterialServiceImpl implements MaterialService {
 
 	private static Logger logger = Logger.getLogger(MaterialServiceImpl.class);
 
+	// private String appId = "wx871d0104ae72e615";
+	// private String appSecret = "00e66c2772af76181745b6f5d92b5801";
+	private String appId = "wx7aec942c6742752d";
+	private String appSecret = "c27b7472a3bb1e9874c240a681b87880";
+
 	/**
 	 * 图文永久素材上传
 	 * 
@@ -37,8 +42,7 @@ public class MaterialServiceImpl implements MaterialService {
 	 */
 	public String articleInsert(List<ArticleDto> artList) {
 		logger.info("start-uploadPhoto,param ,artList" + artList);
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
 		String articleUrl = "https://api.weixin.qq.com/cgi-bin/material/add_news?access_token="
 				+ access_token;
 		Map<String, Object> articles = new HashMap<String, Object>();
@@ -54,13 +58,15 @@ public class MaterialServiceImpl implements MaterialService {
 
 	/**
 	 * 返回url的图片上传
+	 * @param path
+	 * @param param buffer/media
+	 * @return
 	 */
-	public String imageInsert(String path) {
+	public String imageInsert(String path,String param) {
 		logger.info("start-imageInsert,param ,path" + path);
 		String reString = null;
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
-		String[] cmds = { "curl", "-F", "media=@" + path,
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
+		String[] cmds = { "curl", "-F", ""+param+"=@" + path,
 				"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=" + access_token };
 		ProcessBuilder pb = new ProcessBuilder(cmds);
 		pb.redirectErrorStream(true);
@@ -94,10 +100,7 @@ public class MaterialServiceImpl implements MaterialService {
 	public MediaDto materialInsert(String filePath, String type, String title,
 			String introduction) {
 		logger.info("start-uploadPhoto,param ,filePath" + filePath + "type " + type);
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
-		// String access_token = tokenUtil.getAccessToken("wx7aec942c6742752d",
-		// "c27b7472a3bb1e9874c240a681b87880");
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
 		String reString = "";
 		String[] cmds = { "curl", "-F", "media=@" + filePath,
 				"https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="
@@ -151,15 +154,14 @@ public class MaterialServiceImpl implements MaterialService {
 	 * @param type
 	 * @return MaterialDto
 	 */
-	public MaterialDto getMaterialList(int start, int limit, String type) {
+	public MaterialDto getMaterialList(int offset, int count, String type) {
 		logger.info("start-getMaterialList,param ,type " + type);
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
 		String getMaterialPath = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token="
 				+ access_token;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("offset", start);
-		paramMap.put("count", limit);
+		paramMap.put("offset", offset);
+		paramMap.put("count", count);
 		paramMap.put("type", type);
 		String reString = HttpUtils.doPost(getMaterialPath, JsonUtil.getJSONString(paramMap));
 		MaterialDto material = JsonUtil.getJacksonDTO(reString, MaterialDto.class);
@@ -177,8 +179,7 @@ public class MaterialServiceImpl implements MaterialService {
 	 */
 	public String materialDelete(String mediaId) {
 		logger.info("start-materialDelete,param ,mediaId " + mediaId);
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
 		String delMateriaPath = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token="
 				+ access_token;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -198,8 +199,7 @@ public class MaterialServiceImpl implements MaterialService {
 	public MaterialCount getMaterialCount() {
 		// https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=
 		logger.info("start-getMaterialCount");
-		String access_token = tokenUtil.getAccessToken("wx871d0104ae72e615",
-				"00e66c2772af76181745b6f5d92b5801");
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
 		String getCountPath = "https://api.weixin.qq.com/cgi-bin/material";
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("access_token", access_token);
@@ -207,6 +207,32 @@ public class MaterialServiceImpl implements MaterialService {
 		MaterialCount materialCount = JsonUtil.getJacksonDTO(reString, MaterialCount.class);
 		logger.info(materialCount);
 		return materialCount;
+	}
+
+	/**
+	 * 根据mediaId获取素材信息
+	 * 
+	 * @Methods Name getMaterialByMediaId
+	 * @Create In 2016年12月6日 By yedong
+	 * @param mediaId
+	 * @return Map<String,Object>
+	 */
+	public Map<String, Object> getMaterialByMediaId(String mediaId) {
+		String access_token = tokenUtil.getAccessToken(appId, appSecret);
+		String getCountPath = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token="
+				+ access_token;
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("media_id", mediaId);
+		String doPost = HttpUtils.doPost(getCountPath, JsonUtil.getJSONString(map));
+		try {
+			MediaDto material = JsonUtil.getDTO(doPost, MediaDto.class);
+			paramMap.put("material", material);
+			paramMap.put("success", "success");
+		} catch (Exception e) {
+			paramMap.put("success", "error");
+		}
+		return paramMap;
 	}
 
 }
