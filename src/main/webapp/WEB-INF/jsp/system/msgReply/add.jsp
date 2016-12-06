@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -61,12 +62,20 @@ button{
 			            <input type="text" name="title" class="form-control" placeholder="视频标题">
 			            <input type="text" name="introduction" class="form-control" placeholder="视频描述">
 			        </div>
-					<input id="fileID" type="file" name="file" />
+			        <div id="fileID">
+			        	<div id="imageDiv">
+			        		
+			        	</div><br>
+						<input id="fileId" type="file" name="file" />
+						<img id="preview_size_fake"/>
+			        </div>					
 					<input type="hidden" id="fileType" name="fileType" value="text">
 					<input type="hidden" id="eventType" name="eventType" value="subscribe" >
 					<br>
-					<button type="submit" class="btn btn-success">保存</button>
-					<button type="button" class="btn btn-danger">删除</button>
+					<div style=" position: fixed;bottom: 0px;margin-bottom: 100px;">
+						<button type="submit" class="btn btn-success">保存</button>
+						<button type="button" class="btn btn-danger">删除</button>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -82,12 +91,33 @@ button{
 						<th>回复消息类型</th>
 						<th>操作</th>
 					</tr>
-					<tr>
-						<td>规则名称</td>
-						<td>关键字</td>
-						<td>回复消息类型</td>
-						<td>操作</td>
-					</tr>
+					<c:forEach items="${msgReplyList}" var="msgReply">
+						<tr>
+							<td>${msgReply.ruleName}</td>
+							<td>${msgReply.msgKey}</td>
+							<td>
+								<c:if test="${msgReply.msgType == 0}">
+									文本
+								</c:if>
+								<c:if test="${msgReply.msgType == 1}">
+									图片
+								</c:if>
+								<c:if test="${msgReply.msgType == 2}">
+									语音
+								</c:if>
+								<c:if test="${msgReply.msgType == 3}">
+									视频
+								</c:if>
+								<c:if test="${msgReply.msgType == 4}">
+									音频
+								</c:if>
+								<c:if test="${msgReply.msgType == 5}">
+									图文
+								</c:if>
+							</td>
+							<td>删除</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
@@ -95,11 +125,20 @@ button{
 </body>
 <script type="text/javascript">
 	$(function(){
+		$('#fileId').change(function (){
+			$("#imageDiv *").remove();
+			var objPreview = document.getElementById('preview_size_fake');
+			var sender = document.getElementById('fileId');
+			objPreview.style.display = 'block';
+	        objPreview.style.width = '200px';
+	        objPreview.style.height = '200px';
+			objPreview.src = window.URL.createObjectURL(sender.files[0]);
+		});
 		$('#fileID').hide();
 		$('#titleDiv').hide();
 		$('#msgKeyDiv').hide();
 		$('#addRule').click(function(){
-			$('#msgKeyDiv').show();
+			$('#msgKeyDiv').hide();
 			$('#eventType').attr("value",'ruleKey');
 		});
 		$('#subscribe').click(function(){
@@ -117,6 +156,26 @@ button{
 			$('#textID').show();
 		});
 		$('#btnImage').click(function(){
+			$.ajax({
+				type : "POST",
+				dataType: "json",
+				contentType : 'application/json',
+				url : "${pageContext.request.contextPath}/material/getMaterial.shtml",
+				data : JSON.stringify({
+					'offset':'0',
+					'eventType':'image',
+					'count':'10'
+				}),
+				success:function (paramMap) {
+					$("#imageDiv *").remove();
+					var list = paramMap.materialList;
+					for(var i =0;i<list.length;i++){
+						var img = '<div style="width: 200px;float: left;"><img src="' + list[i].url +'" /><br><input type="radio" name="imgMedia" value="' + list[i].media_id + '" /></div>';
+						$("#imageDiv").append(img);
+					} 
+	            }
+			});
+			$('#preview_size_fake').hide();
 			$('#titleDiv').hide();
 			$('#fileType').attr("value",'image');
 			$('#fileID').attr("accept",'image/jpeg,image/png,image/gif');//PNG\JPEG\JPG\GIF 2M

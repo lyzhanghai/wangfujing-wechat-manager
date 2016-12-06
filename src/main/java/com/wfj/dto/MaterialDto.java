@@ -5,8 +5,8 @@ import java.util.List;
 
 public class MaterialDto {
 	private List<MediaDto> item = new ArrayList<MediaDto>();
-	private int total_count;
-	private int item_count;
+	private int total_count; // 该类型的素材的总数
+	private int item_count; // 本次调用获取的素材的数量
 
 	public List<MediaDto> getItem() {
 		return item;

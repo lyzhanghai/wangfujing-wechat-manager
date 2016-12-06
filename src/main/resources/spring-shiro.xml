@@ -91,6 +91,7 @@
                 /appAccountInfo/** = anon
                 /msgReplyAdd.jsp = anon
                 /msgReply/** = anon
+                /material/** = anon
             </value>
         </property>
     </bean>
