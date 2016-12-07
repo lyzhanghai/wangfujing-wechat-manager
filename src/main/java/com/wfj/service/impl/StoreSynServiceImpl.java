@@ -147,20 +147,20 @@ public class StoreSynServiceImpl implements StoreSynService {
                 JSONObject parseObject = JSONObject.parseObject(doPost);
                 Integer errcode = parseObject.getInteger("errcode");
                 String errmsg = parseObject.getString("errmsg");
-                String poiId = parseObject.getString("poi_id");
+                String poi_id = parseObject.getString("poi_id");
 
                 //更新门店信息(门店poiid)
-                if (errcode == 0 && Common.isNotEmpty(poiId)) {
+                if (errcode == 0 && Common.isNotEmpty(poi_id)) {
                     StoreInfo storeInfo = new StoreInfo();
                     storeInfo.setStoreCode(storeCode);
-                    storeInfo.setPoiId(poiId);
+                    storeInfo.setPoiId(poi_id);
                     storeInfoMapper.updateByParaSelective(storeInfo);
                 }
 
                 WechatErrDto wechatErrDto = new WechatErrDto();
                 wechatErrDto.setErrcode(errcode);
                 wechatErrDto.setErrmsg(errmsg);
-                wechatErrDto.setPoiId(poiId);
+                wechatErrDto.setPoiId(poi_id);
 
                 returnDto.setCode(errcode + "");
                 returnDto.setDesc(errmsg);
