@@ -195,10 +195,10 @@ public class StoreSynServiceImpl implements StoreSynService {
         map1.put("avg_price", storeAppReturnDto.getAvgPrice());
 
         Map<String, Object> map2 = new HashMap<String, Object>();
-        map1.put("base_info", map1);
+        map2.put("base_info", map1);
 
         Map<String, Object> map3 = new HashMap<String, Object>();
-        map1.put("business", map2);
+        map3.put("business", map2);
 
         String json = JSONObject.toJSONString(map3);
         logger.info("end com.wfj.service.impl.StoreSynServiceImpl.transformToWechatAddPoi(),return:" + json);
