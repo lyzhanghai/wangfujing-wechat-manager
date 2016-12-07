@@ -157,6 +157,7 @@ public class StoreSynServiceImpl implements StoreSynService {
                     storeInfoMapper.updateByParaSelective(storeInfo);
                 }
 
+                //封装返回信息
                 WechatErrDto wechatErrDto = new WechatErrDto();
                 wechatErrDto.setErrcode(errcode);
                 wechatErrDto.setErrmsg(errmsg);
