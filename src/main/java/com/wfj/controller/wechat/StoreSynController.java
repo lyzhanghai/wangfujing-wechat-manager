@@ -87,8 +87,6 @@ public class StoreSynController extends BaseController {
                 if (!"PNG".equals(type.toUpperCase()) && !"JPG".equals(type.toUpperCase())) {
                     logger.info("不是我们想要的文件类型,请按要求重新上传");
                     paramMap.put("errMsg", "不是我们想要的文件类型,请按要求重新上传");
-                    return paramMap;
-//                    return "";
                 }
                 // 项目在容器中实际发布运行的根路径
                 // String realPath =
@@ -110,23 +108,17 @@ public class StoreSynController extends BaseController {
                 if (Common.isNotEmpty(url)) {
                     paramMap.put("success", "success");
                     paramMap.put("url", url);
-                    return paramMap;
-//                    return "success";
                 }
             } else {
                 logger.info("文件类型为空");
                 paramMap.put("errorMsg", "文件类型为空");
-                return paramMap;
-//                return "";
             }
         } else {
             logger.info("没有找到相对应的文件");
             paramMap.put("errorMsg", "没有找到相对应的文件");
             return paramMap;
-//            return "";
         }
         return paramMap;
-//        return "success";
     }
 
 }
