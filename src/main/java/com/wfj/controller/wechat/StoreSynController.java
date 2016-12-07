@@ -2,6 +2,8 @@ package com.wfj.controller.wechat;
 
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
+import com.wfj.dto.ReturnDto;
+import com.wfj.dto.WechatErrDto;
 import com.wfj.entity.AppAccountInfo;
 import com.wfj.mapper.AppAccountInfoMapper;
 import com.wfj.service.intf.MaterialService;
@@ -70,7 +72,7 @@ public class StoreSynController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = {"/picUpload"})
-    @SystemLog(module = "门店管理", methods = "门店管理-添加门店")
+    @SystemLog(module = "门店管理", methods = "门店管理-上传图片")
     public Map<String, Object> picUpload(MultipartFile file, String storecode, HttpServletRequest request) throws Exception {
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -119,6 +121,20 @@ public class StoreSynController extends BaseController {
             return paramMap;
         }
         return paramMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/releaseToWechat"})
+    @SystemLog(module = "门店管理", methods = "门店管理-发布到微信")
+    public Map<String, Object> releaseToWechat(String storeCode) throws Exception {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        if (Common.isNotEmpty(storeCode)) {
+            ReturnDto returnDto = storeSynService.releaseToWechat(storeCode.trim());
+        } else {
+            returnMap.put("success", "error");
+            returnMap.put("msg", "门店编码为空！");
+        }
+        return returnMap;
     }
 
 }

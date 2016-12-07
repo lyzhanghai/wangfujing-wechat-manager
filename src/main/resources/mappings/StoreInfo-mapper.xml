@@ -504,4 +504,50 @@
         </if>
     </select>
 
+    <select id="selectStoreAppInfoListByParam" parameterType="java.util.Map" resultType="com.wfj.dto.StoreAppReturnDto">
+        SELECT
+        app.appid AS appid,
+        app.appsecret AS appsecret,
+        app.del_flag AS delFlag,
+        store.store_code AS storeCode,
+        store.poi_id AS poiId,
+        store.business_name AS businessName,
+        store.branch_name AS branchName,
+        store.province AS province,
+        store.city AS city,
+        store.district AS district,
+        store.address AS address,
+        store.telephone AS telephone,
+        store.categories AS categories,
+        store.offset_type AS offsetType,
+        store.longitude AS longitude,
+        store.latitude AS latitude,
+        store.photo_list AS photoList,
+        store.special AS special,
+        store.open_time AS openTime,
+        store.avg_price AS avgPrice,
+        store.introduction AS introduction,
+        store.recommend AS recommend
+        FROM
+        appaccountinfo app
+        INNER JOIN storeinfo store ON app.storecode = store.store_code
+        <where>
+            <if test="delFlag != null">
+                and app.del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+            <if test="delFlag == null">
+                and app.del_flag = 0
+            </if>
+            <if test="storeCode != null">
+                and store.store_code = #{storeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="poiId != null">
+                and store.poi_id = #{poiId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
 </mapper>

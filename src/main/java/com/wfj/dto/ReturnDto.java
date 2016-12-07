@@ -9,6 +9,8 @@ public class ReturnDto {
 
     public String desc;//返回信息描述
 
+    public Object obj;//返回对象
+
     public String getCode() {
         return code;
     }
@@ -25,11 +27,20 @@ public class ReturnDto {
         this.desc = desc;
     }
 
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
     @Override
     public String toString() {
         return "ReturnDto{" +
                 "code='" + code + '\'' +
                 ", desc='" + desc + '\'' +
+                ", obj=" + obj +
                 '}';
     }
 }

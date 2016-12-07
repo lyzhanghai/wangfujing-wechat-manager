@@ -1,5 +1,6 @@
 package com.wfj.service.intf;
 
+import com.wfj.dto.ReturnDto;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -10,4 +11,6 @@ public interface StoreSynService {
 
     @Transactional
     String uploadPhotoList(String storeCode, String path, String param);
+
+    ReturnDto releaseToWechat(String storeCode) throws Exception;
 }

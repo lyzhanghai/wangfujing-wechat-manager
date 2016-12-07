@@ -1,5 +1,6 @@
 package com.wfj.mapper;
 
+import com.wfj.dto.StoreAppReturnDto;
 import com.wfj.entity.StoreInfo;
 
 import java.util.List;
@@ -25,4 +26,12 @@ public interface StoreInfoMapper {
     int updateByParaSelective(StoreInfo storeInfo);
 
     int batchDeleteByPara(List<String> storeCodeList);
+
+    /**
+     * 查询storeinfo和appaccountinfo内容
+     *
+     * @param paramMap
+     * @return
+     */
+    List<StoreAppReturnDto> selectStoreAppInfoListByParam(Map<String, Object> paramMap);
 }

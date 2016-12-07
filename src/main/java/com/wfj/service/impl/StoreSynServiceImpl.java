@@ -3,14 +3,15 @@ package com.wfj.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wfj.dto.MediaDto;
+import com.wfj.dto.ReturnDto;
+import com.wfj.dto.StoreAppReturnDto;
+import com.wfj.dto.WechatErrDto;
 import com.wfj.entity.AppAccountInfo;
 import com.wfj.entity.StoreInfo;
 import com.wfj.mapper.AppAccountInfoMapper;
 import com.wfj.mapper.StoreInfoMapper;
 import com.wfj.service.intf.StoreSynService;
-import com.wfj.util.Common;
-import com.wfj.util.JsonUtil;
-import com.wfj.util.WechatUtil;
+import com.wfj.util.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -114,6 +115,94 @@ public class StoreSynServiceImpl implements StoreSynService {
         }
         logger.info("end com.wfj.service.impl.StoreSynServiceImpl.updatePhotoList(),return:" + url);
         return url;
+    }
+
+    /**
+     * 门店发布到微信，调用微信接口创建门店
+     *
+     * @param storeCode
+     * @return
+     */
+    public ReturnDto releaseToWechat(String storeCode) throws Exception {
+        logger.info("start com.wfj.service.impl.StoreSynServiceImpl.releaseToWechat(),para:" + storeCode);
+        ReturnDto returnDto = new ReturnDto();
+        if (Common.isNotEmpty(storeCode)) {
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            paramMap.put("storeCode", storeCode);
+            paramMap.put("delFlag", 0);
+            List<StoreAppReturnDto> storeAppReturnDtoList = storeInfoMapper.selectStoreAppInfoListByParam(paramMap);
+            if (storeAppReturnDtoList.size() == 1) {
+                StoreAppReturnDto storeAppReturnDto = storeAppReturnDtoList.get(0);
+                String appid = storeAppReturnDto.getAppid();
+                String appsecret = storeAppReturnDto.getAppsecret();
+                String accessToken = wechatUtil.getAccessToken(appid, appsecret);
+                String reqUrl = "http://api.weixin.qq.com/cgi-bin/poi/addpoi?access_token=" + accessToken;
+
+//                Map<String, String> params = new HashMap<String, String>();
+//                String sendPost = HttpUtil.sendPost(reqUrl, map3);
+                String doPost = HttpUtils.doPost(reqUrl, transformToWechatAddPoi(storeAppReturnDto));
+                logger.info("调用微信接口创建门店返回结果：" + doPost);
+
+                JSONObject parseObject = JSONObject.parseObject(doPost);
+                Integer errcode = parseObject.getInteger("errcode");
+                String errmsg = parseObject.getString("errmsg");
+
+                returnDto.setDesc(errmsg);
+                if (errcode == 0) {
+                    returnDto.setCode("0");
+                    returnDto.setDesc("门店发布到微信成功！");
+                }
+                WechatErrDto wechatErrDto = new WechatErrDto();
+                wechatErrDto.setErrcode(errcode);
+                wechatErrDto.setErrmsg(errmsg);
+                returnDto.setObj(wechatErrDto);
+            }
+        } else {
+            returnDto.setCode("1");
+            returnDto.setDesc("门店编码为空！");
+        }
+        logger.info("end com.wfj.service.impl.StoreSynServiceImpl.releaseToWechat(),return:" + returnDto.toString());
+        return returnDto;
+    }
+
+    /**
+     * 参数转换
+     *
+     * @param storeAppReturnDto
+     * @return
+     */
+    private String transformToWechatAddPoi(StoreAppReturnDto storeAppReturnDto) {
+        logger.info("start com.wfj.service.impl.StoreSynServiceImpl.transformToWechatAddPoi(),para:" + storeAppReturnDto.toString());
+
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("sid", storeAppReturnDto.getStoreCode());
+        map1.put("business_name", storeAppReturnDto.getBusinessName());
+        map1.put("branch_name", storeAppReturnDto.getBranchName());
+        map1.put("province", storeAppReturnDto.getProvince());
+        map1.put("city", storeAppReturnDto.getCity());
+        map1.put("district", storeAppReturnDto.getDistrict());
+        map1.put("address", storeAppReturnDto.getAddress());
+        map1.put("telephone", storeAppReturnDto.getTelephone());
+        map1.put("categories", storeAppReturnDto.getCategories());
+        map1.put("offset_type", storeAppReturnDto.getOffsetType());
+        map1.put("longitude", storeAppReturnDto.getLongitude());
+        map1.put("latitude", storeAppReturnDto.getLatitude());
+        map1.put("photo_list", storeAppReturnDto.getPhotoList());
+        map1.put("recommend", storeAppReturnDto.getRecommend());
+        map1.put("special", storeAppReturnDto.getSpecial());
+        map1.put("introduction", storeAppReturnDto.getIntroduction());
+        map1.put("open_time", storeAppReturnDto.getOpenTime());
+        map1.put("avg_price", storeAppReturnDto.getAvgPrice());
+
+        Map<String, Object> map2 = new HashMap<String, Object>();
+        map1.put("base_info", map1);
+
+        Map<String, Object> map3 = new HashMap<String, Object>();
+        map1.put("business", map2);
+
+        String json = JSONObject.toJSONString(map3);
+        logger.info("end com.wfj.service.impl.StoreSynServiceImpl.transformToWechatAddPoi(),return:" + json);
+        return json;
     }
 
 

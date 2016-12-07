@@ -13,6 +13,9 @@ $(function () {
     $("#upLoad").click("click", function () {
         picUpload();
     });
+    $("#releaseFun").click("click", function () {
+        releaseFun();
+    });
     $("#delFun").click("click", function () {
         delFun();
     });
@@ -56,6 +59,25 @@ function picUpload() {
         type: 2,
         area: ["50%", "80%"],
         content: rootPath + '/storeSyn/picUploadUI.shtml?storeCode=' + ids
+    });
+}
+function releaseFun() {
+    var ids = [];
+    $("input.checkboxes[name='id']:checkbox").each(function () {
+        if ($(this).attr("checked")) {
+            ids.push($(this).val());
+        }
+    });
+    /*var cbox = grid.getSelectedCheckbox();*/
+    if (ids.length > 1 || ids == "") {
+        layer.msg("只能选中一个");
+        return;
+    }
+    pageii = layer.open({
+        title: "编辑",
+        type: 2,
+        area: ["50%", "80%"],
+        content: rootPath + '/storeSyn/releaseToWechat.shtml?storeCode=' + ids
     });
 }
 function getDetailUI(storeCode) {
