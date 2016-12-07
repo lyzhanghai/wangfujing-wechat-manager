@@ -50,13 +50,15 @@ public class Common {
 	private static final String ZB_NAME = "zb_name";
 	// 默认除法运算精度
 	private static final int DEF_DIV_SCALE = 10;
+
+	public  static  final  String USER_STORE_K="user_store_k";
 	
 	
 
 	/**
 	 * String转换double
 	 * 
-	 * @param String
+	 * @param
 	 * @return double
 	 */
 	public static double convertSourData(String dataStr) throws Exception {

@@ -310,7 +310,7 @@ function uthorizationStore() {
 		layer.msg("请选择一个对象！");
 		return;
 	}
-	var url = rootPath + '/resources/permissions.shtml?userId=' + ids;
+	var url = rootPath + '/userAuthorizatioStore/userAuthorizatioStore.shtml?userId=' + ids;
 	pageii = layer.open({
 		title: "授权门店",
 		type: 2,
