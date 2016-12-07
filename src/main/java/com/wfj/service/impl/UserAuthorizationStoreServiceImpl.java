@@ -45,7 +45,7 @@ public class UserAuthorizationStoreServiceImpl implements UserAuthorizationStore
                     userAuthorizationStoreDto.setBusinessName(storeInfo.getBusinessName());
                     userAuthorizationStoreDto.setStoreCode(storeInfo.getStoreCode());
                     userAuthorizationStoreDto.setUserId(paramMap.get("userId") + "");
-                    userAuthorizationStoreDto.setIsLoseEfficacy(userAuthorizationStoreMap.get("userId" + "") == null || userAuthorizationStoreMap.get("userId" + "").getIsLoseEfficacy() == 0 ? 0 : 1);
+                    userAuthorizationStoreDto.setIsLoseEfficacy(userAuthorizationStoreMap.get("userId" + "") != null && userAuthorizationStoreMap.get("userId" + "").getIsLoseEfficacy() == 0 ? 0 : 1);
                     userAuthStoreList.add(userAuthorizationStoreDto);
                 }
             }
