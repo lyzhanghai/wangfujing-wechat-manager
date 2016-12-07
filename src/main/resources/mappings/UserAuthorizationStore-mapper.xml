@@ -114,4 +114,32 @@
       user_number = #{userNumber,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectListByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List"/>
+    from user_authorization_store
+    <where>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null" >
+        and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="storeCode != null" >
+        and store_code = #{storeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="businessName != null" >
+        and business_name = #{businessName,jdbcType=VARCHAR}
+      </if>
+      <if test="isLoseEfficacy != null" >
+        and is_lose_efficacy = #{isLoseEfficacy,jdbcType=INTEGER}
+      </if>
+      <if test="userNumber != null" >
+        and user_number = #{userNumber,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
 </mapper>

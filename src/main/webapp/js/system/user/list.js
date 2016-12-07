@@ -24,6 +24,9 @@ $(function () {
 	$("#permissions").click("click", function () {
 		permissions();
 	});
+	$("#uthorizationStore").click("click", function () {
+		uthorizationStore();
+	});
 });
 
 function editAccount() {
@@ -293,4 +296,25 @@ function checkThis(obj) {
 		$(obj).attr("checked", false);
 		$(obj).parents('tr').removeClass("active");
 	}
+}
+
+function uthorizationStore() {
+	/*var cbox = grid.getSelectedCheckbox();*/
+	var ids = [];
+	$("input.checkboxes[name='id']:checkbox").each(function () {
+		if ($(this).attr("checked")) {
+			ids.push($(this).val());
+		}
+	});
+	if (ids.length > 1 || ids == "") {
+		layer.msg("请选择一个对象！");
+		return;
+	}
+	var url = rootPath + '/resources/permissions.shtml?userId=' + ids;
+	pageii = layer.open({
+		title: "授权门店",
+		type: 2,
+		area: ["40%", "65%"],
+		content: url
+	});
 }
