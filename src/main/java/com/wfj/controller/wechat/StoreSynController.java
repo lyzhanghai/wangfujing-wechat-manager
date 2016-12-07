@@ -130,6 +130,13 @@ public class StoreSynController extends BaseController {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         if (Common.isNotEmpty(storeCode)) {
             ReturnDto returnDto = storeSynService.releaseToWechat(storeCode.trim());
+            String code = returnDto.getCode();
+            if ("0".equals(code)) {
+                returnMap.put("success", "success");
+            } else {
+                returnMap.put("success", "error");
+            }
+            returnMap.put("msg", returnDto.getDesc());
         } else {
             returnMap.put("success", "error");
             returnMap.put("msg", "门店编码为空！");
