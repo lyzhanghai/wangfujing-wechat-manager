@@ -90,7 +90,7 @@ function releaseFun() {
             }
         });*/
         var s = CommnUtil.ajax(url, {
-            storeCode: ids
+            storeCode: ids[0]
         }, "json");
         if (s.success == "success") {
             layer.msg('发布成功');
