@@ -46,6 +46,7 @@ public class UserAuthorizationStoreServiceImpl implements UserAuthorizationStore
                 userAuthorizationStoreDto.setBusinessName(storeInfo.getBusinessName());
                 userAuthorizationStoreDto.setStoreCode(storeInfo.getStoreCode());
                 userAuthorizationStoreDto.setUserId(paramMap.get("userId") + "");
+                //若绑定门店且未失败，则值为0，否则为1
                 userAuthorizationStoreDto.setIsLoseEfficacy(storeInfo.getStoreCode() != null && userAuthorizationStoreMap.get("userId" + "").getIsLoseEfficacy() == 0 ? 0 : 1);
                 userAuthStoreList.add(userAuthorizationStoreDto);
             }
