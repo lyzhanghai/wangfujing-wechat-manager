@@ -55,7 +55,7 @@ function picUpload() {
         return;
     }
     pageii = layer.open({
-        title: "编辑",
+        title: "上传图片",
         type: 2,
         area: ["50%", "80%"],
         content: rootPath + '/storeSyn/picUploadUI.shtml?storeCode=' + ids
@@ -73,11 +73,31 @@ function releaseFun() {
         layer.msg("只能选中一个");
         return;
     }
-    pageii = layer.open({
-        title: "编辑",
-        type: 2,
-        area: ["50%", "80%"],
-        content: rootPath + '/storeSyn/releaseToWechat.shtml?storeCode=' + ids
+    layer.confirm('是否发布？', function (index) {
+        var url = rootPath + '/storeSyn/releaseToWechat.shtml';
+        /*$.ajax({
+            type: "post",
+            dataType: "json",
+            url: url,
+            data: {
+                storeCode: ids
+            },
+            success: function (response) {
+                layer.msg(response.msg);
+                if (response.success == 'success') {
+                    storeManagerList();
+                }
+            }
+        });*/
+        var s = CommnUtil.ajax(url, {
+            storeCode: ids
+        }, "json");
+        if (s == "success") {
+            layer.msg('发布成功');
+            storeManagerList();
+        } else {
+            layer.msg('发布失败');
+        }
     });
 }
 function getDetailUI(storeCode) {
