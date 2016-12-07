@@ -25,7 +25,9 @@ public class TestStoreSynServiceImpl {
         map1.put("district", "15个汉字或30个英文字符内");
         map1.put("address", "");
         map1.put("telephone", "");
+        String[] categories = {"美食", "小吃快餐"};
         map1.put("categories", "[\"美食,小吃快餐\"]");
+        map1.put("categories", categories);
         map1.put("offset_type", 1);
         map1.put("longitude", 115.32375);
         map1.put("latitude", 25.097486);

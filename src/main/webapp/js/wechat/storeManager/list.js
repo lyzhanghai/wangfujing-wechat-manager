@@ -96,7 +96,7 @@ function releaseFun() {
             layer.msg('发布成功');
             storeManagerList();
         } else {
-            layer.msg('发布失败');
+            layer.msg(s.msg);
         }
     });
 }
