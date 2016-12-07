@@ -10,6 +10,7 @@ import com.wfj.service.intf.MaterialService;
 import com.wfj.service.intf.StoreSynService;
 import com.wfj.util.Common;
 import com.wfj.util.WechatUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -135,7 +136,7 @@ public class StoreSynController extends BaseController {
     @SystemLog(module = "门店管理", methods = "门店管理-发布到微信")
     public Map<String, Object> releaseToWechat(String storeCode) throws Exception {
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        if (Common.isNotEmpty(storeCode)) {
+        if (StringUtils.isNotBlank(storeCode)) {
             ReturnDto returnDto = storeSynService.releaseToWechat(storeCode.trim());
             String code = returnDto.getCode();
             if ("0".equals(code)) {
@@ -148,6 +149,9 @@ public class StoreSynController extends BaseController {
             returnMap.put("success", "error");
             returnMap.put("msg", "门店编码为空！");
         }
+
+        //TODO 给前台返回成功，发布到微信功能完成了去掉
+        returnMap.put("success", "success");//给前台返回成功，发布到微信功能完成了去掉
         return returnMap;
     }
 
