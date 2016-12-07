@@ -62,4 +62,19 @@ public class UserAuthorizationStoreServiceImpl implements UserAuthorizationStore
         }
         return userAuthStoreList;
     }
+
+    /**
+     * 查询授权门店
+     * @param paramMap
+     * @return
+     * @throws Exception
+     */
+    public List<UserAuthorizationStore> getselectListByUserId(Map<String, Object> paramMap) throws Exception {
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        paraMap.put("userId", paramMap.get("userId") + "");
+        paraMap.put("isLoseEfficacy","0");
+
+        List<UserAuthorizationStore> userAuthorizationStoreList = userAuthorizationStoreMapper.selectListByParam(paraMap);
+        return userAuthorizationStoreList;
+    }
 }
