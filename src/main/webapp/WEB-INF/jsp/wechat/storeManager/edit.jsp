@@ -101,8 +101,16 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">坐标类型</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" placeholder="请输入坐标类型"
-							   name="offsetType" id="offsetType" value="${store.offsetType}" readonly="readonly">
+						<%--<input type="text" class="form-control" placeholder="请输入坐标类型"
+							   name="offsetType" id="offsetType" value="${store.offsetType}" readonly="readonly">--%>
+						<select id="offsetType" name="offsetType" disabled="disabled">
+							<option value="1" <c:if test="${store.offsetType == 1}">selected="selected"</c:if>>火星坐标</option>
+							<option value="2" <c:if test="${store.offsetType == 2}">selected="selected"</c:if>>sogou经纬度</option>
+							<option value="3" <c:if test="${store.offsetType == 3}">selected="selected"</c:if>>百度经纬度</option>
+							<option value="4" <c:if test="${store.offsetType == 4}">selected="selected"</c:if>>mapbar经纬度</option>
+							<option value="5" <c:if test="${store.offsetType == 5}">selected="selected"</c:if>>GPS坐标</option>
+							<option value="6" <c:if test="${store.offsetType == 6}">selected="selected"</c:if>>sogou墨卡托坐标</option>
+						</select>
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
