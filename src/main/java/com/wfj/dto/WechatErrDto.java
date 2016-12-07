@@ -1,7 +1,5 @@
 package com.wfj.dto;
 
-import javax.inject.Inject;
-
 /**
  * Created by wangxuan on 2016-12-07 0007.
  * 微信接口返回结构
