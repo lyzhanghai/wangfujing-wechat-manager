@@ -12,6 +12,8 @@ public class WechatErrDto {
 
     private String errmsg;//错误信息
 
+    private String poiId;//门店poiid
+
     public Integer getErrcode() {
         return errcode;
     }
@@ -28,11 +30,20 @@ public class WechatErrDto {
         this.errmsg = errmsg;
     }
 
+    public String getPoiId() {
+        return poiId;
+    }
+
+    public void setPoiId(String poiId) {
+        this.poiId = poiId;
+    }
+
     @Override
     public String toString() {
         return "WechatErrDto{" +
-                "errcode='" + errcode + '\'' +
+                "errcode=" + errcode +
                 ", errmsg='" + errmsg + '\'' +
+                ", poiId='" + poiId + '\'' +
                 '}';
     }
 }

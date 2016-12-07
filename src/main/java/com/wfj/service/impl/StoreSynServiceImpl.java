@@ -123,6 +123,7 @@ public class StoreSynServiceImpl implements StoreSynService {
      * @param storeCode
      * @return
      */
+    @Transactional
     public ReturnDto releaseToWechat(String storeCode) throws Exception {
         logger.info("start com.wfj.service.impl.StoreSynServiceImpl.releaseToWechat(),para:" + storeCode);
         ReturnDto returnDto = new ReturnDto();
@@ -146,15 +147,27 @@ public class StoreSynServiceImpl implements StoreSynService {
                 JSONObject parseObject = JSONObject.parseObject(doPost);
                 Integer errcode = parseObject.getInteger("errcode");
                 String errmsg = parseObject.getString("errmsg");
+                String poiId = parseObject.getString("poi_id");
 
+                //更新门店信息(门店poiid)
+                if (errcode == 0 && Common.isNotEmpty(poiId)) {
+                    StoreInfo storeInfo = new StoreInfo();
+                    storeInfo.setStoreCode(storeCode);
+                    storeInfo.setPoiId(poiId);
+                    storeInfoMapper.updateByParaSelective(storeInfo);
+                }
+
+                WechatErrDto wechatErrDto = new WechatErrDto();
+                wechatErrDto.setErrcode(errcode);
+                wechatErrDto.setErrmsg(errmsg);
+                wechatErrDto.setPoiId(poiId);
+
+                returnDto.setCode(errcode + "");
                 returnDto.setDesc(errmsg);
                 if (errcode == 0) {
                     returnDto.setCode("0");
                     returnDto.setDesc("门店发布到微信成功！");
                 }
-                WechatErrDto wechatErrDto = new WechatErrDto();
-                wechatErrDto.setErrcode(errcode);
-                wechatErrDto.setErrmsg(errmsg);
                 returnDto.setObj(wechatErrDto);
             }
         } else {

@@ -12,5 +12,6 @@ public interface StoreSynService {
     @Transactional
     String uploadPhotoList(String storeCode, String path, String param);
 
+    @Transactional
     ReturnDto releaseToWechat(String storeCode) throws Exception;
 }
