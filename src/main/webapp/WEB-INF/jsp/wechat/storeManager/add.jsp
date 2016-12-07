@@ -103,8 +103,14 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">坐标类型</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入坐标类型"
-                           name="offsetType" id="offsetType">
+                    <select id="offsetType" name="offsetType">
+                        <option value="1" selected="selected">火星坐标</option>
+                        <option value="2">sogou经纬度</option>
+                        <option value="3">百度经纬度</option>
+                        <option value="4">mapbar经纬度</option>
+                        <option value="5">GPS坐标</option>
+                        <option value="6">sogou墨卡托坐标</option>
+                    </select>
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
