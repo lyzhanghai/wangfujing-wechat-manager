@@ -123,6 +123,13 @@ public class StoreSynController extends BaseController {
         return paramMap;
     }
 
+    /**
+     * 门店发布到微信
+     *
+     * @param storeCode
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @RequestMapping(value = {"/releaseToWechat"})
     @SystemLog(module = "门店管理", methods = "门店管理-发布到微信")
