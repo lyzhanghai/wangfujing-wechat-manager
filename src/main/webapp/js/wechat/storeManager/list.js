@@ -92,7 +92,7 @@ function releaseFun() {
         var s = CommnUtil.ajax(url, {
             storeCode: ids
         }, "json");
-        if (s == "success") {
+        if (s.success == "success") {
             layer.msg('发布成功');
             storeManagerList();
         } else {
