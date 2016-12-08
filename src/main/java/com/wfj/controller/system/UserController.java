@@ -2,14 +2,23 @@ package com.wfj.controller.system;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.wfj.controller.wechat.StoreSynController;
+import com.wfj.dto.ReturnDto;
 import com.wfj.entity.*;
+import com.wfj.util.*;
+import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,10 +30,8 @@ import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.exception.SystemException;
 import com.wfj.plugin.PageView;
-import com.wfj.util.Common;
-import com.wfj.util.JsonUtils;
-import com.wfj.util.POIUtils;
-import com.wfj.util.PasswordHelper;
+
+import static java.lang.System.out;
 
 /**
  * 
@@ -35,6 +42,13 @@ import com.wfj.util.PasswordHelper;
 @Controller
 @RequestMapping("/user/")
 public class UserController extends BaseController {
+
+	private static Logger logger = Logger.getLogger(StoreSynController.class);
+
+	@Autowired
+    private RedisUtil redisUtil;
+
+
 	@Inject
 	private UserMapper userMapper;
 	
@@ -210,5 +224,50 @@ public class UserController extends BaseController {
 		passwordHelper.encryptPassword(userFormMap);
 		userMapper.editEntity(userFormMap);
 		return "success";
+	}
+
+
+	@RequestMapping("test")
+	public String test(HttpServletRequest request) throws Exception {
+		return Common.BACKGROUND_PATH + "/system/user/userAuthorizationStore";
+//		return "redirect:index.shtml";
+	}
+
+	@RequestMapping("testlogin")//, method = RequestMethod.GET, produces = "text/html; charset=utf-8"
+	@ResponseBody
+	public String testlogin(String storeNo,String userId) throws Exception {
+		boolean b= redisUtil.set(Common.USER_STORE_K+userId,storeNo);
+		logger.debug("存入 redis key:"+Common.USER_STORE_K+userId+" 门店号："+storeNo +"存入是否成功："+b);
+//		测试用
+//		String resutl=redisUtil.get(Common.USER_STORE_K+userId,"");
+//		logger.debug("key:"+Common.USER_STORE_K+userId+" 门店号："+storeNo);
+		return "/index.shtml";
+	}
+
+
+
+	@RequestMapping("getUserInfo")//, method = RequestMethod.GET, produces = "text/html; charset=utf-8"
+	@ResponseBody
+	public ReturnDto getUserInfo(){
+		ReturnDto rd=new ReturnDto();
+		Map map=new HashMap();
+		try {
+			Session session = SecurityUtils.getSubject().getSession();
+			String userId=session.getAttribute("userSessionId").toString();
+			String username = (String)SecurityUtils.getSubject().getPrincipal();
+			map.put("userId", userId);
+			map.put("accountName",username);
+			String resutl1=redisUtil.getKey(Common.USER_STORE_K+userId,"");
+			logger.debug("取 redis key:"+Common.USER_STORE_K+userId+" 取出结果："+resutl1);
+			map.put("storeCode",resutl1);
+			rd.setObj(map);
+			rd.setCode("0");
+		}catch (Exception e){
+			rd.setCode("1");
+			rd.setDesc(e.getMessage());
+			rd.setObj(new HashMap());
+			e.printStackTrace();
+		}
+		return rd;
 	}
 }

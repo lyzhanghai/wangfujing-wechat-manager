@@ -71,7 +71,7 @@ public class UserAuthorizationStoreServiceImpl implements UserAuthorizationStore
      */
     public List<UserAuthorizationStore> getselectListByUserId(Map<String, Object> paramMap) throws Exception {
         Map<String, Object> paraMap = new HashMap<String, Object>();
-        paraMap.put("userId", paramMap.get("userId") + "");
+        paraMap.put("userId", paramMap.get("userNumber") + "");
         paraMap.put("isLoseEfficacy","0");
 
         List<UserAuthorizationStore> userAuthorizationStoreList = userAuthorizationStoreMapper.selectListByParam(paraMap);

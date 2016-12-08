@@ -4,6 +4,7 @@ package com.wfj.controller.system;
 import com.alibaba.fastjson.JSON;
 import com.wfj.controller.index.BaseController;
 import com.wfj.dto.UserAuthorizationStoreDto;
+import com.wfj.entity.UserAuthorizationStore;
 import com.wfj.service.intf.UserAuthorizationStoreService;
 import com.wfj.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,28 @@ public class UserAuthorizatioStoreController extends BaseController {
 		System.out.println(JSON.toJSONString(userAuthorizationStoreDtoList));
 		return Common.BACKGROUND_PATH + "/system/userAuthorizationStore/userAuthorizationStore";
 	}
-	
+
+
+	/**
+	 *
+	 * @param userId
+	 * @param model
+     * @return
+     */
+	@RequestMapping("getUserAuthorizatioStore")
+	public String getUserAuthorizatioStore(String userId,Model model) {
+		Map<String,Object> paramMaps = new HashMap<String, Object>();
+		paramMaps.put("userId",userId);
+		List<UserAuthorizationStore> userAuthorizationStoreDtoList = null;
+		try{
+			userAuthorizationStoreDtoList =	userAuthorizationStoreService.getselectListByUserId(paramMaps);
+		}catch (Exception e){
+
+		}
+
+		model.addAttribute("userAuthorizatioStoreList", userAuthorizationStoreDtoList);
+		System.out.println(JSON.toJSONString(userAuthorizationStoreDtoList));
+		return Common.BACKGROUND_PATH + "/system/userAuthorizationStore/userAuthorizationStore";
+	}
 
 }
