@@ -38,7 +38,7 @@
 					<label class="col-sm-3 control-label">门店名称</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control checkacc"
-							   placeholder="请输入门店名称" name="businessName" id="businessName" value="${store.businessName}">
+							   placeholder="请输入门店名称" name="businessName" id="businessName" value="${store.businessName}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -46,7 +46,7 @@
 					<label class="col-sm-3 control-label">分店名称</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control checkacc"
-							   placeholder="请输入分店名称" name="branchName" id="branchName" value="${store.branchName}">
+							   placeholder="请输入分店名称" name="branchName" id="branchName" value="${store.branchName}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -54,7 +54,7 @@
 					<label class="col-sm-3 control-label">省</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入省"
-							   name="province" id="province" value="${store.province}">
+							   name="province" id="province" value="${store.province}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -62,7 +62,7 @@
 					<label class="col-sm-3 control-label">市</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入市"
-							   name="city" id="city" value="${store.city}">
+							   name="city" id="city" value="${store.city}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -70,7 +70,7 @@
 					<label class="col-sm-3 control-label">区</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入区"
-							   name="district" id="district" value="${store.district}">
+							   name="district" id="district" value="${store.district}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -78,7 +78,7 @@
 					<label class="col-sm-3 control-label">街道地址</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入街道地址"
-							   name="address" id="address" value="${store.address}">
+							   name="address" id="address" value="${store.address}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -94,15 +94,23 @@
 					<label class="col-sm-3 control-label">门店类型</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入门店类型"
-							   name="categories" id="categories" value="${store.categories}">
+							   name="categories" id="categories" value="${store.categories}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
 				<div class="form-group">
 					<label class="col-sm-3 control-label">坐标类型</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" placeholder="请输入坐标类型"
-							   name="offsetType" id="offsetType" value="${store.offsetType}">
+						<%--<input type="text" class="form-control" placeholder="请输入坐标类型"
+							   name="offsetType" id="offsetType" value="${store.offsetType}" readonly="readonly">--%>
+						<select id="offsetType" name="offsetType" disabled="disabled">
+							<option value="1" <c:if test="${store.offsetType == 1}">selected="selected"</c:if>>火星坐标</option>
+							<option value="2" <c:if test="${store.offsetType == 2}">selected="selected"</c:if>>sogou经纬度</option>
+							<option value="3" <c:if test="${store.offsetType == 3}">selected="selected"</c:if>>百度经纬度</option>
+							<option value="4" <c:if test="${store.offsetType == 4}">selected="selected"</c:if>>mapbar经纬度</option>
+							<option value="5" <c:if test="${store.offsetType == 5}">selected="selected"</c:if>>GPS坐标</option>
+							<option value="6" <c:if test="${store.offsetType == 6}">selected="selected"</c:if>>sogou墨卡托坐标</option>
+						</select>
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -110,7 +118,7 @@
 					<label class="col-sm-3 control-label">经度</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入经度"
-							   name="longitude" id="longitude" value="${store.longitude}">
+							   name="longitude" id="longitude" value="${store.longitude}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
@@ -118,7 +126,7 @@
 					<label class="col-sm-3 control-label">纬度</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" placeholder="请输入纬度"
-							   name="latitude" id="latitude" value="${store.latitude}">
+							   name="latitude" id="latitude" value="${store.latitude}" readonly="readonly">
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>

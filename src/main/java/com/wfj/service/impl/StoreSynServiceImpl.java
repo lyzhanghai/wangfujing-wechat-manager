@@ -15,6 +15,7 @@ import com.wfj.util.Common;
 import com.wfj.util.HttpUtils;
 import com.wfj.util.JsonUtil;
 import com.wfj.util.WechatUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,13 +107,8 @@ public class StoreSynServiceImpl implements StoreSynService {
             //上传图片后更新图片字段
             StoreInfo storeInfo = new StoreInfo();
             storeInfo.setStoreCode(storeCode);
-
-            if (Common.isNotEmpty(url)) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("photo_url", url);
-                JSONArray jsonArray = new JSONArray();
-                jsonArray.add(jsonObject);
-                storeInfo.setPhotoList(jsonArray.toJSONString());
+            if (StringUtils.isNotBlank(url)) {
+                storeInfo.setPhotoList(url);
             }
 
             storeInfoMapper.updateByParaSelective(storeInfo);
@@ -224,11 +221,30 @@ public class StoreSynServiceImpl implements StoreSynService {
         map1.put("district", storeAppReturnDto.getDistrict());
         map1.put("address", storeAppReturnDto.getAddress());
         map1.put("telephone", storeAppReturnDto.getTelephone());
-        map1.put("categories", storeAppReturnDto.getCategories());
+
+        String categories = storeAppReturnDto.getCategories();
+        List<String> categoriesList = new ArrayList<String>();
+        categoriesList.add(categories);
+        map1.put("categories", categoriesList);
+
         map1.put("offset_type", storeAppReturnDto.getOffsetType());
         map1.put("longitude", storeAppReturnDto.getLongitude());
         map1.put("latitude", storeAppReturnDto.getLatitude());
-        map1.put("photo_list", storeAppReturnDto.getPhotoList());
+
+        String photoList = storeAppReturnDto.getPhotoList();
+        if (StringUtils.isNotBlank(photoList)) {
+            String[] split = photoList.split(",");
+            List<Map<String, String>> photo_list = new ArrayList<Map<String, String>>();
+            for (String str : split) {
+                if (StringUtils.isNotBlank(str)) {
+                    Map<String, String> photo_url = new HashMap<String, String>();
+                    photo_url.put("photo_url", str);
+                    photo_list.add(photo_url);
+                }
+            }
+            map1.put("photo_list", photo_list);
+        }
+
         map1.put("recommend", storeAppReturnDto.getRecommend());
         map1.put("special", storeAppReturnDto.getSpecial());
         map1.put("introduction", storeAppReturnDto.getIntroduction());

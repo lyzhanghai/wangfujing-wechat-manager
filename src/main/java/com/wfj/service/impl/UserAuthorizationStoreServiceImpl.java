@@ -40,15 +40,17 @@ public class UserAuthorizationStoreServiceImpl implements UserAuthorizationStore
         if (userAuthorizationStoreList != null && userAuthorizationStoreList.size() > 0) {
             for (UserAuthorizationStore userAuthorizationStore : userAuthorizationStoreList) {
                 userAuthorizationStoreMap.put(userAuthorizationStore.getStoreCode(), userAuthorizationStore);
-                for (StoreInfo storeInfo : storeList) {
-                    UserAuthorizationStoreDto userAuthorizationStoreDto = new UserAuthorizationStoreDto();
-                    userAuthorizationStoreDto.setBusinessName(storeInfo.getBusinessName());
-                    userAuthorizationStoreDto.setStoreCode(storeInfo.getStoreCode());
-                    userAuthorizationStoreDto.setUserId(paramMap.get("userId") + "");
-                    userAuthorizationStoreDto.setIsLoseEfficacy(userAuthorizationStoreMap.get("userId" + "") != null && userAuthorizationStoreMap.get("userId" + "").getIsLoseEfficacy() == 0 ? 0 : 1);
-                    userAuthStoreList.add(userAuthorizationStoreDto);
-                }
             }
+            for (StoreInfo storeInfo : storeList) {
+                UserAuthorizationStoreDto userAuthorizationStoreDto = new UserAuthorizationStoreDto();
+                userAuthorizationStoreDto.setBusinessName(storeInfo.getBusinessName());
+                userAuthorizationStoreDto.setStoreCode(storeInfo.getStoreCode());
+                userAuthorizationStoreDto.setUserId(paramMap.get("userId") + "");
+                //若绑定门店且未失败，则值为0，否则为1
+                userAuthorizationStoreDto.setIsLoseEfficacy(userAuthorizationStoreMap.get(storeInfo.getStoreCode()) != null && userAuthorizationStoreMap.get(storeInfo.getStoreCode()).getIsLoseEfficacy() == 0 ? 0 : 1);
+                userAuthStoreList.add(userAuthorizationStoreDto);
+            }
+
             return userAuthStoreList;
         } else {
             for (StoreInfo storeInfo : storeList) {
