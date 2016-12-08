@@ -1,6 +1,6 @@
 package com.wfj.controller.index;
 
-import com.wfj.dto.ReturnDto;
+import com.wfj.dto.UserBaseInfoDto;
 import com.wfj.entity.ResFormMap;
 import com.wfj.entity.UserFormMap;
 import com.wfj.mapper.ResourcesMapper;
@@ -265,20 +265,17 @@ public class BaseController {
      *
      * @return
      */
-    public String getCurStoreCode() {
-        ReturnDto rd = new ReturnDto();
+    public UserBaseInfoDto getCurStoreCode() {
+        UserBaseInfoDto curUserInfo = new UserBaseInfoDto();
         Map map = new HashMap();
         try {
             Session session = SecurityUtils.getSubject().getSession();
-            String userId = session.getAttribute("userSessionId").toString();
-            String resutl1 = redisUtil.getKey(Common.USER_STORE_K + userId, "");
-            return resutl1;
+            curUserInfo.setUserId(session.getAttribute("userSessionId").toString());
+            curUserInfo.setUserName((String) SecurityUtils.getSubject().getPrincipal());
+            curUserInfo.setStoreCode(redisUtil.getKey(Common.USER_STORE_K + curUserInfo.getUserId(), ""));
         } catch (Exception e) {
-            rd.setCode("1");
-            rd.setDesc(e.getMessage());
-            rd.setObj(new HashMap());
-            e.printStackTrace();
+
         }
-        return null;
+        return curUserInfo;
     }
 }
