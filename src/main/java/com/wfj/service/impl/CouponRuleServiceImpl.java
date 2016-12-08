@@ -30,4 +30,30 @@ public class CouponRuleServiceImpl implements ICouponRuleService {
 
         return list;
     }
+
+    /**
+     * 根据sid查询券规则
+     *
+     * @param sid
+     * @return
+     */
+    public CouponRule queryCouponInfoBySid(Integer sid) {
+        return couponRuleMapper.selectByPrimaryKey(sid);
+    }
+
+    public boolean saveCouponInfo(CouponRule record) {
+        int count = couponRuleMapper.insertSelective(record);
+        if (count == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean updateCouponInfo(CouponRule record) {
+        int count = couponRuleMapper.updateByPrimaryKeySelective(record);
+        if (count == 1) {
+            return true;
+        }
+        return false;
+    }
 }

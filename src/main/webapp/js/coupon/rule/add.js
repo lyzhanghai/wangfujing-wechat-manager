@@ -79,12 +79,7 @@ $(function () {
                 data: $("#form").serialize(),
                 success: function (response) {
                     if (response == "success") {
-                        layer.confirm('更新成功!是否关闭窗口?', function (index) {
-                            window.parent.userList();
-                            parent.layer.close(parent.pageii);
-                            return false;
-                        });
-                        $("#form")[0].reset();
+                        layer.alert('添加成功！', 3);
                     } else {
                         layer.alert('添加失败！', 3);
                     }
@@ -93,7 +88,7 @@ $(function () {
                 }
             });
             /*success1.show();
-            error1.hide();*/
+             error1.hide();*/
         }
     });
 
@@ -102,10 +97,16 @@ $(function () {
 function loadCouponBG(djq) {
     var url = rootPath + '/dic/queryDicList.shtml';
     var data = CommnUtil.ajax(url, {"key": "coupon_bg"}, "json");
+    console.debug(djq);
     if (data != null) {
         var h = "<option value='0'></option>";
         for (var i = 0; i < data.list.length; i++) {
-            h += "<option value='" + data.list[i].name + "'>" + data.list[i].name + "</option>";
+            if (djq == data.list[i].name) {
+                h += "<option value='" + data.list[i].name + "' selected='selected'>"
+                    + data.list[i].name + "</option>";
+            } else {
+                h += "<option value='" + data.list[i].name + "'>" + data.list[i].name + "</option>";
+            }
         }
         $("#colorselector_djq").html(h);
     } else {
