@@ -2,6 +2,8 @@ package com.wfj.mapper;
 
 import com.wfj.entity.CouponRule;
 
+import java.util.List;
+
 public interface CouponRuleMapper {
     int deleteByPrimaryKey(Integer sid);
 
@@ -14,4 +16,6 @@ public interface CouponRuleMapper {
     int updateByPrimaryKeySelective(CouponRule record);
 
     int updateByPrimaryKey(CouponRule record);
+
+    List<CouponRule> selectCouponRuleInfo(CouponRule record);
 }
