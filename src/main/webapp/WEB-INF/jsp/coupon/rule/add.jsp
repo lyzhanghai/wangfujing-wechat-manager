@@ -100,6 +100,8 @@
         <div class="portlet-body form">
             <!-- BEGIN FORM-->
             <form id="form" name="form" action="#" method="post" class="form-horizontal">
+                <input type="hidden" value="${coupon.sid}" name="sid"
+                       id="sid">
                 <div class="form-body">
                     <div class="alert alert-danger display-hide">
                         <button class="close" data-close="alert"></button>
@@ -115,7 +117,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券流水位数" name="NoLength" id="NoLength">
+                                   placeholder="请输入券流水位数" name="NoLength" id="NoLength" value="${coupon.NoLength}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -124,7 +126,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券号起始位" name="couponrule.PrefixStr" id="PrefixStr">
+                                   placeholder="请输入券号起始位" name="PrefixStr" id="PrefixStr">
                         </div>
                     </div>
                     <div class="form-group">
@@ -133,7 +135,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券号前缀字符" name="couponrule.StartNo" id="StartNo">
+                                   placeholder="请输入券号前缀字符" name="StartNo" id="StartNo">
                         </div>
                     </div>
                     <div class="form-group">
@@ -142,7 +144,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券号后缀长度" name="couponrule.SuffixLength" id="SuffixLength">
+                                   placeholder="请输入券号后缀长度" name="SuffixLength" id="SuffixLength">
                         </div>
                     </div>
                     <div class="form-group">
@@ -151,21 +153,7 @@
 
                         <div class="col-sm-4">
                             <div class="dropdown dropdown-colorselector">
-                                <select id="colorselector_djq">
-                                    <option value="#63b359" data-color="#63b359" selected="selected">#63b359</option>
-                                    <option value="#2c9f67" data-color="#2c9f67">#2c9f67</option>
-                                    <option value="#509fc9" data-color="#509fc9">#509fc9</option>
-                                    <option value="#5885cf" data-color="#5885cf">#5885cf</option>
-                                    <option value="#9062c0" data-color="#9062c0">#9062c0</option>
-                                    <option value="#d09a45" data-color="#d09a45">#d09a45</option>
-                                    <option value="#e4b138" data-color="#e4b138">#e4b138</option>
-                                    <option value="#ee903c" data-color="#ee903c">#ee903c</option>
-                                    <option value="#f08500" data-color="#f08500">#f08500</option>
-                                    <option value="#a9d92d" data-color="#a9d92d">#a9d92d</option>
-                                    <option value="#dd6549" data-color="#dd6549">#dd6549</option>
-                                    <option value="#cc463d" data-color="#cc463d">#cc463d</option>
-                                    <option value="#cf3e36" data-color="#cf3e36">#cf3e36</option>
-                                    <option value="#5E6671" data-color="#5E6671">#5E6671</option>
+                                <select class="form-control" name="colorselector_djq" id="colorselector_djq">
                                 </select>
                                 <a data-toggle="dropdown" href="#">
                                     <span class="btn-colorselector" style="background-color: rgb(99, 179, 89);"></span>
@@ -202,8 +190,61 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="form-group">
 
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="vertical-align: middle;">折扣券背景
+                        </label>
+
+                        <div class="col-sm-4">
+                            <div class="dropdown dropdown-colorselector">
+                                <select class="form-control" id="colorselector_zkq">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="vertical-align: middle;">礼品券背景
+                        </label>
+
+                        <div class="col-sm-4">
+                            <div class="dropdown dropdown-colorselector">
+                                <select class="form-control" id="colorselector_lpq">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="vertical-align: middle;">邀请券背景
+                        </label>
+
+                        <div class="col-sm-4">
+                            <div class="dropdown dropdown-colorselector">
+                                <select class="form-control" id="colorselector_yqq">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="vertical-align: middle;">促销券背景
+                        </label>
+
+                        <div class="col-sm-4">
+                            <div class="dropdown dropdown-colorselector">
+                                <select class="form-control" id="colorselector_cxq">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="vertical-align: middle;">异业券背景
+                        </label>
+
+                        <div class="col-sm-4">
+                            <div class="dropdown dropdown-colorselector">
+                                <select  class="form-control" id="colorselector_yyq">
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-actions">
@@ -214,13 +255,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </form>
             <!-- END FORM-->
         </div>
     </div>
 </div>
-<header class="panel-heading">
-
-</header>
-<div class="table-responsive">
-</div>
+<script type="text/javascript">
+    loadCouponBG("${coupon.djbackground}");
+</script>

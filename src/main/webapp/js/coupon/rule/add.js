@@ -15,7 +15,7 @@ $(function () {
         },
         rules: {
             NoLength: {
-                minlength: 2,
+                number: true,
                 required: true
             },
             email: {
@@ -71,15 +71,45 @@ $(function () {
         },
 
         submitHandler: function (form) {
-            success1.show();
-            error1.hide();
+            $.ajax({
+                type: "post",
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                url: rootPath + '/couponrule/addEntity.shtml',
+                dataType: "json",
+                data: $("#form").serialize(),
+                success: function (response) {
+                    if (response == "success") {
+                        layer.confirm('更新成功!是否关闭窗口?', function (index) {
+                            window.parent.userList();
+                            parent.layer.close(parent.pageii);
+                            return false;
+                        });
+                        $("#form")[0].reset();
+                    } else {
+                        layer.alert('添加失败！', 3);
+                    }
+                },
+                error: function () {
+                }
+            });
+            /*success1.show();
+            error1.hide();*/
         }
     });
 
 });
 
-function click1(obj) {
-
-    console.debug(obj);
-    console.debug($(obj));
+function loadCouponBG(djq) {
+    var url = rootPath + '/dic/queryDicList.shtml';
+    var data = CommnUtil.ajax(url, {"key": "coupon_bg"}, "json");
+    if (data != null) {
+        var h = "<option value='0'></option>";
+        for (var i = 0; i < data.list.length; i++) {
+            h += "<option value='" + data.list[i].name + "'>" + data.list[i].name + "</option>";
+        }
+        $("#colorselector_djq").html(h);
+    } else {
+        layer.msg("获取背景字典错误，请联系管理员！");
+    }
 }
+

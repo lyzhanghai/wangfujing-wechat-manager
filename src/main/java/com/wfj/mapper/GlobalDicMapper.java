@@ -2,6 +2,8 @@ package com.wfj.mapper;
 
 import com.wfj.entity.GlobalDic;
 
+import java.util.List;
+
 public interface GlobalDicMapper {
     int deleteByPrimaryKey(Integer sid);
 
@@ -14,4 +16,6 @@ public interface GlobalDicMapper {
     int updateByPrimaryKeySelective(GlobalDic record);
 
     int updateByPrimaryKey(GlobalDic record);
+
+    List<GlobalDic> selectDicListByType(GlobalDic record);
 }

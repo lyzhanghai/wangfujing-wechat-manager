@@ -1,88 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wfj.mapper.GlobalDicMapper" >
-  <resultMap id="BaseResultMap" type="com.wfj.entity.GlobalDic" >
-    <id column="sid" property="sid" jdbcType="INTEGER" />
-    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="ifdel" property="ifdel" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.wfj.mapper.GlobalDicMapper">
+    <resultMap id="BaseResultMap" type="com.wfj.entity.GlobalDic">
+        <id column="sid" property="sid" jdbcType="INTEGER"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="ifdel" property="ifdel" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     sid, keyword, code, name, ifdel
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from global_dic
-    where sid = #{sid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from global_dic
+        where sid = #{sid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from global_dic
     where sid = #{sid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.wfj.entity.GlobalDic" >
+    <insert id="insert" parameterType="com.wfj.entity.GlobalDic">
     insert into global_dic (sid, keyword, code, 
       name, ifdel)
     values (#{sid,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{ifdel,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.wfj.entity.GlobalDic" >
-    insert into global_dic
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        sid,
-      </if>
-      <if test="keyword != null" >
-        keyword,
-      </if>
-      <if test="code != null" >
-        code,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="ifdel != null" >
-        ifdel,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        #{sid,jdbcType=INTEGER},
-      </if>
-      <if test="keyword != null" >
-        #{keyword,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null" >
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="ifdel != null" >
-        #{ifdel,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.GlobalDic" >
-    update global_dic
-    <set >
-      <if test="keyword != null" >
-        keyword = #{keyword,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null" >
-        code = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="ifdel != null" >
-        ifdel = #{ifdel,jdbcType=INTEGER},
-      </if>
-    </set>
-    where sid = #{sid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wfj.entity.GlobalDic" >
+    <insert id="insertSelective" parameterType="com.wfj.entity.GlobalDic">
+        insert into global_dic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="ifdel != null">
+                ifdel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                #{sid,jdbcType=INTEGER},
+            </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="ifdel != null">
+                #{ifdel,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.GlobalDic">
+        update global_dic
+        <set>
+            <if test="keyword != null">
+                keyword = #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="ifdel != null">
+                ifdel = #{ifdel,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wfj.entity.GlobalDic">
     update global_dic
     set keyword = #{keyword,jdbcType=VARCHAR},
       code = #{code,jdbcType=VARCHAR},
@@ -90,4 +90,31 @@
       ifdel = #{ifdel,jdbcType=INTEGER}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
+
+    <select id="selectDicListByType" resultMap="BaseResultMap" parameterType="com.wfj.entity.GlobalDic"
+            resultType="com.wfj.entity.GlobalDic">
+        select
+        <include refid="Base_Column_List"/>
+        from global_dic
+        <where>
+            <if test="sid != null">
+                AND sid = #{sid,jdbcType=VARCHAR}
+            </if>
+            <if test="keyword != null">
+                AND keyword = #{keyword,jdbcType=VARCHAR}
+            </if>
+            <if test="code != null">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="ifdel != null">
+                AND ifdel = #{ifdel,jdbcType=INTEGER}
+            </if>
+            <if test="ifdel == null">
+                AND ifdel = 0
+            </if>
+        </where>
+    </select>
 </mapper>
