@@ -3,7 +3,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery.form.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/js/jquery/jquery-validation/jquery.validate.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-validation/messages_cn.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/js/jquery/jquery-validation/messages_cn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/coupon/rule/add.js"></script>
 <style type="text/css">
 
@@ -147,8 +148,25 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" style="vertical-align: middle;">代金券背景
                         </label>
-                        <div class="col-sm-4" >
-                            <div class="dropdown dropdown-colorselector" style=" vertical-align: middle;padding-top: 8px;">
+
+                        <div class="col-sm-4">
+                            <div class="dropdown dropdown-colorselector">
+                                <select id="colorselector_djq">
+                                    <option value="#63b359" data-color="#63b359" selected="selected">#63b359</option>
+                                    <option value="#2c9f67" data-color="#2c9f67">#2c9f67</option>
+                                    <option value="#509fc9" data-color="#509fc9">#509fc9</option>
+                                    <option value="#5885cf" data-color="#5885cf">#5885cf</option>
+                                    <option value="#9062c0" data-color="#9062c0">#9062c0</option>
+                                    <option value="#d09a45" data-color="#d09a45">#d09a45</option>
+                                    <option value="#e4b138" data-color="#e4b138">#e4b138</option>
+                                    <option value="#ee903c" data-color="#ee903c">#ee903c</option>
+                                    <option value="#f08500" data-color="#f08500">#f08500</option>
+                                    <option value="#a9d92d" data-color="#a9d92d">#a9d92d</option>
+                                    <option value="#dd6549" data-color="#dd6549">#dd6549</option>
+                                    <option value="#cc463d" data-color="#cc463d">#cc463d</option>
+                                    <option value="#cf3e36" data-color="#cf3e36">#cf3e36</option>
+                                    <option value="#5E6671" data-color="#5E6671">#5E6671</option>
+                                </select>
                                 <a data-toggle="dropdown" href="#">
                                     <span class="btn-colorselector" style="background-color: rgb(99, 179, 89);"></span>
                                 </a>
@@ -183,19 +201,19 @@
                                            title="#5E6671"></a></li>
                                 </ul>
                             </div>
-                    </div>
-                    <div class="form-group">
+                        </div>
+                        <div class="form-group">
 
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <div class="row">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button type="submit" class="btn green">Submit</button>
-                            <button type="button" class="btn default">Cancel</button>
                         </div>
                     </div>
-                </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">Submit</button>
+                                <button type="button" class="btn default">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
             </form>
             <!-- END FORM-->
         </div>

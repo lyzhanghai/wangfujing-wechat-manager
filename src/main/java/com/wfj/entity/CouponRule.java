@@ -39,6 +39,8 @@ public class CouponRule {
 
     private String filed3;
 
+    private String storeCode;
+
     public Integer getSid() {
         return sid;
     }
@@ -181,5 +183,13 @@ public class CouponRule {
 
     public void setFiled3(String filed3) {
         this.filed3 = filed3;
+    }
+
+    public String getStoreCode() {
+        return storeCode;
+    }
+
+    public void setStoreCode(String storeCode) {
+        this.storeCode = storeCode;
     }
 }

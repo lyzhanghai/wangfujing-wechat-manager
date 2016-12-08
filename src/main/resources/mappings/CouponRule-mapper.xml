@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wfj.mapper.CouponRuleMapper" >
-  <resultMap id="BaseResultMap" type="com.wfj.entity.CouponRule" >
-    <id column="sid" property="sid" jdbcType="INTEGER" />
-    <result column="NoLength" property="nolength" jdbcType="INTEGER" />
-    <result column="PrefixStr" property="prefixstr" jdbcType="VARCHAR" />
-    <result column="StartNo" property="startno" jdbcType="VARCHAR" />
-    <result column="SuffixLength" property="suffixlength" jdbcType="VARCHAR" />
-    <result column="DjBackground" property="djbackground" jdbcType="VARCHAR" />
-    <result column="ZkBackground" property="zkbackground" jdbcType="VARCHAR" />
-    <result column="LpBackground" property="lpbackground" jdbcType="VARCHAR" />
-    <result column="YqBackground" property="yqbackground" jdbcType="VARCHAR" />
-    <result column="CxBackground" property="cxbackground" jdbcType="VARCHAR" />
-    <result column="YEBackground" property="yebackground" jdbcType="VARCHAR" />
-    <result column="create_userId" property="createUserid" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_userId" property="updateUserid" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="filed1" property="filed1" jdbcType="VARCHAR" />
-    <result column="filed2" property="filed2" jdbcType="VARCHAR" />
-    <result column="filed3" property="filed3" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.wfj.mapper.CouponRuleMapper">
+    <resultMap id="BaseResultMap" type="com.wfj.entity.CouponRule">
+        <id column="sid" property="sid" jdbcType="INTEGER"/>
+        <result column="NoLength" property="nolength" jdbcType="INTEGER"/>
+        <result column="PrefixStr" property="prefixstr" jdbcType="VARCHAR"/>
+        <result column="StartNo" property="startno" jdbcType="VARCHAR"/>
+        <result column="SuffixLength" property="suffixlength" jdbcType="VARCHAR"/>
+        <result column="DjBackground" property="djbackground" jdbcType="VARCHAR"/>
+        <result column="ZkBackground" property="zkbackground" jdbcType="VARCHAR"/>
+        <result column="LpBackground" property="lpbackground" jdbcType="VARCHAR"/>
+        <result column="YqBackground" property="yqbackground" jdbcType="VARCHAR"/>
+        <result column="CxBackground" property="cxbackground" jdbcType="VARCHAR"/>
+        <result column="YEBackground" property="yebackground" jdbcType="VARCHAR"/>
+        <result column="create_userId" property="createUserid" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_userId" property="updateUserid" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="filed1" property="filed1" jdbcType="VARCHAR"/>
+        <result column="filed2" property="filed2" jdbcType="VARCHAR"/>
+        <result column="filed3" property="filed3" jdbcType="VARCHAR"/>
+        <result column="store_code" property="storeCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     sid, NoLength, PrefixStr, StartNo, SuffixLength, DjBackground, ZkBackground, LpBackground, 
     YqBackground, CxBackground, YEBackground, create_userId, create_time, update_userId, 
-    update_time, filed1, filed2, filed3
+    update_time, filed1, filed2, filed3,store_code
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from coupon_rule
-    where sid = #{sid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from coupon_rule
+        where sid = #{sid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from coupon_rule
     where sid = #{sid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.wfj.entity.CouponRule" >
+    <insert id="insert" parameterType="com.wfj.entity.CouponRule">
     insert into coupon_rule (sid, NoLength, PrefixStr, 
       StartNo, SuffixLength, DjBackground, 
       ZkBackground, LpBackground, YqBackground, 
@@ -52,179 +53,179 @@
       #{filed1,jdbcType=VARCHAR}, #{filed2,jdbcType=VARCHAR}, #{filed3,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wfj.entity.CouponRule" >
-    insert into coupon_rule
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        sid,
-      </if>
-      <if test="nolength != null" >
-        NoLength,
-      </if>
-      <if test="prefixstr != null" >
-        PrefixStr,
-      </if>
-      <if test="startno != null" >
-        StartNo,
-      </if>
-      <if test="suffixlength != null" >
-        SuffixLength,
-      </if>
-      <if test="djbackground != null" >
-        DjBackground,
-      </if>
-      <if test="zkbackground != null" >
-        ZkBackground,
-      </if>
-      <if test="lpbackground != null" >
-        LpBackground,
-      </if>
-      <if test="yqbackground != null" >
-        YqBackground,
-      </if>
-      <if test="cxbackground != null" >
-        CxBackground,
-      </if>
-      <if test="yebackground != null" >
-        YEBackground,
-      </if>
-      <if test="createUserid != null" >
-        create_userId,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateUserid != null" >
-        update_userId,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="filed1 != null" >
-        filed1,
-      </if>
-      <if test="filed2 != null" >
-        filed2,
-      </if>
-      <if test="filed3 != null" >
-        filed3,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        #{sid,jdbcType=INTEGER},
-      </if>
-      <if test="nolength != null" >
-        #{nolength,jdbcType=INTEGER},
-      </if>
-      <if test="prefixstr != null" >
-        #{prefixstr,jdbcType=VARCHAR},
-      </if>
-      <if test="startno != null" >
-        #{startno,jdbcType=VARCHAR},
-      </if>
-      <if test="suffixlength != null" >
-        #{suffixlength,jdbcType=VARCHAR},
-      </if>
-      <if test="djbackground != null" >
-        #{djbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="zkbackground != null" >
-        #{zkbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="lpbackground != null" >
-        #{lpbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="yqbackground != null" >
-        #{yqbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="cxbackground != null" >
-        #{cxbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="yebackground != null" >
-        #{yebackground,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserid != null" >
-        #{createUserid,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUserid != null" >
-        #{updateUserid,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="filed1 != null" >
-        #{filed1,jdbcType=VARCHAR},
-      </if>
-      <if test="filed2 != null" >
-        #{filed2,jdbcType=VARCHAR},
-      </if>
-      <if test="filed3 != null" >
-        #{filed3,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.CouponRule" >
-    update coupon_rule
-    <set >
-      <if test="nolength != null" >
-        NoLength = #{nolength,jdbcType=INTEGER},
-      </if>
-      <if test="prefixstr != null" >
-        PrefixStr = #{prefixstr,jdbcType=VARCHAR},
-      </if>
-      <if test="startno != null" >
-        StartNo = #{startno,jdbcType=VARCHAR},
-      </if>
-      <if test="suffixlength != null" >
-        SuffixLength = #{suffixlength,jdbcType=VARCHAR},
-      </if>
-      <if test="djbackground != null" >
-        DjBackground = #{djbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="zkbackground != null" >
-        ZkBackground = #{zkbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="lpbackground != null" >
-        LpBackground = #{lpbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="yqbackground != null" >
-        YqBackground = #{yqbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="cxbackground != null" >
-        CxBackground = #{cxbackground,jdbcType=VARCHAR},
-      </if>
-      <if test="yebackground != null" >
-        YEBackground = #{yebackground,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserid != null" >
-        create_userId = #{createUserid,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUserid != null" >
-        update_userId = #{updateUserid,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="filed1 != null" >
-        filed1 = #{filed1,jdbcType=VARCHAR},
-      </if>
-      <if test="filed2 != null" >
-        filed2 = #{filed2,jdbcType=VARCHAR},
-      </if>
-      <if test="filed3 != null" >
-        filed3 = #{filed3,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where sid = #{sid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wfj.entity.CouponRule" >
+    <insert id="insertSelective" parameterType="com.wfj.entity.CouponRule">
+        insert into coupon_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="nolength != null">
+                NoLength,
+            </if>
+            <if test="prefixstr != null">
+                PrefixStr,
+            </if>
+            <if test="startno != null">
+                StartNo,
+            </if>
+            <if test="suffixlength != null">
+                SuffixLength,
+            </if>
+            <if test="djbackground != null">
+                DjBackground,
+            </if>
+            <if test="zkbackground != null">
+                ZkBackground,
+            </if>
+            <if test="lpbackground != null">
+                LpBackground,
+            </if>
+            <if test="yqbackground != null">
+                YqBackground,
+            </if>
+            <if test="cxbackground != null">
+                CxBackground,
+            </if>
+            <if test="yebackground != null">
+                YEBackground,
+            </if>
+            <if test="createUserid != null">
+                create_userId,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateUserid != null">
+                update_userId,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="filed1 != null">
+                filed1,
+            </if>
+            <if test="filed2 != null">
+                filed2,
+            </if>
+            <if test="filed3 != null">
+                filed3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                #{sid,jdbcType=INTEGER},
+            </if>
+            <if test="nolength != null">
+                #{nolength,jdbcType=INTEGER},
+            </if>
+            <if test="prefixstr != null">
+                #{prefixstr,jdbcType=VARCHAR},
+            </if>
+            <if test="startno != null">
+                #{startno,jdbcType=VARCHAR},
+            </if>
+            <if test="suffixlength != null">
+                #{suffixlength,jdbcType=VARCHAR},
+            </if>
+            <if test="djbackground != null">
+                #{djbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="zkbackground != null">
+                #{zkbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="lpbackground != null">
+                #{lpbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="yqbackground != null">
+                #{yqbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="cxbackground != null">
+                #{cxbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="yebackground != null">
+                #{yebackground,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserid != null">
+                #{createUserid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserid != null">
+                #{updateUserid,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="filed1 != null">
+                #{filed1,jdbcType=VARCHAR},
+            </if>
+            <if test="filed2 != null">
+                #{filed2,jdbcType=VARCHAR},
+            </if>
+            <if test="filed3 != null">
+                #{filed3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.CouponRule">
+        update coupon_rule
+        <set>
+            <if test="nolength != null">
+                NoLength = #{nolength,jdbcType=INTEGER},
+            </if>
+            <if test="prefixstr != null">
+                PrefixStr = #{prefixstr,jdbcType=VARCHAR},
+            </if>
+            <if test="startno != null">
+                StartNo = #{startno,jdbcType=VARCHAR},
+            </if>
+            <if test="suffixlength != null">
+                SuffixLength = #{suffixlength,jdbcType=VARCHAR},
+            </if>
+            <if test="djbackground != null">
+                DjBackground = #{djbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="zkbackground != null">
+                ZkBackground = #{zkbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="lpbackground != null">
+                LpBackground = #{lpbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="yqbackground != null">
+                YqBackground = #{yqbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="cxbackground != null">
+                CxBackground = #{cxbackground,jdbcType=VARCHAR},
+            </if>
+            <if test="yebackground != null">
+                YEBackground = #{yebackground,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserid != null">
+                create_userId = #{createUserid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserid != null">
+                update_userId = #{updateUserid,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="filed1 != null">
+                filed1 = #{filed1,jdbcType=VARCHAR},
+            </if>
+            <if test="filed2 != null">
+                filed2 = #{filed2,jdbcType=VARCHAR},
+            </if>
+            <if test="filed3 != null">
+                filed3 = #{filed3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wfj.entity.CouponRule">
     update coupon_rule
     set NoLength = #{nolength,jdbcType=INTEGER},
       PrefixStr = #{prefixstr,jdbcType=VARCHAR},
@@ -245,4 +246,71 @@
       filed3 = #{filed3,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
+
+    <select id="selectCouponRuleInfo" resultMap="BaseResultMap"
+            resultType="com.wfj.entity.CouponRule"
+            parameterType="com.wfj.entity.CouponRule">
+        select
+        <include refid="Base_Column_List"/>
+        from coupon_rule
+        <where>
+            <if test="sid != null">
+                AND sid = #{sid,jdbcType=INTEGER}
+            </if>
+            <if test="storeCode != null">
+                AND store_code = #{storeCode,jdbcType=INTEGER}
+            </if>
+            <if test="nolength != null">
+                AND NoLength = #{nolength,jdbcType=INTEGER}
+            </if>
+            <if test="prefixstr != null">
+                AND PrefixStr = #{prefixstr,jdbcType=VARCHAR}
+            </if>
+            <if test="startno != null">
+                AND StartNo = #{startno,jdbcType=VARCHAR}
+            </if>
+            <if test="suffixlength != null">
+                SuffixLength = #{suffixlength,jdbcType=VARCHAR}
+            </if>
+            <if test="djbackground != null">
+                AND DjBackground = #{djbackground,jdbcType=VARCHAR}
+            </if>
+            <if test="zkbackground != null">
+                AND ZkBackground = #{zkbackground,jdbcType=VARCHAR}
+            </if>
+            <if test="lpbackground != null">
+                AND LpBackground = #{lpbackground,jdbcType=VARCHAR}
+            </if>
+            <if test="yqbackground != null">
+                AND YqBackground = #{yqbackground,jdbcType=VARCHAR}
+            </if>
+            <if test="cxbackground != null">
+                AND CxBackground = #{cxbackground,jdbcType=VARCHAR}
+            </if>
+            <if test="yebackground != null">
+                AND YEBackground = #{yebackground,jdbcType=VARCHAR}
+            </if>
+            <if test="createUserid != null">
+                AND create_userId = #{createUserid,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateUserid != null">
+                AND update_userId = #{updateUserid,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime != null">
+                AND update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="filed1 != null">
+                filed1 = #{filed1,jdbcType=VARCHAR}
+            </if>
+            <if test="filed2 != null">
+                AND filed2 = #{filed2,jdbcType=VARCHAR}
+            </if>
+            <if test="filed3 != null">
+                AND filed3 = #{filed3,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>
