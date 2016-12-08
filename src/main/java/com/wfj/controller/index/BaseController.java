@@ -265,7 +265,7 @@ public class BaseController {
      *
      * @return
      */
-    public UserBaseInfoDto getCurStoreCode() {
+    public UserBaseInfoDto getCurUserInfo() {
         UserBaseInfoDto curUserInfo = new UserBaseInfoDto();
         Map map = new HashMap();
         try {
