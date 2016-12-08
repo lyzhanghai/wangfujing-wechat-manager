@@ -8,20 +8,20 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>弹框</title>
     <style>
-        .clickBtn {
-            display: block;
-            margin: 100px auto;
-        }
-        .iframe_box {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            opacity: 0.7;
-            z-index: 1000;
-            background-color: #000;
-        }
+        /*.clickBtn {*/
+        /*display: block;*/
+        /*margin: 100px auto;*/
+        /*}*/
+        /*.iframe_box {*/
+        /*position: fixed;*/
+        /*top: 0;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        /*right: 0;*/
+        /*opacity: 0.7;*/
+        /*z-index: 1000;*/
+        /*background-color: #000;*/
+        /*}*/
         .popUp{
             position: absolute;
             top: 50%;
@@ -81,11 +81,16 @@
         }
         input[type="checkbox"]{
             vertical-align: middle;
+            /*margin-left:100px;*/
         }
         .listStyle li{
             width: 100%;
             line-height: 30px;
             border-bottom: #ccc solid 1px;
+        }
+        .listStyle th,
+        .listStyle td {
+            border-bottom:#ccc solid 1px;
         }
         .listStyle span {
             vertical-align: middle;
@@ -103,36 +108,59 @@
             background: #E9E9E9;
             border-bottom: #ccc solid 1px;
         }
+        table{
+            border-collapse:collapse;
+            border-spacing:0;
+        }
     </style>
     <link href="css/base.css" rel="stylesheet" type="text/css" />
 </head>
-<button class="clickBtn">点击弹出弹框</button>
+<%--<button class="clickBtn">点击弹出弹框</button>--%>
 <!--弹窗iframe-->
-<div class="iframe_box"></div>
+<%--<div class="iframe_box"></div>--%>
 <!-- 退出弹窗 -->
-<div class="popUp">
-    <div class="popUp_head clearfix">
-        <span class="fenpei">分配权限</span>
-        <a href="#" class="close"></a>
-    </div>
-    <div class="popUp_content">
-        <ul class="listStyle">
-            <c:forEach items="${userAuthorizatioStoreList}" var="UserAuthorizationStoreDto" >
-                <li>
-                    <input type="checkbox" <c:if test="${UserAuthorizationStoreDto.isLoseEfficacy == 0}">
-                        checked="checked"
-                    </c:if>/>
-                    <span>${UserAuthorizationStoreDto.businessName }</span>
-                 </li>
+<%--<div class="popUp">--%>
+<%--<div class="popUp_head clearfix">--%>
+<%--<span class="fenpei">分配权限</span>--%>
+<%--<a href="#" class="close"></a>--%>
+<%--</div>--%>
+<div class="popUp_content">
+    <%--<ul class="listStyle">
+        <c:forEach items="${userAuthorizatioStoreList}" var="UserAuthorizationStoreDto" >
+            <li>
+                <input type="checkbox" <c:if test="${UserAuthorizationStoreDto.isLoseEfficacy == 0}">
+                    checked="checked"
+                </c:if>/>
+                <span>${UserAuthorizationStoreDto.businessName }</span>
+             </li>
+        </c:forEach>
+    </ul>--%>
+    <form action="${pageContext.request.contextPath}/system/userAuthorizatioStore/addUserAuthorizationStore.shtml" method="post" >
+        <table class="listStyle">
+            <tr>
+                <th>是否授权</th>
+                <th>门店名称</th>
+                <th>门店编码</th>
+            </tr>
+            <c:forEach items="${userAuthorizatioStoreList}" var="UserAuthorizationStoreDto">
+                <tr>
+                    <td><input type="checkbox" <c:if test="${UserAuthorizationStoreDto.isLoseEfficacy == 0}">checked="checked"</c:if>/></td>
+                    <td> ${UserAuthorizationStoreDto.businessName } </td>
+                    <td> ${UserAuthorizationStoreDto.storeCode }</td>
+                    <td><input type="hidden" value="${UserAuthorizationStoreDto.storeCode }" /></td>
+                    <%--<td><input type="hidden"/>${UserAuthorizationStoreDto.storeCode }</td>--%>
+                </tr>
             </c:forEach>
-        </ul>
 
-    </div>
-    <div class="btnBox">
-        <input class="button_blue" type="button" value="保存" name="Confirm" />
-        <input class="button_green ml15 cancel" type="button" value="取消" name="cancel" />
-    </div>
+        </table>
+    </form>
+
 </div>
+<div class="btnBox">
+    <input class="button_blue" type="submit" value=" " name="Confirm" />
+    <input class="button_green ml15 cancel" type="button" value="取消" name="cancel" />
+</div>
+<%--</div>--%>
 <script type="text/javascript" language="javascript" src="js/jquery-1.9.1.min.js"></script>
 </body>
 </html>
