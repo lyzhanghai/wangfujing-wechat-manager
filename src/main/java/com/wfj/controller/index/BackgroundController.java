@@ -1,22 +1,16 @@
 package com.wfj.controller.index;
 
-import java.io.BufferedInputStream;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.sql.DriverManager;
-import java.util.*;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.alibaba.fastjson.JSON;
-import com.sun.javafx.collections.MappingChange;
+import com.mysql.jdbc.Connection;
+import com.wfj.entity.ResFormMap;
 import com.wfj.entity.UserAuthorizationStore;
+import com.wfj.entity.UserFormMap;
+import com.wfj.entity.UserLoginFormMap;
+import com.wfj.mapper.ResourcesMapper;
+import com.wfj.mapper.UserLoginMapper;
 import com.wfj.service.intf.UserAuthorizationStoreService;
+import com.wfj.util.Common;
+import com.wfj.util.TreeObject;
+import com.wfj.util.TreeUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.shiro.SecurityUtils;
@@ -35,15 +29,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.wfj.entity.ResFormMap;
-import com.wfj.entity.UserFormMap;
-import com.wfj.entity.UserLoginFormMap;
-import com.wfj.mapper.ResourcesMapper;
-import com.wfj.mapper.UserLoginMapper;
-import com.wfj.util.Common;
-import com.wfj.util.TreeObject;
-import com.wfj.util.TreeUtil;
-import com.mysql.jdbc.Connection;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.sql.DriverManager;
+import java.util.*;
 
 /**
  * 进行管理后台框架界面的类
