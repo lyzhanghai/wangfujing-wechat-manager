@@ -136,36 +136,36 @@
         var storeCode = '';
         var userId = '';
         var a = {};
-        var isLoseEfficafy = 1;
-        userListIN.find("tr").each(function(){
-            var checkbox = $(this).find('td:eq(0) input');
-//            var attrState = checkbox.attr("checked");
-            isLoseEfficacy = $(".isLoseEfficacy").attr("name");
-            checkbox.change(function(){           // 这里是对复选框进行点击操作
-                if($(this).is('checked')){        // 如果是被选中状态
-                    isLoseEfficacy = 1;          // 将其状态改为未选中状态
-                }else{                            // 如果是未被选中状态
-                    isLoseEfficacy = 0;          // 将其状态改为被选中状态
-                }
-            });
-
-            // var isLoseEfficacyState = $(".isLoseEfficacy").attr("name");
-            businessName = $(this).find("td").eq(1).text();
-            storeCode = $(this).find("td").eq(2).text();
-            userId = $(".userId").attr("name");
-
-            a = {
-                "storeCode":storeCode,
-                "isLoseEfficacy":isLoseEfficacy,
-                "userId":userId,
-                "businessName":businessName
-            }
-
-            userAuthorizatioStoreList.push(a);
-            console.log(userAuthorizatioStoreList);
-        });
+        var isLoseEfficafy = '';
 
         $("#saveBtn").click(function () {
+            userListIN.find("tr").each(function(){
+                var checkbox = $(this).find('td:eq(0) input');
+                // var attrState = checkbox.attr("checked");
+                // isLoseEfficacy = $(".isLoseEfficacy").attr("name");
+                // checkbox.change(function(){           // 这里是对复选框进行点击操作
+                if(checkbox.is(':checked')){        // 如果是被选中状态
+                    isLoseEfficacy ="0";           // 将其状态改为未选中状态
+                }else{                           // 如果是未被选中状态
+                    isLoseEfficacy ="1";          // 将其状态改为被选中状态
+                }
+                // });
+
+                // var isLoseEfficacyState = $(".isLoseEfficacy").attr("name");
+                businessName = $(this).find("td").eq(1).text();
+                storeCode = $(this).find("td").eq(2).text();
+                userId = $(".userId").attr("name");
+
+                a = {
+                    "storeCode":storeCode,
+                    "isLoseEfficacy":isLoseEfficacy,
+                    "userId":userId,
+                    "businessName":businessName
+                }
+
+                userAuthorizatioStoreList.push(a);
+                console.log(userAuthorizatioStoreList);
+            });
             var pathName = document.location.pathname;
             var index = pathName.substr(1).indexOf("/");
             var result = pathName.substr(0, index + 1);
