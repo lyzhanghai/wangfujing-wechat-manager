@@ -23,5 +23,8 @@ public interface UserAuthorizationStoreService {
     List<UserAuthorizationStore> getselectListByUserId(Map<String, Object> paramMap) throws Exception;
 
 
+    void addUserAuthorizationStore(List<UserAuthorizationStoreDto> dtoList)throws Exception;
+
+
 
 }

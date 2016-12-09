@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,20 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>弹框</title>
     <style>
-        /*.clickBtn {*/
-        /*display: block;*/
-        /*margin: 100px auto;*/
-        /*}*/
-        /*.iframe_box {*/
-        /*position: fixed;*/
-        /*top: 0;*/
-        /*bottom: 0;*/
-        /*left: 0;*/
-        /*right: 0;*/
-        /*opacity: 0.7;*/
-        /*z-index: 1000;*/
-        /*background-color: #000;*/
-        /*}*/
         .popUp{
             position: absolute;
             top: 50%;
@@ -113,54 +98,106 @@
             border-spacing:0;
         }
     </style>
-    <link href="css/base.css" rel="stylesheet" type="text/css" />
 </head>
-<%--<button class="clickBtn">点击弹出弹框</button>--%>
-<!--弹窗iframe-->
-<%--<div class="iframe_box"></div>--%>
-<!-- 退出弹窗 -->
-<%--<div class="popUp">--%>
-<%--<div class="popUp_head clearfix">--%>
-<%--<span class="fenpei">分配权限</span>--%>
-<%--<a href="#" class="close"></a>--%>
-<%--</div>--%>
 <div class="popUp_content">
-    <%--<ul class="listStyle">
-        <c:forEach items="${userAuthorizatioStoreList}" var="UserAuthorizationStoreDto" >
-            <li>
-                <input type="checkbox" <c:if test="${UserAuthorizationStoreDto.isLoseEfficacy == 0}">
-                    checked="checked"
-                </c:if>/>
-                <span>${UserAuthorizationStoreDto.businessName }</span>
-             </li>
-        </c:forEach>
-    </ul>--%>
-    <form action="${pageContext.request.contextPath}/system/userAuthorizatioStore/addUserAuthorizationStore.shtml" method="post" >
+    <form name="fromname">
         <table class="listStyle">
+            <thead>
             <tr>
                 <th>是否授权</th>
                 <th>门店名称</th>
                 <th>门店编码</th>
             </tr>
+            </thead>
+            <tbody id="userListIN">
             <c:forEach items="${userAuthorizatioStoreList}" var="UserAuthorizationStoreDto">
-                <tr>
-                    <td><input type="checkbox" <c:if test="${UserAuthorizationStoreDto.isLoseEfficacy == 0}">checked="checked"</c:if>/></td>
-                    <td> ${UserAuthorizationStoreDto.businessName } </td>
-                    <td> ${UserAuthorizationStoreDto.storeCode }</td>
-                    <td><input type="hidden" value="${UserAuthorizationStoreDto.storeCode }" /></td>
-                    <%--<td><input type="hidden"/>${UserAuthorizationStoreDto.storeCode }</td>--%>
+                <tr  class="userId" name="${UserAuthorizationStoreDto.userId}">
+                    <td><input class="isLoseEfficacy" name="${UserAuthorizationStoreDto.isLoseEfficacy == 0}" type="checkbox" <c:if test="${UserAuthorizationStoreDto.isLoseEfficacy == 0}">checked="checked"</c:if>/></td>
+                    <td class="businessName"> ${UserAuthorizationStoreDto.businessName } </td>
+                    <td class="storeCode"> ${UserAuthorizationStoreDto.storeCode }</td>
                 </tr>
             </c:forEach>
-
+            </tbody>
         </table>
     </form>
 
 </div>
 <div class="btnBox">
-    <input class="button_blue" type="submit" value=" " name="Confirm" />
+    <input class="button_blue" id="saveBtn" type="submit" value="保存" name="Confirm" />
     <input class="button_green ml15 cancel" type="button" value="取消" name="cancel" />
 </div>
 <%--</div>--%>
-<script type="text/javascript" language="javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript"  language="javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.8.3.js"></script>
+<script>
+    $(function(){
+        var userAuthorizatioStoreList = [];
+        var userListIN = $("#userListIN");
+        var businessName = '';
+        var storeCode = '';
+        var userId = '';
+        var a = {};
+        var isLoseEfficafy = 1;
+        userListIN.find("tr").each(function(){
+            var checkbox = $(this).find('td:eq(0) input');
+//            var attrState = checkbox.attr("checked");
+            isLoseEfficacy = $(".isLoseEfficacy").attr("name");
+            checkbox.change(function(){           // 这里是对复选框进行点击操作
+                if($(this).is('checked')){        // 如果是被选中状态
+                    isLoseEfficacy = 1;          // 将其状态改为未选中状态
+                }else{                            // 如果是未被选中状态
+                    isLoseEfficacy = 0;          // 将其状态改为被选中状态
+                }
+            });
+
+            // var isLoseEfficacyState = $(".isLoseEfficacy").attr("name");
+            businessName = $(this).find("td").eq(1).text();
+            storeCode = $(this).find("td").eq(2).text();
+            userId = $(".userId").attr("name");
+
+            a = {
+                "storeCode":storeCode,
+                "isLoseEfficacy":isLoseEfficacy,
+                "userId":userId,
+                "businessName":businessName
+            }
+
+            userAuthorizatioStoreList.push(a);
+            console.log(userAuthorizatioStoreList);
+        });
+
+        $("#saveBtn").click(function () {
+            var pathName = document.location.pathname;
+            var index = pathName.substr(1).indexOf("/");
+            var result = pathName.substr(0, index + 1);
+            $.ajax({
+                type: "POST",
+                url : result+"/userAuthorizatioStore/adduserAuthorizationStore.shtml",
+                data: JSON.stringify(userAuthorizatioStoreList),
+                contentType:"application/json",
+                success: function(msg){
+                    alert( "数据保存: " + msg );
+                }
+            });
+        });
+
+
+//        $("#saveBtn").click(function(){
+//
+//            var pathName = document.location.pathname;
+//            var index = pathName.substr(1).indexOf("/");
+//            var result = pathName.substr(0, index + 1);
+//
+//            alert(result);
+//            alert(userAuthorizatioStoreList);
+//            $.post(result+ '/userAuthorizatioStore/adduserAuthorizationStore.shtml',{userAuthorizatioStoreList},function(json){
+//                // 这里是赵同学进行的保存后台操作
+//            }, "json")
+//        })
+
+    })
+
+</script>
+
 </body>
 </html>
+
