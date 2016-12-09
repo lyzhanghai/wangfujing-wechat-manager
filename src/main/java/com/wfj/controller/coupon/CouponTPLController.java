@@ -72,6 +72,7 @@ public class CouponTPLController extends BaseController {
 		UserBaseInfoDto curUser = getCurUserInfo();
 		entity.setStoreCode(curUser.getStoreCode());
 		entity.setCreateUserid(curUser.getUserId());
+		entity.setCreateUserName(curUser.getUserName());
 
 		int i = couponTPLService.insertSelective(entity);
 		if (i == 1) {
