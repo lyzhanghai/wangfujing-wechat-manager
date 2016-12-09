@@ -3690,6 +3690,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="${pageContext.servletContext.contextPath }/assets/global/plugins/jquery-ui/jquery-ui.min.js"
         type="text/javascript"></script>
+<script src="${pageContext.servletContext.contextPath }/js/highstock.js"
+        type="text/javascript"></script>
+<script src="${pageContext.servletContext.contextPath }/assets/global/plugins/bootstrap-daterangepicker/moment.js"
+        type="text/javascript"></script>
 <script src="${pageContext.servletContext.contextPath }/assets/global/plugins/bootstrap/js/bootstrap.min.js"
         type="text/javascript"></script>
 <script src="${pageContext.servletContext.contextPath }/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"

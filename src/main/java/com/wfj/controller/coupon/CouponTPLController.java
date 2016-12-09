@@ -1,20 +1,18 @@
 package com.wfj.controller.coupon;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.dto.CouponTemplateDto;
+import com.wfj.dto.UserBaseInfoDto;
 import com.wfj.entity.CouponTemplate;
 import com.wfj.entity.DataTableResult;
 import com.wfj.service.intf.CouponTemplateService;
@@ -47,21 +45,16 @@ public class CouponTPLController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/findCouponTPLByPage")
 	@SystemLog(module = "卡券模板", methods = "卡券模板管理-分页查询")
-	public DataTableResult<CouponTemplate> findCouponTPLByPage(
-			@RequestBody CouponTemplateDto para) {
+	public DataTableResult<CouponTemplate> findCouponTPLByPage(CouponTemplateDto para) {
+
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("start", para.getiDisplayStart());
 		paramMap.put("limit", para.getiDisplayLength());
-		paramMap.put("ifdel", 0);
-		try {
-			BeanUtils.copyProperties(paramMap, para);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		UserBaseInfoDto curUser = getCurUserInfo();
+		paramMap.put("storeCode", curUser.getStoreCode());
+		paramMap.put("createUserId", curUser.getUserId());
 		DataTableResult<CouponTemplate> page = couponTPLService.selectPageListByParam(paramMap);
-		page.setiTotalDisplayRecords(page.getAaData().size());
+		page.setiTotalDisplayRecords(page.getiTotalRecords());
 		page.setsEcho(para.getsEcho());
 		return page;
 	}
@@ -69,15 +62,18 @@ public class CouponTPLController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/addCouponTPL")
 	@SystemLog(module = "卡券模板", methods = "卡券模板管理-新增")
-	public String addCouponTPL(@RequestBody CouponTemplateDto para) {
+	public String addCouponTPL(String selCouponType, String txtCouponValue,
+			String txtCouponPriceLimit, String txtCouponName) {
 		CouponTemplate entity = new CouponTemplate();
-		try {
-			BeanUtils.copyProperties(entity, para);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		entity.setCouponType(selCouponType);
+		entity.setCouponPriceLimit(txtCouponPriceLimit);
+		entity.setCouponValue(txtCouponValue);
+		entity.setCouponName(txtCouponName);
+		UserBaseInfoDto curUser = getCurUserInfo();
+		entity.setStoreCode(curUser.getStoreCode());
+		entity.setCreateUserid(curUser.getUserId());
+		entity.setCreateUserName(curUser.getUserName());
+
 		int i = couponTPLService.insertSelective(entity);
 		if (i == 1) {
 			return "success";

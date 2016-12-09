@@ -12,11 +12,11 @@
     <result column="ifdel" property="ifdel" jdbcType="INTEGER" />
     <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
     <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
-    <result column="filed3" property="filed3" jdbcType="VARCHAR" />
+    <result column="create_userName" property="createUserName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     sid, coupon_type, coupon_value, coupon_price_limit, create_userId, create_time, update_time, 
-    ifdel, store_code, coupon_name, filed3
+    ifdel, store_code, coupon_name, create_userName
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -32,11 +32,11 @@
     insert into coupon_template (sid, coupon_type, coupon_value, 
       coupon_price_limit, create_userId, create_time, 
       update_time, ifdel, store_code, 
-      coupon_name, filed3)
+      coupon_name, create_userName)
     values (#{sid,jdbcType=INTEGER}, #{couponType,jdbcType=VARCHAR}, #{couponValue,jdbcType=VARCHAR}, 
       #{couponPriceLimit,jdbcType=VARCHAR}, #{createUserid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{ifdel,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, 
-      #{couponName,jdbcType=VARCHAR}, #{filed3,jdbcType=VARCHAR})
+      #{couponName,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wfj.entity.CouponTemplate" >
     insert into coupon_template
@@ -71,8 +71,8 @@
       <if test="couponName != null" >
         coupon_name,
       </if>
-      <if test="filed3 != null" >
-        filed3,
+      <if test="createUserName != null" >
+        create_userName,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -106,8 +106,8 @@
       <if test="couponName != null" >
         #{couponName,jdbcType=VARCHAR},
       </if>
-      <if test="filed3 != null" >
-        #{filed3,jdbcType=VARCHAR},
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -141,8 +141,8 @@
       <if test="couponName != null" >
         coupon_name = #{couponName,jdbcType=VARCHAR},
       </if>
-      <if test="filed3 != null" >
-        filed3 = #{filed3,jdbcType=VARCHAR},
+      <if test="createUserName != null" >
+        create_userName = #{createUserName,jdbcType=VARCHAR},
       </if>
     </set>
     where sid = #{sid,jdbcType=INTEGER}
@@ -158,7 +158,7 @@
       ifdel = #{ifdel,jdbcType=INTEGER},
       store_code = #{storeCode,jdbcType=VARCHAR},
       coupon_name = #{couponName,jdbcType=VARCHAR},
-      filed3 = #{filed3,jdbcType=VARCHAR}
+      create_userName = #{createUserName,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
   
@@ -193,14 +193,17 @@
 			<if test="ifdel != null" >
 			  and ifdel = #{ifdel,jdbcType=INTEGER}
 			</if>
+			<if test="ifdel == null" >
+			  and ifdel = 0
+			</if>
 			<if test="storeCode != null" >
 			  and store_code = #{storeCode,jdbcType=VARCHAR}
 			</if>
 			<if test="couponName != null" >
 			  and coupon_name = #{couponName,jdbcType=VARCHAR}
 			</if>
-			<if test="filed3 != null" >
-			  and filed3 = #{filed3,jdbcType=VARCHAR}
+			<if test="createUserName != null" >
+			  and create_userName = #{createUserName,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
@@ -235,14 +238,17 @@
 			<if test="ifdel != null" >
 			  and ifdel = #{ifdel,jdbcType=INTEGER}
 			</if>
+			<if test="ifdel == null" >
+			  and ifdel = 0
+			</if>
 			<if test="storeCode != null" >
 			  and store_code = #{storeCode,jdbcType=VARCHAR}
 			</if>
 			<if test="couponName != null" >
 			  and coupon_name = #{couponName,jdbcType=VARCHAR}
 			</if>
-			<if test="filed3 != null" >
-			  and filed3 = #{filed3,jdbcType=VARCHAR}
+			<if test="createUserName != null" >
+			  and create_userName = #{createUserName,jdbcType=VARCHAR}
 			</if>
 		</where>
 		order by
@@ -280,14 +286,17 @@
 			<if test="ifdel != null" >
 			  and ifdel = #{ifdel,jdbcType=INTEGER}
 			</if>
+			<if test="ifdel == null" >
+			  and ifdel = 0
+			</if>
 			<if test="storeCode != null" >
 			  and store_code = #{storeCode,jdbcType=VARCHAR}
 			</if>
 			<if test="couponName != null" >
 			  and coupon_name = #{couponName,jdbcType=VARCHAR}
 			</if>
-			<if test="filed3 != null" >
-			  and filed3 = #{filed3,jdbcType=VARCHAR}
+			<if test="createUserName != null" >
+			  and create_userName = #{createUserName,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>

@@ -13,6 +13,7 @@ import com.wfj.entity.DataTableResult;
 import com.wfj.mapper.CouponInfoMapper;
 import com.wfj.mapper.CouponTemplateMapper;
 import com.wfj.service.intf.CouponTemplateService;
+import com.wfj.util.Constants;
 
 @Service
 public class CouponTemplateServiceImpl implements CouponTemplateService {
@@ -36,7 +37,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
 			CouponTemplate entity = new CouponTemplate();
 			entity.setSid(sid);
 			entity.setIfdel(1);
-			return couponTemplateMapper.updateByPrimaryKey(entity);
+			return couponTemplateMapper.updateByPrimaryKeySelective(entity);
 		} else {
 			return 0;
 		}
@@ -65,8 +66,19 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
 	public DataTableResult<CouponTemplate> selectPageListByParam(Map<String, Object> paramMap) {
 		DataTableResult<CouponTemplate> page = new DataTableResult<CouponTemplate>();
 
-		List<CouponTemplate> couponList = couponTemplateMapper.selectListByParam(paramMap);
+		List<CouponTemplate> couponList = couponTemplateMapper.selectPageListByParam(paramMap);
 		if (couponList != null && couponList.size() > 0) {
+			for (CouponTemplate couponTPL : couponList) {
+				if (couponTPL.getCouponType().equals(Constants.COUPON_TYPE_DJ)) {
+					couponTPL.setCouponType(Constants.COUPON_TYPE_DJ_NAME);
+				} else if (couponTPL.getCouponType().equals(Constants.COUPON_TYPE_ZK)) {
+					couponTPL.setCouponType(Constants.COUPON_TYPE_ZK_NAME);
+				} else if (couponTPL.getCouponType().equals(Constants.COUPON_TYPE_YQ)) {
+					couponTPL.setCouponType(Constants.COUPON_TYPE_YQ_NAME);
+				} else if (couponTPL.getCouponType().equals(Constants.COUPON_TYPE_LP)) {
+					couponTPL.setCouponType(Constants.COUPON_TYPE_LP_NAME);
+				}
+			}
 			page.setAaData(couponList);
 		}
 		paramMap.put("start", null);

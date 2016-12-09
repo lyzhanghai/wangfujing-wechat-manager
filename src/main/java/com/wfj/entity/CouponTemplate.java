@@ -25,7 +25,7 @@ public class CouponTemplate extends PageBase {
 
 	private String couponName;
 
-	private String filed3;
+	private String createUserName;
 
 	public Integer getSid() {
 		return sid;
@@ -107,11 +107,12 @@ public class CouponTemplate extends PageBase {
 		this.couponName = couponName;
 	}
 
-	public String getFiled3() {
-		return filed3;
+	public String getCreateUserName() {
+		return createUserName;
 	}
 
-	public void setFiled3(String filed3) {
-		this.filed3 = filed3;
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
 	}
+
 }
