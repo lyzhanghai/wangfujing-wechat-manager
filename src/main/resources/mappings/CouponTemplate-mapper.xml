@@ -193,6 +193,9 @@
 			<if test="ifdel != null" >
 			  and ifdel = #{ifdel,jdbcType=INTEGER}
 			</if>
+			<if test="ifdel == null" >
+			  and ifdel = 0
+			</if>
 			<if test="storeCode != null" >
 			  and store_code = #{storeCode,jdbcType=VARCHAR}
 			</if>
@@ -234,6 +237,9 @@
 			</if>
 			<if test="ifdel != null" >
 			  and ifdel = #{ifdel,jdbcType=INTEGER}
+			</if>
+			<if test="ifdel == null" >
+			  and ifdel = 0
 			</if>
 			<if test="storeCode != null" >
 			  and store_code = #{storeCode,jdbcType=VARCHAR}
@@ -279,6 +285,9 @@
 			</if>
 			<if test="ifdel != null" >
 			  and ifdel = #{ifdel,jdbcType=INTEGER}
+			</if>
+			<if test="ifdel == null" >
+			  and ifdel = 0
 			</if>
 			<if test="storeCode != null" >
 			  and store_code = #{storeCode,jdbcType=VARCHAR}
