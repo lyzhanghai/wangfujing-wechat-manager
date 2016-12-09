@@ -161,4 +161,135 @@
       filed3 = #{filed3,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="selectListByParam" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from coupon_template
+		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=INTEGER}
+			</if>
+			<if test="couponType != null" >
+			  and coupon_type = #{couponType,jdbcType=VARCHAR}
+			</if>
+			<if test="couponValue != null" >
+			  and coupon_value = #{couponValue,jdbcType=VARCHAR}
+			</if>
+			<if test="couponPriceLimit != null" >
+			  and coupon_price_limit = #{couponPriceLimit,jdbcType=VARCHAR}
+			</if>
+			<if test="createUserid != null" >
+			  and create_userId = #{createUserid,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null" >
+			  and create_time = #{createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateTime != null" >
+			  and update_time = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="ifdel != null" >
+			  and ifdel = #{ifdel,jdbcType=INTEGER}
+			</if>
+			<if test="filed1 != null" >
+			  and filed1 = #{filed1,jdbcType=VARCHAR}
+			</if>
+			<if test="filed2 != null" >
+			  and filed2 = #{filed2,jdbcType=VARCHAR}
+			</if>
+			<if test="filed3 != null" >
+			  and filed3 = #{filed3,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectPageListByParam" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from coupon_template
+		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=INTEGER}
+			</if>
+			<if test="couponType != null" >
+			  and coupon_type = #{couponType,jdbcType=VARCHAR}
+			</if>
+			<if test="couponValue != null" >
+			  and coupon_value = #{couponValue,jdbcType=VARCHAR}
+			</if>
+			<if test="couponPriceLimit != null" >
+			  and coupon_price_limit = #{couponPriceLimit,jdbcType=VARCHAR}
+			</if>
+			<if test="createUserid != null" >
+			  and create_userId = #{createUserid,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null" >
+			  and create_time = #{createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateTime != null" >
+			  and update_time = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="ifdel != null" >
+			  and ifdel = #{ifdel,jdbcType=INTEGER}
+			</if>
+			<if test="filed1 != null" >
+			  and filed1 = #{filed1,jdbcType=VARCHAR}
+			</if>
+			<if test="filed2 != null" >
+			  and filed2 = #{filed2,jdbcType=VARCHAR}
+			</if>
+			<if test="filed3 != null" >
+			  and filed3 = #{filed3,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by
+		sid asc
+		limit
+		#{start}, #{limit}
+	</select>
+	<select id="getCountByParam" resultType="java.lang.Integer"
+		parameterType="HashMap">
+		select
+		count(sid)
+		from coupon_template
+		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=INTEGER}
+			</if>
+			<if test="couponType != null" >
+			  and coupon_type = #{couponType,jdbcType=VARCHAR}
+			</if>
+			<if test="couponValue != null" >
+			  and coupon_value = #{couponValue,jdbcType=VARCHAR}
+			</if>
+			<if test="couponPriceLimit != null" >
+			  and coupon_price_limit = #{couponPriceLimit,jdbcType=VARCHAR}
+			</if>
+			<if test="createUserid != null" >
+			  and create_userId = #{createUserid,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null" >
+			  and create_time = #{createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateTime != null" >
+			  and update_time = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="ifdel != null" >
+			  and ifdel = #{ifdel,jdbcType=INTEGER}
+			</if>
+			<if test="filed1 != null" >
+			  and filed1 = #{filed1,jdbcType=VARCHAR}
+			</if>
+			<if test="filed2 != null" >
+			  and filed2 = #{filed2,jdbcType=VARCHAR}
+			</if>
+			<if test="filed3 != null" >
+			  and filed3 = #{filed3,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+  
 </mapper>
