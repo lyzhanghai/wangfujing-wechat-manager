@@ -40,7 +40,7 @@
                 <label class="col-sm-3 control-label">门店名称</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control checkacc"
-                           placeholder="请输入门店名称" name="businessName" id="businessName">
+                           placeholder="请输入门店名称（仅为商户名，如：国美、麦当劳，不应包含地区、地址、分店名等信息）" name="businessName" id="businessName">
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
@@ -48,7 +48,7 @@
                 <label class="col-sm-3 control-label">分店名称</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control checkacc"
-                           placeholder="请输入分店名称" name="branchName" id="branchName">
+                           placeholder="请输入分店名称（不应包含地区信息，不应与门店名有重复，错误示例：北京王府井店）" name="branchName" id="branchName">
                 </div>
             </div>
             <div class="line line-dashed line-lg pull-in"></div>
@@ -79,7 +79,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">街道地址</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入街道地址"
+                    <input type="text" class="form-control" placeholder="请输入街道地址（不要填写省市信息）"
                            name="address" id="address">
                 </div>
             </div>
@@ -87,7 +87,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">电话</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入电话"
+                    <input type="text" class="form-control" placeholder="请输入电话（纯数字，区号、分机号均由“-”隔开）"
                            name="telephone" id="telephone">
                 </div>
             </div>
@@ -95,7 +95,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">门店类型</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入门店类型"
+                    <input type="text" class="form-control" placeholder="请输入门店类型(不同级分类用“,”隔开，如：美食,川菜,火锅。)"
                            name="categories" id="categories">
                 </div>
             </div>
@@ -117,7 +117,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">经度</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入经度"
+                    <input type="text" class="form-control" placeholder="请输入经度（经纬度均为火星坐标，最好选用腾讯地图标记的坐标）"
                            name="longitude" id="longitude">
                 </div>
             </div>
@@ -125,7 +125,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">纬度</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入纬度"
+                    <input type="text" class="form-control" placeholder="请输入纬度（经纬度均为火星坐标，最好选用腾讯地图标记的坐标）"
                            name="latitude" id="latitude">
                 </div>
             </div>
@@ -141,7 +141,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">营业时间</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入营业时间"
+                    <input type="text" class="form-control" placeholder="请输入营业时间（24 小时制表示，用“-”连接，如8:00-20:00）"
                            name="openTime" id="openTime">
                 </div>
             </div>
@@ -149,7 +149,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">人均价格</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="请输入人均价格"
+                    <input type="text" class="form-control" placeholder="请输入人均价格（大于0 的整数）"
                            name="avgPrice" id="avgPrice">
                 </div>
             </div>

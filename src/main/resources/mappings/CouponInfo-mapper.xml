@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wfj.mapper.CouponInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wfj.entity.CouponInfo" >
+    <id column="sid" property="sid" jdbcType="BIGINT" />
+    <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="code_type" property="codeType" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="notice" property="notice" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="begin_timestamp" property="beginTimestamp" jdbcType="TIMESTAMP" />
+    <result column="end_timestamp" property="endTimestamp" jdbcType="TIMESTAMP" />
+    <result column="get_limit" property="getLimit" jdbcType="INTEGER" />
+    <result column="fixed_term" property="fixedTerm" jdbcType="INTEGER" />
+    <result column="fixed_begin_term" property="fixedBeginTerm" jdbcType="INTEGER" />
+    <result column="coupon_status" property="couponStatus" jdbcType="VARCHAR" />
+    <result column="approval_userId" property="approvalUserid" jdbcType="VARCHAR" />
+    <result column="approval_userName" property="approvalUsername" jdbcType="VARCHAR" />
+    <result column="approval_time" property="approvalTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_userId" property="createUserid" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_userId" property="updateUserid" jdbcType="VARCHAR" />
+    <result column="app_system" property="appSystem" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wfj.entity.CouponInfo" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, store_code, card_type, logo_url, code_type, brand_name, title, sub_title, color, 
+    notice, quantity, type, begin_timestamp, end_timestamp, get_limit, fixed_term, fixed_begin_term, 
+    coupon_status, approval_userId, approval_userName, approval_time, create_time, create_userId, 
+    update_time, update_userId, app_system
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from coupon_info
+    where sid = #{sid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from coupon_info
+    where sid = #{sid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wfj.entity.CouponInfo" >
+    insert into coupon_info (sid, store_code, card_type, 
+      logo_url, code_type, brand_name, 
+      title, sub_title, color, 
+      notice, quantity, type, 
+      begin_timestamp, end_timestamp, get_limit, 
+      fixed_term, fixed_begin_term, coupon_status, 
+      approval_userId, approval_userName, approval_time, 
+      create_time, create_userId, update_time, 
+      update_userId, app_system, description
+      )
+    values (#{sid,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{notice,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{beginTimestamp,jdbcType=TIMESTAMP}, #{endTimestamp,jdbcType=TIMESTAMP}, #{getLimit,jdbcType=INTEGER}, 
+      #{fixedTerm,jdbcType=INTEGER}, #{fixedBeginTerm,jdbcType=INTEGER}, #{couponStatus,jdbcType=VARCHAR}, 
+      #{approvalUserid,jdbcType=VARCHAR}, #{approvalUsername,jdbcType=VARCHAR}, #{approvalTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateUserid,jdbcType=VARCHAR}, #{appSystem,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wfj.entity.CouponInfo" >
+    insert into coupon_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="storeCode != null" >
+        store_code,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="codeType != null" >
+        code_type,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="notice != null" >
+        notice,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="beginTimestamp != null" >
+        begin_timestamp,
+      </if>
+      <if test="endTimestamp != null" >
+        end_timestamp,
+      </if>
+      <if test="getLimit != null" >
+        get_limit,
+      </if>
+      <if test="fixedTerm != null" >
+        fixed_term,
+      </if>
+      <if test="fixedBeginTerm != null" >
+        fixed_begin_term,
+      </if>
+      <if test="couponStatus != null" >
+        coupon_status,
+      </if>
+      <if test="approvalUserid != null" >
+        approval_userId,
+      </if>
+      <if test="approvalUsername != null" >
+        approval_userName,
+      </if>
+      <if test="approvalTime != null" >
+        approval_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUserid != null" >
+        create_userId,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateUserid != null" >
+        update_userId,
+      </if>
+      <if test="appSystem != null" >
+        app_system,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=BIGINT},
+      </if>
+      <if test="storeCode != null" >
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTimestamp != null" >
+        #{beginTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTimestamp != null" >
+        #{endTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getLimit != null" >
+        #{getLimit,jdbcType=INTEGER},
+      </if>
+      <if test="fixedTerm != null" >
+        #{fixedTerm,jdbcType=INTEGER},
+      </if>
+      <if test="fixedBeginTerm != null" >
+        #{fixedBeginTerm,jdbcType=INTEGER},
+      </if>
+      <if test="couponStatus != null" >
+        #{couponStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalUserid != null" >
+        #{approvalUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalUsername != null" >
+        #{approvalUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null" >
+        #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null" >
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null" >
+        #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="appSystem != null" >
+        #{appSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wfj.entity.CouponInfo" >
+    update coupon_info
+    <set >
+      <if test="storeCode != null" >
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        code_type = #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTimestamp != null" >
+        begin_timestamp = #{beginTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTimestamp != null" >
+        end_timestamp = #{endTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getLimit != null" >
+        get_limit = #{getLimit,jdbcType=INTEGER},
+      </if>
+      <if test="fixedTerm != null" >
+        fixed_term = #{fixedTerm,jdbcType=INTEGER},
+      </if>
+      <if test="fixedBeginTerm != null" >
+        fixed_begin_term = #{fixedBeginTerm,jdbcType=INTEGER},
+      </if>
+      <if test="couponStatus != null" >
+        coupon_status = #{couponStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalUserid != null" >
+        approval_userId = #{approvalUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalUsername != null" >
+        approval_userName = #{approvalUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null" >
+        approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null" >
+        create_userId = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null" >
+        update_userId = #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="appSystem != null" >
+        app_system = #{appSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wfj.entity.CouponInfo" >
+    update coupon_info
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      notice = #{notice,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      begin_timestamp = #{beginTimestamp,jdbcType=TIMESTAMP},
+      end_timestamp = #{endTimestamp,jdbcType=TIMESTAMP},
+      get_limit = #{getLimit,jdbcType=INTEGER},
+      fixed_term = #{fixedTerm,jdbcType=INTEGER},
+      fixed_begin_term = #{fixedBeginTerm,jdbcType=INTEGER},
+      coupon_status = #{couponStatus,jdbcType=VARCHAR},
+      approval_userId = #{approvalUserid,jdbcType=VARCHAR},
+      approval_userName = #{approvalUsername,jdbcType=VARCHAR},
+      approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_userId = #{createUserid,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_userId = #{updateUserid,jdbcType=VARCHAR},
+      app_system = #{appSystem,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wfj.entity.CouponInfo" >
+    update coupon_info
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      notice = #{notice,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      begin_timestamp = #{beginTimestamp,jdbcType=TIMESTAMP},
+      end_timestamp = #{endTimestamp,jdbcType=TIMESTAMP},
+      get_limit = #{getLimit,jdbcType=INTEGER},
+      fixed_term = #{fixedTerm,jdbcType=INTEGER},
+      fixed_begin_term = #{fixedBeginTerm,jdbcType=INTEGER},
+      coupon_status = #{couponStatus,jdbcType=VARCHAR},
+      approval_userId = #{approvalUserid,jdbcType=VARCHAR},
+      approval_userName = #{approvalUsername,jdbcType=VARCHAR},
+      approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_userId = #{createUserid,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_userId = #{updateUserid,jdbcType=VARCHAR},
+      app_system = #{appSystem,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+</mapper>

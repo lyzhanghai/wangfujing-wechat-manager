@@ -76,19 +76,19 @@ function releaseFun() {
     layer.confirm('是否发布？', function (index) {
         var url = rootPath + '/storeSyn/releaseToWechat.shtml';
         /*$.ajax({
-            type: "post",
-            dataType: "json",
-            url: url,
-            data: {
-                storeCode: ids
-            },
-            success: function (response) {
-                layer.msg(response.msg);
-                if (response.success == 'success') {
-                    storeManagerList();
-                }
-            }
-        });*/
+         type: "post",
+         dataType: "json",
+         url: url,
+         data: {
+         storeCode: ids
+         },
+         success: function (response) {
+         layer.msg(response.msg);
+         if (response.success == 'success') {
+         storeManagerList();
+         }
+         }
+         });*/
         var s = CommnUtil.ajax(url, {
             storeCode: ids[0]
         }, "json");
@@ -96,7 +96,7 @@ function releaseFun() {
             layer.msg('发布成功');
             storeManagerList();
         } else {
-            layer.msg('发布失败');
+            layer.msg(s.msg);
         }
     });
 }
@@ -132,7 +132,7 @@ function addFun() {
     pageii = layer.open({
         title: "新增",
         type: 2,
-        area: ["50%", "80%"],
+        area: ["60%", "80%"],
         content: rootPath + '/storeManager/addUI.shtml'
     });
 }
@@ -251,7 +251,25 @@ function storeManagerList() {
             }, {
                 "mDataProp": 'offsetType',
                 "sTitle": "坐标类型",
-                "sWidth": '10%'
+                "sWidth": '10%',
+                "mRender": function (data, type, full) {
+                    var offsetType = data;
+                    var offsetTypeView = "";
+                    if (offsetType == 1) {
+                        offsetTypeView = "火星坐标";
+                    } else if (offsetType == 2) {
+                        offsetTypeView = "sogou经纬度";
+                    } else if (offsetType == 3) {
+                        offsetTypeView = "百度经纬度";
+                    } else if (offsetType == 4) {
+                        offsetTypeView = "mapbar经纬度";
+                    } else if (offsetType == 5) {
+                        offsetTypeView = "GPS坐标";
+                    } else if (offsetType == 6) {
+                        offsetTypeView = "sogou墨卡托坐标";
+                    }
+                    return offsetTypeView;
+                }
             }, {
                 "mDataProp": 'longitude',
                 "sTitle": "经度",

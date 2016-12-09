@@ -1,20 +1,16 @@
 package com.wfj.controller.index;
 
-import java.io.BufferedInputStream;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.mysql.jdbc.Connection;
+import com.wfj.entity.ResFormMap;
+import com.wfj.entity.UserAuthorizationStore;
+import com.wfj.entity.UserFormMap;
+import com.wfj.entity.UserLoginFormMap;
+import com.wfj.mapper.ResourcesMapper;
+import com.wfj.mapper.UserLoginMapper;
+import com.wfj.service.intf.UserAuthorizationStoreService;
+import com.wfj.util.Common;
+import com.wfj.util.TreeObject;
+import com.wfj.util.TreeUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +20,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,15 +29,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.wfj.entity.ResFormMap;
-import com.wfj.entity.UserFormMap;
-import com.wfj.entity.UserLoginFormMap;
-import com.wfj.mapper.ResourcesMapper;
-import com.wfj.mapper.UserLoginMapper;
-import com.wfj.util.Common;
-import com.wfj.util.TreeObject;
-import com.wfj.util.TreeUtil;
-import com.mysql.jdbc.Connection;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.sql.DriverManager;
+import java.util.*;
 
 /**
  * 进行管理后台框架界面的类
@@ -59,6 +53,9 @@ public class BackgroundController extends BaseController {
 
 	@Inject
 	private UserLoginMapper userLoginMapper;
+
+	@Autowired
+	private UserAuthorizationStoreService userAuthorizationStoreService;
 	
 	/**
 	 * @return
@@ -70,7 +67,7 @@ public class BackgroundController extends BaseController {
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String login(String username, String password, HttpServletRequest request) {
+	public String login(String username, String password, HttpServletRequest request,Model model) {
 		try {
 			if (!request.getMethod().equals("POST")) {
 				request.setAttribute("error", "支持POST方法提交！");
@@ -107,12 +104,15 @@ public class BackgroundController extends BaseController {
 			userLogin.put("loginIP", session.getHost());
 			userLoginMapper.addEntity(userLogin);
 			request.removeAttribute("error");
+			model.addAttribute("userAuthorizatioStoreList", getAuthorizationStore(session.getAttribute("userSessionId").toString()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("error", "登录异常，请联系管理员！");
 			return "/login";
 		}
-		return "redirect:index.shtml";
+//		return "redirect:index.shtml";
+
+		return Common.BACKGROUND_PATH + "/system/user/userAuthorizationStore";
 	}
 
 	/**
@@ -226,5 +226,34 @@ public class BackgroundController extends BaseController {
 
 		return "/install";
 	}
+
+
+
+	@RequestMapping("testlogin")
+	public String testlogin(String storeNo,String userId) throws Exception {
+		System.out.println(storeNo);
+		System.out.println(userId);
+
+
+
+//		return Common.BACKGROUND_PATH + "/system/user/userAuthorizationStore";
+		return "redirect:index.shtml";
+	}
+
+	public List<UserAuthorizationStore> getAuthorizationStore(String userName){
+		Map<String,Object> paramMaps = new HashMap<String, Object>();
+		paramMaps.put("userNumber",userName);
+		List<UserAuthorizationStore> userAuthorizationStoreDtoList = null;
+		try{
+			userAuthorizationStoreDtoList =	userAuthorizationStoreService.getselectListByUserId(paramMaps);
+		}catch (Exception e){
+
+		}
+		return userAuthorizationStoreDtoList;
+	}
+
+
+
+
 
 }
