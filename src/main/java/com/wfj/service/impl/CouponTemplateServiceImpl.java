@@ -65,7 +65,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
 	public DataTableResult<CouponTemplate> selectPageListByParam(Map<String, Object> paramMap) {
 		DataTableResult<CouponTemplate> page = new DataTableResult<CouponTemplate>();
 
-		List<CouponTemplate> couponList = couponTemplateMapper.selectListByParam(paramMap);
+		List<CouponTemplate> couponList = couponTemplateMapper.selectPageListByParam(paramMap);
 		if (couponList != null && couponList.size() > 0) {
 			page.setAaData(couponList);
 		}
