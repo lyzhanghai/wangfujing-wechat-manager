@@ -101,10 +101,10 @@ public class UserAuthorizatioStoreController extends BaseController {
 			net.sf.json.JSONObject jsonObject = array.getJSONObject(i);
 			AuthorizationStoreDto dto =  JSON.parseObject(jsonObject.toString(),AuthorizationStoreDto.class);
 			UserAuthorizationStoreDto userAuthorizationStoreDto = new UserAuthorizationStoreDto();
-			userAuthorizationStoreDto.setIsLoseEfficacy(dto.getIsLoseEfficacy().equals("false")?1:0);
-			userAuthorizationStoreDto.setUserId(dto.getUserId());
-			userAuthorizationStoreDto.setStoreCode(dto.getStoreCode());
-			userAuthorizationStoreDto.setBusinessName(dto.getBusinessName());
+			userAuthorizationStoreDto.setIsLoseEfficacy(Integer.valueOf(dto.getIsLoseEfficacy()));
+			userAuthorizationStoreDto.setUserId(dto.getUserId().trim());
+			userAuthorizationStoreDto.setStoreCode(dto.getStoreCode().trim());
+			userAuthorizationStoreDto.setBusinessName(dto.getBusinessName().trim());
 			dtoList.add(userAuthorizationStoreDto);
 		}
 			userAuthorizationStoreService.addUserAuthorizationStore(dtoList);
