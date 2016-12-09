@@ -20,6 +20,7 @@
                        id="userList">
                     <thead>
                     <tr role="row">
+                        <th></th>
                         <th>模板ID</th>
                         <th>券类型</th>
                         <th>品牌券模板</th>
@@ -31,8 +32,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<div id="callback_div" class="table-responsive" style="display: none;">
-    <div id="paging_callback" class="pagclass"></div>
 </div>

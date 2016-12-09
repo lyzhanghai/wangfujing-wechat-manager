@@ -2,9 +2,9 @@ package com.wfj.controller.coupon;
 
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
+import com.wfj.dto.CouponTemplateDto;
 import com.wfj.dto.UserBaseInfoDto;
 import com.wfj.entity.CouponTemplate;
-import com.wfj.entity.DataTableParams;
 import com.wfj.entity.DataTableResult;
 import com.wfj.service.intf.CouponTemplateService;
 import com.wfj.util.Common;
@@ -44,15 +44,14 @@ public class CouponTPLController extends BaseController {
     @ResponseBody
     @RequestMapping("/findCouponTPLByPage")
     @SystemLog(module = "卡券模板", methods = "卡券模板管理-分页查询")
-    public DataTableResult<CouponTemplate> findCouponTPLByPage(DataTableParams para) {
+    public DataTableResult<CouponTemplate> findCouponTPLByPage(CouponTemplateDto para) {
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("start", para.getiDisplayStart());
         paramMap.put("limit", para.getiDisplayLength());
-        paramMap.put("ifdel", 0);
 
         DataTableResult<CouponTemplate> page = couponTPLService.selectPageListByParam(paramMap);
-        page.setiTotalDisplayRecords(page.getAaData().size());
+        page.setiTotalDisplayRecords(page.getiTotalRecords());
         page.setsEcho(para.getsEcho());
         return page;
     }
