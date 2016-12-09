@@ -6,6 +6,9 @@ $(function () {
     $("#addFun").click("click", function () {
         addFun();
     });
+    $("#delFun").click("click", function () {
+        delFun();
+    });
 });
 
 function addFun() {
@@ -14,6 +17,30 @@ function addFun() {
         type: 2,
         area: ["600px", "80%"],
         content: rootPath + '/coupontpl/addUI.shtml'
+    });
+}
+function delFun() {
+    var ids = [];
+    $("input.checkboxes[name='sid']:checkbox").each(function () {
+        if ($(this).attr("checked")) {
+            ids.push($(this).val());
+        }
+    });
+    if (ids.length > 1 || ids == "") {
+        layer.msg("只能选中一个");
+        return;
+    }
+    layer.confirm('是否删除？', function (index) {
+        var url = rootPath + '/coupontpl/deleteCouponTPL.shtml';
+        var s = CommnUtil.ajax(url, {
+            "sid": ids[0]
+        }, "json");
+        if (s == "success") {
+            layer.msg('删除成功');
+            couponTPLList();
+        } else {
+            layer.msg('删除失败');
+        }
     });
 }
 
@@ -32,7 +59,7 @@ function couponTPLList() {
         "searching": false, //去掉搜索框
         "bLengthChange": false,// 是否允许自定义每页显示条数.
         "bServerSide": true,
-        "iDisplayLength": 1,
+        "iDisplayLength": 10,
         "bSort": false,
         "oLanguage": {//语言设置
             "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
@@ -62,38 +89,52 @@ function couponTPLList() {
             {
                 "mDataProp": 'sid',
                 "sTitle": "模板ID",
-                "sWidth": '10%'
+                "sWidth": '5%'
             }, {
                 "mDataProp": 'couponType',
                 "sTitle": "券类型",
                 "sWidth": '10%'
-            }, {
-                "mDataProp": 'couponName',
-                "sTitle": "品牌券模板",
+            },{
+                "mDataProp": 'couponValue',
+                "sTitle": "券面值",
                 "sWidth": '10%'
+            },{
+                "mDataProp": 'couponName',
+                "sTitle": "品牌券模板"
+            },{
+                "mDataProp": 'couponPriceLimit',
+                "sTitle": "使用门槛",
+                "sWidth": '20%'
             }, {
-                "mDataProp": 'createUserid',
+                "mDataProp": 'createUserName',
                 "sTitle": "创建人",
                 "sWidth": '10%'
-            }
-            , {
+            }, {
                 "mDataProp": 'createTime',
                 "sTitle": "创建时间",
-                "sWidth": '10%'
+                "sWidth": '15%',
+                "mRender": function (data, type, full) {
+                    var time = data;
+                    if (time) {
+                        return new Date(time).format("yyyy-MM-dd hh:mm:ss");
+                    } else {
+                        return "";
+                    }
+                }
             }/*,
-             {
-             "mDataProp": '',
-             "sTitle": "操作",
-             "sWidth": '10%',
-             "mRender": function (data, type, full) {
-             var key = buttonMap.keySet();
-             var button = "";
-             for(var i in key){
-             button += buttonMap.get(key[i]);
-             }
-             return button;
-             }
-             }*/],
+            {
+                "mDataProp": '',
+                "sTitle": "操作",
+                "sWidth": '10%',
+                "mRender": function (data, type, full) {
+                    var key = buttonMap.keySet();
+                    var button = "";
+                    for (var i in key) {
+                        button += buttonMap.get(key[i]);
+                    }
+                    return button;
+                }
+            }*/],
         "aoColumnDefs": [{
             sDefaultContent: '',
             aTargets: ['_all']

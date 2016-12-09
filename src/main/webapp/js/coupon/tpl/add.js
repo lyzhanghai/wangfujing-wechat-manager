@@ -10,7 +10,7 @@ $(function () {
                 success: function (response) {
                     if (response == "success") {
                         layer.confirm('添加成功!是否关闭窗口?', function (index) {
-                            //window.parent.userList();
+                            window.parent.couponTPLList();
                             parent.layer.close(parent.pageii);
                             return false;
                         });

@@ -1,14 +1,5 @@
 package com.wfj.controller.coupon;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.dto.CouponTemplateDto;
@@ -17,6 +8,14 @@ import com.wfj.entity.CouponTemplate;
 import com.wfj.entity.DataTableResult;
 import com.wfj.service.intf.CouponTemplateService;
 import com.wfj.util.Common;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CouponTPLController
