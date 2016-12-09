@@ -19,4 +19,6 @@ public interface UserAuthorizationStoreMapper {
     int updateByPrimaryKey(UserAuthorizationStore record);
 
     List<UserAuthorizationStore> selectListByParam(Map<String,Object> paramMap);
+
+    int updateByUserIdAndStoreCode(UserAuthorizationStore record);
 }

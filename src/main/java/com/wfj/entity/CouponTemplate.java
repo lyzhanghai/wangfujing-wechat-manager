@@ -2,114 +2,116 @@ package com.wfj.entity;
 
 import java.util.Date;
 
-public class CouponTemplate {
-    private Integer sid;
+import com.wfj.dto.PageBase;
 
-    private String couponType;
+public class CouponTemplate extends PageBase {
+	private Integer sid;
 
-    private String couponValue;
+	private String couponType;
 
-    private String couponPriceLimit;
+	private String couponValue;
 
-    private String createUserid;
+	private String couponPriceLimit;
 
-    private Date createTime;
+	private String createUserid;
 
-    private Date updateTime;
+	private Date createTime;
 
-    private Integer ifdel;
+	private Date updateTime;
 
-    private String filed1;
+	private Integer ifdel;
 
-    private String filed2;
+	private String storeCode;
 
-    private String filed3;
+	private String couponName;
 
-    public Integer getSid() {
-        return sid;
-    }
+	private String filed3;
 
-    public void setSid(Integer sid) {
-        this.sid = sid;
-    }
+	public Integer getSid() {
+		return sid;
+	}
 
-    public String getCouponType() {
-        return couponType;
-    }
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
 
-    public void setCouponType(String couponType) {
-        this.couponType = couponType;
-    }
+	public String getCouponType() {
+		return couponType;
+	}
 
-    public String getCouponValue() {
-        return couponValue;
-    }
+	public void setCouponType(String couponType) {
+		this.couponType = couponType;
+	}
 
-    public void setCouponValue(String couponValue) {
-        this.couponValue = couponValue;
-    }
+	public String getCouponValue() {
+		return couponValue;
+	}
 
-    public String getCouponPriceLimit() {
-        return couponPriceLimit;
-    }
+	public void setCouponValue(String couponValue) {
+		this.couponValue = couponValue;
+	}
 
-    public void setCouponPriceLimit(String couponPriceLimit) {
-        this.couponPriceLimit = couponPriceLimit;
-    }
+	public String getCouponPriceLimit() {
+		return couponPriceLimit;
+	}
 
-    public String getCreateUserid() {
-        return createUserid;
-    }
+	public void setCouponPriceLimit(String couponPriceLimit) {
+		this.couponPriceLimit = couponPriceLimit;
+	}
 
-    public void setCreateUserid(String createUserid) {
-        this.createUserid = createUserid;
-    }
+	public String getCreateUserid() {
+		return createUserid;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setCreateUserid(String createUserid) {
+		this.createUserid = createUserid;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public Integer getIfdel() {
-        return ifdel;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setIfdel(Integer ifdel) {
-        this.ifdel = ifdel;
-    }
+	public Integer getIfdel() {
+		return ifdel;
+	}
 
-    public String getFiled1() {
-        return filed1;
-    }
+	public void setIfdel(Integer ifdel) {
+		this.ifdel = ifdel;
+	}
 
-    public void setFiled1(String filed1) {
-        this.filed1 = filed1;
-    }
+	public String getStoreCode() {
+		return storeCode;
+	}
 
-    public String getFiled2() {
-        return filed2;
-    }
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
 
-    public void setFiled2(String filed2) {
-        this.filed2 = filed2;
-    }
+	public String getCouponName() {
+		return couponName;
+	}
 
-    public String getFiled3() {
-        return filed3;
-    }
+	public void setCouponName(String couponName) {
+		this.couponName = couponName;
+	}
 
-    public void setFiled3(String filed3) {
-        this.filed3 = filed3;
-    }
+	public String getFiled3() {
+		return filed3;
+	}
+
+	public void setFiled3(String filed3) {
+		this.filed3 = filed3;
+	}
 }

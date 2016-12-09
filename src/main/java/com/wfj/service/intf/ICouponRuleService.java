@@ -17,4 +17,27 @@ public interface ICouponRuleService {
      */
     public List<CouponRule> queryCouponInfo(CouponRule record);
 
+    /**
+     * 根据sid查询券规则
+     *
+     * @param sid
+     * @return
+     */
+    public CouponRule queryCouponInfoBySid(Integer sid);
+
+    /**
+     * 新增
+     *
+     * @param record
+     * @return
+     */
+    public boolean saveCouponInfo(CouponRule record);
+
+    /**
+     * 修改
+     *
+     * @param record
+     * @return
+     */
+    public boolean updateCouponInfo(CouponRule record);
 }
