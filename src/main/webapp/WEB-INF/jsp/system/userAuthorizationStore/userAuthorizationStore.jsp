@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <%@include file="/common/common.jspf" %>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>弹框</title>
     <style>
@@ -124,7 +125,7 @@
 </div>
 <div class="btnBox">
     <input class="button_blue" id="saveBtn" type="submit" value="保存" name="Confirm" />
-    <input class="button_green ml15 cancel" type="button" value="取消" name="cancel" />
+    <input class="button_green ml15 cancel" type="button" value="取消" name="cancel" onclick="closeWin()" />
 </div>
 <%--</div>--%>
 <script type="text/javascript"  language="javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.8.3.js"></script>
@@ -174,8 +175,17 @@
                 url : result+"/userAuthorizatioStore/adduserAuthorizationStore.shtml",
                 data: JSON.stringify(userAuthorizatioStoreList),
                 contentType:"application/json",
-                success: function(msg){
-                    alert( "数据保存: " + msg );
+                success: function(data){
+                    if (data == "success") {
+                        layer.confirm('授权操作成功!是否关闭窗口?', function(index) {
+                            window.parent.userList();
+                            parent.layer.close(parent.pageii);
+                            return false;
+                        });
+                        $("#form")[0].reset();
+                    } else {
+                        layer.alert('授权操作失败！', 3);
+                    }
                 }
             });
         });
@@ -195,6 +205,13 @@
 //        })
 
     })
+
+    function closeWin(){
+        layer.confirm('是否关闭窗口？', {icon: 3,offset: '20px'}, function(index) {
+            parent.layer.close(parent.pageii);
+            return false;
+        });
+    }
 
 </script>
 
