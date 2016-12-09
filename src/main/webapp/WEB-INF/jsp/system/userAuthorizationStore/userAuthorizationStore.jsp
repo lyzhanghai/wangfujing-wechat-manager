@@ -76,6 +76,8 @@
         }
         .listStyle th,
         .listStyle td {
+            text-align: center;
+            line-height: 30px;
             border-bottom:#ccc solid 1px;
         }
         .listStyle span {
