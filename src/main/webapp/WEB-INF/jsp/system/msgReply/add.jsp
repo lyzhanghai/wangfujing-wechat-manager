@@ -68,7 +68,7 @@ button{
 			        	</div><br>
 						<input id="fileId" type="file" name="file" />
 						<img id="preview_size_fake"/>
-			        </div>					
+			        </div>
 					<input type="hidden" id="fileType" name="fileType" value="text">
 					<input type="hidden" id="eventType" name="eventType" value="subscribe" >
 					<br>

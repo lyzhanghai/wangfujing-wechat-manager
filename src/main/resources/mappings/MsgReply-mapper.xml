@@ -188,6 +188,9 @@
 		<include refid="Base_Column_List" />
 		from msg_reply
 		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=INTEGER}
+			</if>
 			<if test="eventType != null">
 				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
@@ -238,6 +241,9 @@
 		<include refid="Base_Column_List" />
 		from msg_reply
 		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=INTEGER}
+			</if>
 			<if test="eventType != null">
 				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>
@@ -292,6 +298,9 @@
 		count(sid)
 		from msg_reply
 		<where>
+			<if test="sid != null">
+				and sid = #{sid,jdbcType=INTEGER}
+			</if>
 			<if test="eventType != null">
 				and event_type = #{eventType,jdbcType=VARCHAR}
 			</if>

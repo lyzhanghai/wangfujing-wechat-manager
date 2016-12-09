@@ -79,4 +79,43 @@ public class UserAuthorizationStoreServiceImpl implements UserAuthorizationStore
         List<UserAuthorizationStore> userAuthorizationStoreList = userAuthorizationStoreMapper.selectListByParam(paraMap);
         return userAuthorizationStoreList;
     }
+
+
+    /**
+     * 用户门店授权方法
+     * @param dtoList
+     * @return void
+     * @throws Exception
+     */
+    public void addUserAuthorizationStore(List<UserAuthorizationStoreDto> dtoList) throws Exception {
+        Map<String,Object> paramMap = new HashMap<String, Object>();
+        Map<String,UserAuthorizationStore> userStoreMap = new HashMap<String, UserAuthorizationStore>();
+        List<UserAuthorizationStore> userAuthorizationStoreList = null;
+        if(dtoList!= null && !dtoList.isEmpty()){
+            paramMap.put("userId", dtoList.get(0).getUserId()) ;
+            userAuthorizationStoreList = userAuthorizationStoreMapper.selectListByParam(paramMap);
+            for (UserAuthorizationStore userAuthorizationStore : userAuthorizationStoreList) {
+                userStoreMap.put(userAuthorizationStore.getStoreCode(),userAuthorizationStore);
+            }
+
+            for (UserAuthorizationStoreDto userAuthorizationStoreDto : dtoList) {
+               if(userStoreMap.get(userAuthorizationStoreDto.getStoreCode())==null){
+                    UserAuthorizationStore entity = new UserAuthorizationStore();
+                    entity.setUserId(userAuthorizationStoreDto.getUserId());
+                    entity.setStoreCode(userAuthorizationStoreDto.getStoreCode());
+                    entity.setBusinessName(userAuthorizationStoreDto.getBusinessName());
+                    entity.setIsLoseEfficacy(userAuthorizationStoreDto.getIsLoseEfficacy());
+                    userAuthorizationStoreMapper.insertSelective(entity);
+                }else if(userStoreMap.get(userAuthorizationStoreDto.getStoreCode()) != null && userAuthorizationStoreDto.getIsLoseEfficacy()==(userStoreMap.get(userAuthorizationStoreDto.getStoreCode()).getIsLoseEfficacy())){
+
+                }else{
+                   UserAuthorizationStore record = new UserAuthorizationStore();
+                   record.setUserId(userAuthorizationStoreDto.getUserId());
+                   record.setStoreCode(userAuthorizationStoreDto.getStoreCode());
+                   record.setIsLoseEfficacy(userAuthorizationStoreDto.getIsLoseEfficacy());
+                   userAuthorizationStoreMapper.updateByUserIdAndStoreCode(record);
+                }
+            }
+        }
+    }
 }

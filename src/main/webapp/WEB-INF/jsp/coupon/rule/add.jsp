@@ -117,7 +117,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券流水位数" name="NoLength" id="NoLength" value="${coupon.NoLength}">
+                                   placeholder="请输入券流水位数" name="NoLength" id="NoLength" value="${coupon.nolength}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -126,7 +126,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券号起始位" name="PrefixStr" id="PrefixStr">
+                                   placeholder="请输入券号起始位" name="PrefixStr" id="PrefixStr" value="${coupon.prefixstr}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -135,7 +135,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券号前缀字符" name="StartNo" id="StartNo">
+                                   placeholder="请输入券号前缀字符" name="StartNo" id="StartNo" value="${coupon.startno}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -144,7 +144,7 @@
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control"
-                                   placeholder="请输入券号后缀长度" name="SuffixLength" id="SuffixLength">
+                                   placeholder="请输入券号后缀长度" name="SuffixLength" id="SuffixLength" value="${coupon.suffixlength}">
                         </div>
                     </div>
                     <div class="form-group">

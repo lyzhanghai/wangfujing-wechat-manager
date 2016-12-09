@@ -142,4 +142,24 @@
     </where>
   </select>
 
+  <update id="updateByUserIdAndStoreCode" parameterType="com.wfj.entity.UserAuthorizationStore" >
+    update user_authorization_store
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        business_name = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="isLoseEfficacy != null" >
+        is_lose_efficacy = #{isLoseEfficacy,jdbcType=INTEGER},
+      </if>
+      <if test="userNumber != null" >
+        user_number = #{userNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+    AND store_code = #{storeCode,jdbcType=VARCHAR}
+  </update>
+
 </mapper>
