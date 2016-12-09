@@ -21,9 +21,9 @@ public class CouponTemplate extends PageBase {
 
 	private Integer ifdel;
 
-	private String filed1;
+	private String storeCode;
 
-	private String filed2;
+	private String couponName;
 
 	private String filed3;
 
@@ -91,20 +91,20 @@ public class CouponTemplate extends PageBase {
 		this.ifdel = ifdel;
 	}
 
-	public String getFiled1() {
-		return filed1;
+	public String getStoreCode() {
+		return storeCode;
 	}
 
-	public void setFiled1(String filed1) {
-		this.filed1 = filed1;
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
 	}
 
-	public String getFiled2() {
-		return filed2;
+	public String getCouponName() {
+		return couponName;
 	}
 
-	public void setFiled2(String filed2) {
-		this.filed2 = filed2;
+	public void setCouponName(String couponName) {
+		this.couponName = couponName;
 	}
 
 	public String getFiled3() {
