@@ -9,7 +9,22 @@
 	<style>
 		.divcss5{height:50px;width:80%;border:1px solid #E6E6E6;
 			margin:0 auto;
+
 		}
+
+		.divCube:hover{
+			background: #ecf8ff;
+
+
+		}
+		.divCube{
+			font-family:"微软雅黑";
+			color: #3abbb9;
+			font-size:20px;
+			line-height:47px;
+		}
+
+
 		.tableclass {
 			 margin-right: 20px;
 			 margin-left: 20px;
@@ -24,8 +39,8 @@
 			margin-top: 70px;
 			margin-right: 25%;
 			margin-left: 25%;
-		}.
-				 divl{
+		}
+		.divl{
 					 position:absolute; height:400px; overflow:auto
 				 }
 	</style>
@@ -41,13 +56,13 @@
 </head>
 <body class="" style="" >
 	<section >
-		<div class="row" style="padding-right: 8px; padding-left: 8px; padding-top: 8ps; padding-bottom: 30px;">
+		<div class="row" style="padding-right: 8px; padding-left: 8px; padding-top: 8px; padding-bottom: 30px;">
 
 
 			<div class="col-md-6 divcenter" >
 				<section class="panel panel-info portlet-item">
 					<header class="panel-heading">
-						<i class="fa fa-th-list"></i> 用户授权们店
+						<i class="fa fa-th-list"></i> 请选择门店
 					</header>
 					<%--data-url="/monitor/systemInfo.shtml" style="padding: 0px"--%>
 					<div  class="panel-body  "  style=" height:600px; overflow-y :auto" overflow:scroll; >
@@ -59,11 +74,11 @@
 								<c:choose>
 									<c:when test="${(status.index + 1)%2==1}">    <!--如果 -->
 										<tr>
-										<td ><div  class="col-md-6 divcss5 tdclass" onclick="onuser(${userAuthorization.storeCode},${userAuthorization.userId})">${userAuthorization.businessName} </div></td>
+										<td ><div  class="col-md-6 divcss5 tdclass divCube" onclick="onuser(${userAuthorization.storeCode},${userAuthorization.userId})">${userAuthorization.businessName} </div></td>
 									</c:when>
 
 									<c:otherwise>  <!--否则 -->
-										<td ><div  class="col-md-6 divcss5 tdclass" onclick="onuser(${userAuthorization.storeCode},${userAuthorization.userId})">${userAuthorization.businessName}</div></td>
+										<td ><div  class="col-md-6 divcss5 tdclass divCube" onclick="onuser(${userAuthorization.storeCode},${userAuthorization.userId})">${userAuthorization.businessName}</div></td>
 										</tr>
 									</c:otherwise>
 								</c:choose>
