@@ -8,14 +8,12 @@ import com.wfj.entity.CouponTemplate;
 import com.wfj.entity.DataTableResult;
 import com.wfj.service.intf.CouponTemplateService;
 import com.wfj.util.Common;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,15 +49,6 @@ public class CouponTPLController extends BaseController {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("start", para.getiDisplayStart());
         paramMap.put("limit", para.getiDisplayLength());
-        paramMap.put("ifdel", 0);
-
-        try {
-            BeanUtils.copyProperties(paramMap, para);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
 
         DataTableResult<CouponTemplate> page = couponTPLService.selectPageListByParam(paramMap);
         page.setiTotalDisplayRecords(page.getiTotalRecords());
