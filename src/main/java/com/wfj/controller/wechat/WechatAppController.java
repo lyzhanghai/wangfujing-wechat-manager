@@ -1,15 +1,5 @@
 package com.wfj.controller.wechat;
 
-import java.util.List;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.wfj.annotation.SystemLog;
 import com.wfj.controller.index.BaseController;
 import com.wfj.dto.WechatAppDto;
@@ -19,6 +9,15 @@ import com.wfj.entity.DataTableResult;
 import com.wfj.mapper.AppAccountInfoMapper;
 import com.wfj.util.Common;
 import com.wfj.util.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * wechatAPP
@@ -47,7 +46,7 @@ public class WechatAppController extends BaseController {
 	public DataTableResult<WechatAppDto> findByPage2(DataTableParams dataTableParams,
 			String businessName) throws Exception {
 		WechatAppDto searchDto = new WechatAppDto();
-		searchDto.setLimit(dataTableParams.getiDisplayStart());
+		searchDto.setStart(dataTableParams.getiDisplayStart());
 		searchDto.setLimit(dataTableParams.getiDisplayLength());
 
 		List<WechatAppDto> appDtoList = appInfoMapper.selectAppInfoListByParam(searchDto);
